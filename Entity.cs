@@ -47,7 +47,7 @@ public partial class Entity : Spawnable {
 
     public override void _PhysicsProcess (double delta) {
         base._PhysicsProcess (delta);
-        
+
         (float angle, Vector2 dir) = GetRotationAndMovement (delta);
         Rotate (angle);
         var collision = MoveAndCollide (dir);

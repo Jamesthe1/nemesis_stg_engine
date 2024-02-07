@@ -27,7 +27,16 @@ public abstract partial class Spawnable : CharacterBody2D {
         Despawn -= _OnDespawn;
     }
 
+    protected virtual void ProcessInterval (double delta) {
+        if (Data.intervalSpawn != null) {
+            double te_interval = (timeElapsed % Data.interval) + delta;
+            if (te_interval > Data.interval)
+                STGController.Instance.Spawn (Data.intervalSpawn, Position);
+        }
+    }
+
     public override void _PhysicsProcess (double delta) {
+        ProcessInterval (delta);
         timeElapsed += delta;
     }
 
@@ -39,5 +48,8 @@ public abstract partial class Spawnable : CharacterBody2D {
     public virtual void _OnSpawn () {
         timeElapsed = 0.0;
     }
-    public virtual void _OnDespawn () { }
+    public virtual void _OnDespawn () {
+        if (Data.despawnSpawn != null)
+            STGController.Instance.Spawn (Data.despawnSpawn, Position);
+    }
 }

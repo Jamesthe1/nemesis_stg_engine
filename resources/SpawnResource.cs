@@ -12,6 +12,13 @@ public abstract partial class SpawnResource : Resource {
     [Export]
     public PackedScene baseScene;
 
+    [Export]
+    public SpawnResource despawnSpawn;
+    [Export]
+    public SpawnResource intervalSpawn;
+    [Export]
+    public float interval = 1f;
+
     public virtual void SetStatsOf (Spawnable spawnable) {
         spawnable.Data = this;
     }

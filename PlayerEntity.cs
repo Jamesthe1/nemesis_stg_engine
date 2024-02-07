@@ -7,7 +7,8 @@ public partial class PlayerEntity : Entity {
         { "ui_up", "up" },
         { "ui_down", "down" },
         { "ui_left", "left" },
-        { "ui_right", "right" }
+        { "ui_right", "right" },
+        { "ui_select", "fire" }
     };
 
     [Export]
@@ -21,6 +22,11 @@ public partial class PlayerEntity : Entity {
     public override void _Ready () {
         foreach (string name in inputNames.Values)
             inputs.Add (name, 0f);
+    }
+
+    protected override void ProcessInterval (double delta) {
+        if (inputs["fire"] > 0f)
+            base.ProcessInterval (delta);
     }
 
     protected override (float, Vector2) GetRotationAndMovement (double delta) {
