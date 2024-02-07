@@ -2,7 +2,7 @@ using Godot;
 
 public abstract partial class SpawnResource : Resource {
     [Export]
-    public Texture texture;
+    public Texture2D texture;
     [Export]
     public Shape2D collisionShape;
     [Export]
