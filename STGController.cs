@@ -41,7 +41,7 @@ public partial class STGController : Node2D {
         if (hadToSpawn)
             AddChild (spawnable);
 
-        resource.SetStatsOf (spawnable);
+        spawnable.Data = resource;
         spawnable.Active = true;
         spawnable.Position = pos;
         spawnable.EmitSignal ("Spawn");

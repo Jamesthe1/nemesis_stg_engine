@@ -18,8 +18,4 @@ public abstract partial class SpawnResource : Resource {
     public SpawnResource intervalSpawn;
     [Export]
     public float interval = 1f;
-
-    public virtual void SetStatsOf (Spawnable spawnable) {
-        spawnable.Data = this;
-    }
 }
