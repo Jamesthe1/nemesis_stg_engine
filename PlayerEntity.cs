@@ -16,14 +16,21 @@ public partial class PlayerEntity : Entity {
 
     protected Dictionary<string, float> inputs = new Dictionary<string, float> ();
 
+    private double timeSinceFire = 0f;
+
     public override void _Ready () {
         foreach (string name in inputNames.Values)
             inputs.Add (name, 0f);
     }
 
     protected override void ProcessInterval (double delta) {
-        if (inputs["fire"] > 0f)
-            base.ProcessInterval (delta);
+        timeSinceFire += delta;
+        if (entityData.intervalSpawn != null &&
+          inputs["fire"] > 0f &&
+          timeSinceFire > entityData.interval) {
+            STGController.Instance.Spawn (entityData.intervalSpawn, Position);
+            timeSinceFire %= entityData.interval;   // We might have some delta left over, keep it
+        }
     }
 
     protected override (float, Vector2) GetRotationAndMovement (double delta) {
