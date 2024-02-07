@@ -16,7 +16,7 @@ public partial class EntityResource : SpawnResource {
     [Export]
     public float speed = 1f;
     [Export]
-    public float turnSpeed = 1f;
+    public float turnSpeed = 0f;
     [Export]
     public int damage = 1;
     /// <summary>
