@@ -41,6 +41,9 @@ public partial class STGController : Node2D {
         if (hadToSpawn)
             AddChild (spawnable);
 
+        spawnable.SetChildIfExist ("Sprite", "texture", resource.texture);
+        spawnable.SetChildIfExist ("Collision", "shape", resource.collisionShape);
+
         spawnable.Data = resource;
         spawnable.Active = true;
         spawnable.Position = pos;
