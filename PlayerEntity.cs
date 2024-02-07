@@ -14,9 +14,6 @@ public partial class PlayerEntity : Entity {
     [Export]
     public int deviceID;
 
-    [Export]
-    public bool controller;
-
     protected Dictionary<string, float> inputs = new Dictionary<string, float> ();
 
     public override void _Ready () {
