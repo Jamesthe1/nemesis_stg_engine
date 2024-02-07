@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjeyphqpkhabx"]
+
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/Spawner.cs" id="1_lklc4"]
+
+[node name="Spawner" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_lklc4")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_OnSeen"]
