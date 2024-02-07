@@ -28,7 +28,7 @@ public partial class STGController : Node2D {
     /// <returns>The new object that was spawned</returns>
     public Spawnable Spawn (SpawnResource resource, Vector2 pos) {
         bool hadToSpawn = false;
-        Spawnable spawnable = spare.FirstOrDefault (s => s.Data.baseScene == resource.baseScene);
+        Spawnable spawnable = spare.FirstOrDefault (s => s.Data.baseScene.Equals (resource.baseScene));
         if (spawnable == null) {
             hadToSpawn = true;
             spawnable = resource.baseScene.Instantiate () as Spawnable;
