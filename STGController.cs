@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 
 [Tool]
-public sealed partial class STGController : Node2D {
+public partial class STGController : Node2D {
     private List<Spawnable> active = new List<Spawnable> ();
     private List<Spawnable> spare = new List<Spawnable> ();
 
