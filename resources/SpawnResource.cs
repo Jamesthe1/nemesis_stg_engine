@@ -12,10 +12,16 @@ public abstract partial class SpawnResource : Resource {
     [Export]
     public PackedScene baseScene;
 
+    /// <summary>
+    /// Spawned on despawn
+    /// </summary>
     [Export]
     public SpawnResource despawnSpawn;
     [Export]
     public SpawnResource intervalSpawn;
+    /// <summary>
+    /// The interval to spawn <see cref="intervalSpawn"/>
+    /// </summary>
     [Export]
     public float interval = 1f;
 }
