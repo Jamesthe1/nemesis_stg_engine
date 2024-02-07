@@ -28,5 +28,5 @@ public partial class EntityResource : SpawnResource {
     /// Health of the moving item. If set to 0, despawns on collide
     /// </summary>
     [Export]
-    public int hp = 0;
+    public int hp = 3;
 }
