@@ -13,11 +13,11 @@ public sealed partial class STGCore : EditorPlugin {
 		// Nodes
 		RegisterType<Spawner, CharacterBody2D> ();
 		RegisterType<Entity, CharacterBody2D> ();
+		RegisterType<PlayerEntity, CharacterBody2D> ();
 		RegisterType<STGController, Node2D> ();
 
 		// Resources
 		RegisterType<EntityResource, Resource> ();
-		RegisterType<EntitySpawnResource, Resource> ();
 		RegisterType<SpawnerDataResource, Resource> ();
 	}
 
