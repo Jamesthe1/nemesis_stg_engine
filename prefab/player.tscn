@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://drgrfhxba06dm"]
+
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/PlayerEntity.cs" id="1_a8ew3"]
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_a8ew3")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
