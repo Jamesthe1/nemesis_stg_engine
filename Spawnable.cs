@@ -27,6 +27,10 @@ public abstract partial class Spawnable : CharacterBody2D {
         Despawn -= _OnDespawn;
     }
 
+    public override void _PhysicsProcess (double delta) {
+        timeElapsed += delta;
+    }
+
     [Signal]
     public delegate void SpawnEventHandler ();
     [Signal]
