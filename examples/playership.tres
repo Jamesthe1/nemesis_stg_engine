@@ -1,0 +1,26 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://b58h7qx700vgd"]
+
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/resources/EntityResource.cs" id="1_bbdgj"]
+[ext_resource type="PackedScene" uid="uid://drgrfhxba06dm" path="res://addons/nemesis_stg_engine/prefab/player.tscn" id="1_sr8hw"]
+[ext_resource type="Resource" uid="uid://tsy82141051s" path="res://addons/nemesis_stg_engine/examples/bullet_player.tres" id="2_nvkeq"]
+[ext_resource type="Texture2D" uid="uid://dwgswtnmw5584" path="res://addons/nemesis_stg_engine/examples/ship.png" id="2_x1fw1"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_6lp40"]
+points = PackedVector2Array(44, -4, -12, -4, -36, 32, -36, -12, 44, -12)
+
+[resource]
+script = ExtResource("1_bbdgj")
+loopPath = false
+follow = null
+speed = 60.0
+turnSpeed = 0.0
+damage = 1
+miscDamage = 1
+hp = 3
+texture = ExtResource("2_x1fw1")
+collisionShape = SubResource("ConvexPolygonShape2D_6lp40")
+collisionLayer = 2
+collisionMask = 5
+baseScene = ExtResource("1_sr8hw")
+intervalSpawn = ExtResource("2_nvkeq")
+interval = 0.1
