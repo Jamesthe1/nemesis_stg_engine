@@ -7,6 +7,8 @@ public partial class STGController : Node2D {
     private List<Spawnable> active = new List<Spawnable> ();
     private List<Spawnable> spare = new List<Spawnable> ();
 
+    public static List<PlayerEntity> Players { get; private set; }
+
     [Export]
     public Vector2 stageMovement = Vector2.Zero;
 
@@ -16,10 +18,13 @@ public partial class STGController : Node2D {
 
     public override void _EnterTree () {
         Instance = this;
+        Players = new List<PlayerEntity> ();
     }
 
     public override void _PhysicsProcess (double delta) {
         Position += -stageMovement;
+        foreach (PlayerEntity player in Players)
+            player.Position += stageMovement;   // Keep them on-screen
     }
 
     /// <summary>
