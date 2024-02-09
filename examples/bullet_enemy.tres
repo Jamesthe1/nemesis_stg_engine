@@ -5,16 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://b1r4j77x44imu" path="res://addons/nemesis_stg_engine/examples/bullet_enemy.png" id="3_scf4x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5qb6t"]
-radius = 40.0
+radius = 12.0
 
 [resource]
 script = ExtResource("2_42pyf")
 loopPath = false
 follow = null
-speed = 60.0
+speed = 256.0
 turnSpeed = 0.0
 damage = 1
-miscDamage = 1
+selfDamage = 1
 hp = 3
 texture = ExtResource("3_scf4x")
 collisionShape = SubResource("CircleShape2D_5qb6t")

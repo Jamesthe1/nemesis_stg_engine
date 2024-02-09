@@ -1,0 +1,24 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://b58h7qx700vgd"]
+
+[ext_resource type="PackedScene" uid="uid://drgrfhxba06dm" path="res://addons/nemesis_stg_engine/prefab/player.tscn" id="1_1hnv0"]
+[ext_resource type="Resource" uid="uid://tsy82141051s" path="res://addons/nemesis_stg_engine/examples/bullet_player.tres" id="2_5yjxf"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/resources/PlayerResource.cs" id="2_woiks"]
+[ext_resource type="Texture2D" uid="uid://dwgswtnmw5584" path="res://addons/nemesis_stg_engine/examples/ship.png" id="3_ca6kq"]
+
+[resource]
+script = ExtResource("2_woiks")
+deviceID = 0
+usesKeyboard = true
+loopPath = false
+follow = null
+speed = 256.0
+turnSpeed = 0.0
+damage = 1
+selfDamage = 1
+hp = 3
+texture = ExtResource("3_ca6kq")
+collisionLayer = 2
+collisionMask = 5
+baseScene = ExtResource("1_1hnv0")
+intervalSpawn = ExtResource("2_5yjxf")
+interval = 0.1
