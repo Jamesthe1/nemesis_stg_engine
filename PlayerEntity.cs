@@ -62,4 +62,10 @@ public partial class PlayerEntity : Entity {
         if (!(entityData is PlayerResource))
             throw new System.Exception ("A player has been spawned without a player resource. Please make sure your player spawner's data has a PlayerResource associated with it!");
     }
+
+    public override void _OnDespawn () {
+        base._OnDespawn ();
+        foreach (string name in inputs.Keys)
+            inputs[name] = 0f;
+    }
 }
