@@ -22,6 +22,9 @@ public partial class STGController : Node2D {
     }
 
     public override void _PhysicsProcess (double delta) {
+        if (Engine.IsEditorHint ())
+            return;
+
         Position += -stageMovement;
         foreach (PlayerEntity player in Players)
             player.Position += stageMovement;   // Keep them on-screen
