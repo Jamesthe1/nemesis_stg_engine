@@ -36,6 +36,10 @@ public partial class STGController : Node2D {
             player.Position += stageMovement;   // Keep them on-screen
     }
 
+    private Rect2 CenteredRegion (Vector2 size) {
+        return new Rect2 (-size * 0.5f, size);
+    }
+
     /// <summary>
     /// Spawns a spawnable using the provided resource details
     /// </summary>
@@ -57,6 +61,12 @@ public partial class STGController : Node2D {
 
         spawnable.SetChildIfExist ("Sprite", "texture", resource.texture);
         spawnable.SetChildIfExist ("Collision", "shape", resource.collisionShape);
+        if (spawnable.HasNode ("VisCheck")) {
+            Vector2 size = Vector2.One * 20;
+            if (resource.texture != null)
+                size = resource.texture.GetSize ();
+            spawnable.SetChildIfExist ("VisCheck", "rect", CenteredRegion (size));
+        }
 
         spawnable.Data = resource;
         spawnable.Active = true;    // Also sets collision mask and layer

@@ -9,3 +9,8 @@ script = ExtResource("1_hjfib")
 [node name="Sprite" type="Sprite2D" parent="."]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+
+[node name="VisCheck" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisCheck" to="." method="_OnSeen"]
+[connection signal="screen_exited" from="VisCheck" to="." method="_OnUnseen"]

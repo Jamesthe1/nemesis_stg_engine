@@ -6,6 +6,6 @@
 motion_mode = 1
 script = ExtResource("1_lklc4")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisCheck" type="VisibleOnScreenNotifier2D" parent="."]
 
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_OnSeen"]
+[connection signal="screen_entered" from="VisCheck" to="." method="_OnSeen"]
