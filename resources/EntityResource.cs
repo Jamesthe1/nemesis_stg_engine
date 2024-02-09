@@ -23,7 +23,7 @@ public partial class EntityResource : SpawnResource {
     /// Damage for when there's collision with something that is not an entity
     /// </summary>
     [Export]
-    public int miscDamage = 1;
+    public int selfDamage = 1;
     /// <summary>
     /// Health of the moving item. If set to 0, despawns on collide
     /// </summary>

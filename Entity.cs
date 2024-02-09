@@ -58,7 +58,7 @@ public partial class Entity : Spawnable {
                 EmitSignal ("Damage", other.entityData.damage);
             }
             else
-                EmitSignal ("Damage", entityData.miscDamage);
+                EmitSignal ("Damage", entityData.selfDamage);
         }
     }
 
