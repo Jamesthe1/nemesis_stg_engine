@@ -3,7 +3,7 @@ using Godot;
 public partial class SpawnerDataResource : SpawnResource {
     public enum SpawnTrigger {
         OnSeen,
-        OnAppear,
+        OnPlaced,
         Event
     }
 

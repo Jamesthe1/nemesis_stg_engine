@@ -60,7 +60,7 @@ public partial class Spawner : Spawnable {
     }
 
     public override void _OnSpawn () {
-        if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnAppear)
+        if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnPlaced)
             FireSpawn ();
     }
 
