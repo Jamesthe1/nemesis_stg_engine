@@ -19,6 +19,7 @@ public sealed partial class STGCore : EditorPlugin {
 		// Resources
 		RegisterType<EntityResource, Resource> ();
 		RegisterType<SpawnerDataResource, Resource> ();
+		RegisterType<PlayerResource, Resource> ();
 	}
 
 	private void RegisterType<T, U> () where T : class, U where U : class {

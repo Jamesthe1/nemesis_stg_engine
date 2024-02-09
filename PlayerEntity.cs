@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Godot.Collections;
 
@@ -11,10 +12,14 @@ public partial class PlayerEntity : Entity {
         { "ui_select", "fire" }
     };
 
-    [Export]
-    public int deviceID;
-
     protected Dictionary<string, float> inputs = new Dictionary<string, float> ();
+
+    public int DeviceID {
+        get => ((PlayerResource)entityData).deviceID;
+    }
+    public bool UsesKeyboard {
+        get => ((PlayerResource)entityData).usesKeyboard;
+    }
 
     private double timeSinceFire = 0f;
 
@@ -39,12 +44,22 @@ public partial class PlayerEntity : Entity {
     }
 
     public override void _Input (InputEvent @event) {
-        if (@event.Device != deviceID)
+        if (@event.Device != DeviceID || !Active)
             return;
 
-        if (@event is InputEventAction e_action && inputNames.ContainsKey (e_action.Action)) {
-            string key = inputNames[e_action.Action];
-            inputs[key] = e_action.Strength;
+        bool isJoy = @event is InputEventJoypadButton || @event is InputEventJoypadMotion;
+        if ((UsesKeyboard && isJoy) || (!UsesKeyboard && @event is InputEventKey))
+            return;
+
+        foreach (var inputName in inputNames) {
+            if (@event.IsAction (inputName.Key))
+                inputs[inputName.Value] = @event.GetActionStrength (inputName.Key);
         }
+    }
+
+    public override void _OnSpawn () {
+        base._OnSpawn ();
+        if (!(entityData is PlayerResource))
+            throw new System.Exception ("A player has been spawned without a player resource. Please make sure your player spawner's data has a PlayerResource associated with it!");
     }
 }
