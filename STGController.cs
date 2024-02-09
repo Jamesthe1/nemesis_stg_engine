@@ -116,4 +116,11 @@ public partial class STGController : Node2D {
         spawnable.EmitSignal ("Despawn");
         return true;
     }
+
+    [Signal]
+    public delegate void SaveCheckpointEventHandler ();
+    [Signal]
+    public delegate void LoadCheckpointEventHandler ();
+    [Signal]
+    public delegate void BossAlarmEventHandler ();
 }
