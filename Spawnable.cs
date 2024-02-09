@@ -54,6 +54,9 @@ public abstract partial class Spawnable : CharacterBody2D {
             STGController.Instance.Spawn (Data.despawnSpawn, Position);
     }
 
+    public virtual void _OnSeen () { }
+    public virtual void _OnUnseen () { }
+
     public void SetChildIfExist (NodePath path, string param, Variant value) {
         if (HasNode (path))
             GetNode (path).Set (param, value);

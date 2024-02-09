@@ -34,7 +34,7 @@ public partial class Spawner : Spawnable {
             STGController.Instance.Despawn (this);
     }
 
-    public void _OnSeen () {
+    public override void _OnSeen () {
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnSeen)
             FireSpawn ();
     }
