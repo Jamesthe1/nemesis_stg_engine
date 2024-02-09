@@ -30,10 +30,11 @@ public partial class Entity : Spawnable {
     /// <returns>A tuple representing rotation and movement</returns>
     protected virtual (float, Vector2) GetRotationAndMovement (double delta) {
         float angle = entityData.turnSpeed;
+        bool followSet = entityData.follow != null && entityData.follow != "";
         if (entityData.path != null) {
             // TODO: Get new angle from path
         }
-        if (entityData.follow != null && GetNode (entityData.follow) != null) {
+        else if (followSet && GetNode (entityData.follow) != null) {
             Vector2 pos = GetNode<Node2D> (entityData.follow).Position;
             float dirAngle = GetAngleTo (pos);
             angle = (float)Math.Min (Mathf.Abs (entityData.turnSpeed) * delta, Mathf.Abs (dirAngle));
