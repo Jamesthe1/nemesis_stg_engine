@@ -60,9 +60,4 @@ public abstract partial class Spawnable : CharacterBody2D {
     public virtual void _OnUnseen () {
         EmitSignal ("Despawn");
     }
-
-    public void SetChildIfExist (NodePath path, string param, Variant value) {
-        if (HasNode (path))
-            GetNode (path).Set (param, value);
-    }
 }
