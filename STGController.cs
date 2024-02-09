@@ -81,7 +81,7 @@ public partial class STGController : Node2D {
     /// <summary>
     /// Despawns a spawnable
     /// </summary>
-    /// <returns>A state whether or not the object could not be despawned</returns>
+    /// <returns>A state whether or not the object could be despawned</returns>
     public bool Despawn (Spawnable spawnable) {
         if (!active.Contains (spawnable))
             return false;
