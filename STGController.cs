@@ -8,6 +8,12 @@ public partial class STGController : Node2D {
     private List<Spawnable> spare = new List<Spawnable> ();
 
     public static List<PlayerEntity> Players { get; private set; }
+    public static Dictionary<int, PlayerEntity> Devices {
+        get {
+            int[] devices = Input.GetConnectedJoypads ().ToArray ();
+            return devices.ToDictionary (d => d, d => Players.FirstOrDefault (p => p.DeviceID == d));
+        }
+    }
 
     [Export]
     public Vector2 stageMovement = Vector2.Zero;
