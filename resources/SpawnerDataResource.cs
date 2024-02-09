@@ -1,10 +1,5 @@
 using Godot;
 
-using SpawnDictionary = Godot.Collections.Dictionary<
-                            Godot.Vector2,
-                            Godot.Collections.Dictionary<SpawnResource, float>
-                        >;
-
 public partial class SpawnerDataResource : SpawnResource {
     public enum SpawnTrigger {
         OnSeen,
@@ -15,9 +10,22 @@ public partial class SpawnerDataResource : SpawnResource {
     [Export]
     public SpawnTrigger trigger = SpawnTrigger.OnSeen;
     [Export]
-    public SpawnDictionary spawnPoints = new SpawnDictionary ();
+    public SpawnResource[] spawns = new SpawnResource[0];
+    [Export]
+    public float startRotation = 0f;
+    [Export]
+    public float rotationIncrement = 0f;
+    /// <summary>
+    /// How long it will take to spawn all items
+    /// </summary>
+    [Export]
+    public double time = 0f;
     [Export]
     public bool despawnAfter = true;
     [Export]
     public bool requireKill = false;
+
+    public double TimePerSpawn {
+        get => time / spawns.Length;
+    }
 }

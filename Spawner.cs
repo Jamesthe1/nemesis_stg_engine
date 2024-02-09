@@ -6,6 +6,9 @@ public partial class Spawner : Spawnable {
 
     public override SpawnResource Data { get => spawnData; set => spawnData = value as SpawnerDataResource; }
 
+    private double timeTrigger = 0.0;
+    private int fireId = -1;
+
     public override void _Ready () {
         if (!STGController.Instance.IsTracked (this)) {
             STGController.Instance.RequestTrack (this);
@@ -23,15 +26,27 @@ public partial class Spawner : Spawnable {
         Trigger -= _OnTrigger;
     }
 
-    private void FireSpawn () {
-        foreach (var locations in spawnData.spawnPoints) {
-            foreach (var spawn in locations.Value) {
-                float rad = Mathf.DegToRad (spawn.Value);
-                STGController.Instance.Spawn (spawn.Key, locations.Key).Rotate (rad);
+    public override void _PhysicsProcess (double delta) {
+        if (fireId >= 0 && fireId < spawnData.spawns.Length) {
+            double timeSinceFire = timeElapsed - timeTrigger;
+            timeSinceFire -= spawnData.TimePerSpawn * fireId;   // Stay up-to-date with our existing spawns
+            while (fireId < spawnData.spawns.Length && timeSinceFire >= spawnData.TimePerSpawn) {
+                Spawnable spawn = STGController.Instance.Spawn (spawnData.spawns[fireId], Position);
+                spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
+
+                fireId++;
+                timeSinceFire -= spawnData.TimePerSpawn;
             }
+            if (spawnData.despawnAfter)
+                STGController.Instance.Despawn (this);
         }
-        if (spawnData.despawnAfter)
-            STGController.Instance.Despawn (this);
+
+        base._PhysicsProcess (delta);
+    }
+
+    private void FireSpawn () {
+        timeTrigger = timeElapsed;
+        fireId = 0;
     }
 
     public override void _OnSeen () {
