@@ -27,17 +27,18 @@ public partial class STGController : Node2D {
         Players = new List<PlayerEntity> ();
     }
 
-    public void MoveStage (Vector2 direction) {
-        Position += -direction;
+    public void MoveStageTo (Vector2 pos) {
+        Vector2 shift = pos - Position;
+        Position -= shift;
         foreach (PlayerEntity player in Players)
-            player.Position += direction;   // Keep them on-screen
+            player.Position += shift;   // Keep them on-screen
     }
 
     public override void _PhysicsProcess (double delta) {
         if (Engine.IsEditorHint ())
             return;
 
-        MoveStage (stageMovement);
+        MoveStageTo (Position + stageMovement);
     }
 
     private Rect2 CenteredRegion (Vector2 size) {
