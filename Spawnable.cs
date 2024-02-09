@@ -8,12 +8,14 @@ public abstract partial class Spawnable : CharacterBody2D {
         get; set;
     }
 
+    private bool _active = true;
     public bool Active {
-        get => (CollisionLayer | CollisionMask) > 0 && Visible;
+        get => _active;
         set {
-            CollisionLayer = Data.collisionLayer * Convert.ToUInt32 (value);
-            CollisionMask = Data.collisionMask * Convert.ToUInt32 (value);
-            Visible = value;
+            _active = value;
+            CollisionLayer = Data.collisionLayer * Convert.ToUInt32 (_active);
+            CollisionMask = Data.collisionMask * Convert.ToUInt32 (_active);
+            Visible = _active;
         }
     }
 
