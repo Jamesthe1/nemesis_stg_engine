@@ -34,6 +34,10 @@ public partial class STGController : Node2D {
             player.Position += shift;   // Keep them on-screen
     }
 
+    public void MoveStageTo (NodePath nodePath) {
+        MoveStageTo (GetNode<Node2D> (nodePath).Position);
+    }
+
     public override void _PhysicsProcess (double delta) {
         if (Engine.IsEditorHint ())
             return;
