@@ -23,6 +23,8 @@ public partial class STGController : Node2D {
 
     [Export]
     public Vector2 stageMovement = Vector2.Zero;
+    [Export]
+    public NodePath parallaxBgPath;
 
     public static STGController Instance {
         get; private set;
@@ -60,6 +62,7 @@ public partial class STGController : Node2D {
             return;
 
         MoveStageTo (Position + stageMovement);
+        GetNode<Node2D> (parallaxBgPath).Position -= stageMovement; // Keep illusion of smooth movement by having it loop continuously
     }
 
     private Rect2 CenteredRegion (Vector2 size) {
