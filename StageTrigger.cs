@@ -1,3 +1,4 @@
+using System.Collections;
 using Godot;
 
 public partial class StageTrigger : Marker2D {
@@ -9,7 +10,7 @@ public partial class StageTrigger : Marker2D {
 
     public enum TriggerType {
         Checkpoint,
-        JumpToTrigger,
+        JumpToNode,
         Boss
     }
 
@@ -56,13 +57,27 @@ public partial class StageTrigger : Marker2D {
             FireTrigger ();
     }
 
-    private void FireTrigger () {
-        if (!disabled)
-            EmitSignal ("Trigger", this);
+    protected virtual void FireTrigger () {
+        if (disabled)
+            return;
+
+        switch (type) {
+            case TriggerType.Checkpoint: {
+                // TODO: Checkpoint code
+                break;
+            }
+            case TriggerType.JumpToNode: {
+                if (jump != null && jump != "")
+                    STGController.Instance.MoveStageTo (jump);
+                break;
+            }
+            case TriggerType.Boss: {
+                STGController.Instance.EmitSignal ("BossAlarm");
+                break;
+            }
+        }
+
         if (fireOnce)
             disabled = true;
     }
-
-    [Signal]
-    public delegate void TriggerEventHandler (StageTrigger triggerNode);
 }
