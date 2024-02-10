@@ -19,11 +19,13 @@ public partial class Spawner : Spawnable {
     public override void _EnterTree () {
         base._EnterTree ();
         Trigger += _OnTrigger;
+        STGController.Instance.PlayerSpawn += _OnPlayerSpawnEvent;
     }
 
     public override void _ExitTree () {
         base._ExitTree ();
         Trigger -= _OnTrigger;
+        STGController.Instance.PlayerSpawn -= _OnPlayerSpawnEvent;
     }
 
     public override void _PhysicsProcess (double delta) {
@@ -61,6 +63,11 @@ public partial class Spawner : Spawnable {
 
     public override void _OnSpawn () {
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnPlaced)
+            FireSpawn ();
+    }
+
+    public virtual void _OnPlayerSpawnEvent () {
+        if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.PlayerSpawnEvent)
             FireSpawn ();
     }
 

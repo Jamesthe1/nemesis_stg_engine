@@ -4,7 +4,8 @@ public partial class SpawnerDataResource : SpawnResource {
     public enum SpawnTrigger {
         OnSeen,
         OnPlaced,
-        Event
+        Event,
+        PlayerSpawnEvent
     }
 
     [Export]

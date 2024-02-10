@@ -8,6 +8,12 @@ public partial class STGController : Node2D {
     private List<Spawnable> spare = new List<Spawnable> ();
 
     public static List<PlayerEntity> Players { get; private set; }
+    protected List<Spawner> PlayerSpawners {
+        get => active.OfType<Spawner> ()
+                     .Where (s => s.spawnData.trigger == SpawnerDataResource.SpawnTrigger.PlayerSpawnEvent)
+                     .ToList ();
+    }
+
     public static Dictionary<int, PlayerEntity> Devices {
         get {
             int[] devices = Input.GetConnectedJoypads ().ToArray ();
@@ -27,11 +33,22 @@ public partial class STGController : Node2D {
         Players = new List<PlayerEntity> ();
     }
 
+    public override void _Ready () {
+        StageStartup ();
+    }
+
+    protected virtual void StageStartup () {
+        EmitSignal ("PlayerSpawn");
+    }
+
     public void MoveStageTo (Vector2 pos) {
         Vector2 shift = pos - Position;
+        List<Node2D> movables = Players.Cast<Node2D> ().ToList ();
+        movables.AddRange (PlayerSpawners);
+
         Position -= shift;
-        foreach (PlayerEntity player in Players)
-            player.Position += shift;   // Keep them on-screen
+        foreach (Node2D movable in movables)
+            movable.Position += shift;   // Keep them on-screen
     }
 
     public void MoveStageTo (NodePath nodePath) {
@@ -121,6 +138,8 @@ public partial class STGController : Node2D {
         return true;
     }
 
+    [Signal]
+    public delegate void PlayerSpawnEventHandler ();
     [Signal]
     public delegate void SaveCheckpointEventHandler ();
     [Signal]
