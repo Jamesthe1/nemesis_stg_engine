@@ -62,7 +62,7 @@ public partial class STGController : Node2D {
             return;
 
         MoveStageTo (Position + stageMovement);
-        GetNode<Node2D> (parallaxBgPath).Position -= stageMovement; // Keep illusion of smooth movement by having it loop continuously
+        GetNode<Node2D> (parallaxBgPath).Position -= stageMovement; // Keep illusion of smooth movement by decoupling bg movement from world
     }
 
     private Rect2 CenteredRegion (Vector2 size) {
