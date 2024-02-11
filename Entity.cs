@@ -57,11 +57,11 @@ public partial class Entity : Spawnable {
         var collision = MoveAndCollide (dir);
         if (collision != null) {
             if (collision.GetCollider () is Entity other) {
-                other.EmitSignal ("Damage", entityData.damage);
-                EmitSignal ("Damage", other.entityData.damage);
+                other.EmitSignal ("Damage", entityData.ramDamage);
+                EmitSignal ("Damage", other.entityData.ramDamage);
             }
             else
-                EmitSignal ("Damage", entityData.selfDamage);
+                EmitSignal ("Damage", entityData.miscSelfDamage);
         }
     }
 

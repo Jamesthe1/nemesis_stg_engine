@@ -27,12 +27,12 @@ public partial class EntityResource : SpawnResource {
     public float turnSpeed = 0f;
 
     [Export]
-    public int damage = 1;
+    public int ramDamage = 1;
     /// <summary>
     /// Damage for when there's collision with something that is not an entity
     /// </summary>
     [Export]
-    public int selfDamage = 1;
+    public int miscSelfDamage = 1;
     /// <summary>
     /// Health of the moving item. If set to 0, despawns on collide
     /// </summary>
