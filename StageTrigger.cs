@@ -33,6 +33,12 @@ public partial class StageTrigger : Marker2D {
         }
     }
 
+    protected void CheckTriggerPassed () {
+        if (condition == TriggerCondition.PassX && Passed (0) ||
+            condition == TriggerCondition.PassY && Passed (1))
+            disabled = true;
+    }
+
     protected bool Passed (int axis) {
         Vector2 stage = -STGController.Instance.Position;
         Vector2 moveDir = STGController.Instance.stageMovement.Sign ();
@@ -41,8 +47,13 @@ public partial class StageTrigger : Marker2D {
         return stage[axis] < Position[axis];
     }
 
+    public override void _EnterTree() {
+        STGController.Instance.LoadCheckpoint += CheckTriggerPassed;
+    }
+
     public override void _ExitTree () {
         GetNode<VisibleOnScreenNotifier2D> ("VisCheck").ScreenEntered -= ScreenTriggerCheck;
+        STGController.Instance.LoadCheckpoint -= CheckTriggerPassed;
     }
 
     public override void _PhysicsProcess (double delta) {
