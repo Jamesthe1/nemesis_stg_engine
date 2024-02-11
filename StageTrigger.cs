@@ -33,19 +33,19 @@ public partial class StageTrigger : Marker2D {
         }
     }
 
+    protected bool Passed (int axis) {
+        Vector2 stage = -STGController.Instance.Position;
+        Vector2 moveDir = STGController.Instance.stageMovement.Sign ();
+        if (moveDir[axis] == 1)
+            return stage[axis] > Position[axis];
+        return stage[axis] < Position[axis];
+    }
+
     public override void _ExitTree () {
         GetNode<VisibleOnScreenNotifier2D> ("VisCheck").ScreenEntered -= ScreenTriggerCheck;
     }
 
     public override void _PhysicsProcess (double delta) {
-        bool Passed (int axis) {
-            Vector2 stage = -STGController.Instance.Position;
-            Vector2 moveDir = STGController.Instance.stageMovement.Sign ();
-            if (moveDir[axis] == 1)
-                return stage[axis] >= Position[axis];
-            return stage[axis] <= Position[axis];
-        }
-
         if (condition == TriggerCondition.PassX && Passed (0) ||
             condition == TriggerCondition.PassY && Passed (1))
             FireTrigger ();
