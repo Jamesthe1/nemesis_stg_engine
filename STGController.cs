@@ -83,6 +83,9 @@ public partial class STGController : Node2D {
     /// </summary>
     /// <returns>The new object that was spawned</returns>
     public Spawnable Spawn (SpawnResource resource, Vector2 pos) {
+        if (resource == null)
+            throw new ArgumentNullException ($"{nameof(SpawnResource)} cannot be null");
+
         bool hadToSpawn = false;
         Spawnable spawnable = spare.FirstOrDefault (s => s.Data.baseScene.Equals (resource.baseScene));
         if (spawnable == null) {

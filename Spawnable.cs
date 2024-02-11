@@ -48,6 +48,8 @@ public abstract partial class Spawnable : CharacterBody2D {
     public delegate void DespawnEventHandler ();
 
     public virtual void _OnSpawn () {
+        if (Data == null)
+            throw new NullReferenceException ($"Spawnable data of node {Name} cannot be null");
         timeElapsed = 0.0;
     }
 
