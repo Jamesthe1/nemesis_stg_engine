@@ -2,21 +2,30 @@ using Godot;
 
 /// <summary>
 /// An entity with preset movement behavior.
-/// <para>If nether <see cref="path"/> nor <see cref="follow"/> are set, the entity will move in a straight line (or turn consistently by <see cref="turnSpeed"/>) until off-screen.</para>
-/// <para>If <see cref="path"/> is set, the entity will follow the path. It will then follow default behavior unless <see cref="loopPath"/> is true.</para>
-/// <para>If <see cref="follow"/> is set (and <see cref="path"/> is null), the entity will turn towards the node (if it can be found) by <see cref="turnSpeed"/>.</para>
+/// <para><see cref="MotionType.Standard"/>: The entity will move in a straight line (or turn consistently by <see cref="turnSpeed"/>) until off-screen.</para>
+/// <para><see cref="MotionType.Path"/>: The entity will follow <see cref="path"/>. Once complete, it will follow default behavior unless <see cref="loopPath"/> is true.</para>
+/// <para><see cref="MotionType.Follow"/>: The entity will turn towards <see cref="follow"/> by <see cref="turnSpeed"/>.</para>
 /// </summary>
 public partial class EntityResource : SpawnResource {
+    public enum MotionType {
+        Standard,
+        Path,
+        Follow
+    }
+    [Export]
+    public MotionType type;
     [Export]
     public Curve2D path;
     [Export]
     public bool loopPath = false;
     [Export]
     public NodePath follow;
+
     [Export]
     public float speed = 1f;
     [Export]
     public float turnSpeed = 0f;
+
     [Export]
     public int damage = 1;
     /// <summary>
