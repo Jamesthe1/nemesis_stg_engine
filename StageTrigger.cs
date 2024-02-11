@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using Godot;
 
-public partial class StageTrigger : Marker2D {
+public partial class StageTrigger : Marker2D, ISaveState<bool> {
     public enum TriggerCondition {
         PassX,
         PassY,
@@ -25,18 +26,14 @@ public partial class StageTrigger : Marker2D {
 
     public bool disabled;
 
+    public static Dictionary<NodePath, bool> States { get; private set; } = new Dictionary<NodePath, bool> ();
+
     public override void _Ready () {
         string visCheckName = "VisCheck";
         if (!HasNode (visCheckName)) {
             var visCheck = this.CreateChild<VisibleOnScreenNotifier2D> (visCheckName);
             visCheck.ScreenEntered += ScreenTriggerCheck;
         }
-    }
-
-    protected void CheckTriggerPassed () {
-        if (condition == TriggerCondition.PassX && Passed (0) ||
-            condition == TriggerCondition.PassY && Passed (1))
-            disabled = true;
     }
 
     protected bool Passed (int axis) {
@@ -48,12 +45,14 @@ public partial class StageTrigger : Marker2D {
     }
 
     public override void _EnterTree() {
-        STGController.Instance.LoadCheckpoint += CheckTriggerPassed;
+        STGController.Instance.SaveCheckpoint += SaveState;
+        STGController.Instance.LoadCheckpoint += LoadState;
     }
 
     public override void _ExitTree () {
         GetNode<VisibleOnScreenNotifier2D> ("VisCheck").ScreenEntered -= ScreenTriggerCheck;
-        STGController.Instance.LoadCheckpoint -= CheckTriggerPassed;
+        STGController.Instance.SaveCheckpoint -= SaveState;
+        STGController.Instance.LoadCheckpoint -= LoadState;
     }
 
     public override void _PhysicsProcess (double delta) {
@@ -89,5 +88,13 @@ public partial class StageTrigger : Marker2D {
 
         if (fireOnce)
             disabled = true;
+    }
+
+    public void SaveState() {
+        States[GetPath ()] = disabled;
+    }
+
+    public void LoadState() {
+        disabled = States[GetPath ()];
     }
 }

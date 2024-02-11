@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using Godot;
 
-public partial class Spawner : Spawnable {
+public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     [Export]
     public SpawnerDataResource spawnData;
 
@@ -8,6 +9,8 @@ public partial class Spawner : Spawnable {
 
     private double timeTrigger = 0.0;
     private int fireId = -1;
+    
+    public static Dictionary<NodePath, SpawnerSaveData> States { get; private set; } = new Dictionary<NodePath, SpawnerSaveData> ();
 
     public override void _Ready () {
         if (!STGController.Instance.IsTracked (this)) {
@@ -20,12 +23,16 @@ public partial class Spawner : Spawnable {
         base._EnterTree ();
         Trigger += _OnTrigger;
         STGController.Instance.PlayerSpawn += _OnPlayerSpawnEvent;
+        STGController.Instance.SaveCheckpoint += SaveState;
+        STGController.Instance.LoadCheckpoint += LoadState;
     }
 
     public override void _ExitTree () {
         base._ExitTree ();
         Trigger -= _OnTrigger;
         STGController.Instance.PlayerSpawn -= _OnPlayerSpawnEvent;
+        STGController.Instance.SaveCheckpoint -= SaveState;
+        STGController.Instance.LoadCheckpoint -= LoadState;
     }
 
     public override void _PhysicsProcess (double delta) {
@@ -69,6 +76,17 @@ public partial class Spawner : Spawnable {
     public virtual void _OnPlayerSpawnEvent () {
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.PlayerSpawnEvent)
             FireSpawn ();
+    }
+
+    public void SaveState () {
+        States[GetPath ()] = new SpawnerSaveData (spawnData, timeTrigger, fireId);
+    }
+
+    public void LoadState() {
+        SpawnerSaveData state = States[GetPath ()];
+        spawnData = state.data;
+        timeTrigger = state.timeTrigger;
+        fireId = state.fireId;
     }
 
     [Signal]
