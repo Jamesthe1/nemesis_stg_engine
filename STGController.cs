@@ -1,9 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
 [Tool]
 public partial class STGController : Node2D {
+    public enum StageLoadProcess {
+        Nothing,
+        UseCheckpoint,
+        ClearStats
+    }
+
     private List<Spawnable> active = new List<Spawnable> ();
     private List<Spawnable> spare = new List<Spawnable> ();
 
@@ -29,6 +36,7 @@ public partial class STGController : Node2D {
     public static STGController Instance {
         get; private set;
     }
+    protected static NodePath checkpoint = "";
 
     public override void _EnterTree () {
         Instance = this;
@@ -36,11 +44,11 @@ public partial class STGController : Node2D {
     }
 
     public override void _Ready () {
-        StageStartup ();
+        EmitSignal ("PlayerSpawn");
     }
 
-    protected virtual void StageStartup () {
-        EmitSignal ("PlayerSpawn");
+    public virtual void ClearStats () {
+        checkpoint = "";
     }
 
     public void MoveStageTo (Vector2 pos) {
@@ -142,12 +150,49 @@ public partial class STGController : Node2D {
         return true;
     }
 
+    public static void SetNewCheckpoint (NodePath newCheckpoint) {
+        checkpoint = newCheckpoint;
+        Instance.EmitSignal ("SaveCheckpoint");
+    }
+
+    public static void UnloadStage () {
+        Instance.EmitSignal ("StageStartUnload");
+        Instance.Free ();
+    }
+
+    public static void LoadStage (PackedScene scene, Node parent, StageLoadProcess process = StageLoadProcess.ClearStats) {
+        if (parent == null)
+            throw new ArgumentNullException ("Parent cannot be null");
+        
+        STGController stage = scene.Instantiate<STGController> ();
+        parent.AddChild (stage);
+
+        if (process == StageLoadProcess.UseCheckpoint) {
+            stage.MoveStageTo (stage.GetNode<Node2D> (checkpoint).Position);
+            stage.EmitSignal ("LoadCheckpoint");
+        }
+        else if (process == StageLoadProcess.ClearStats)
+            stage.ClearStats ();
+
+        stage.RequestReady ();
+    }
+
+    public static void ReloadStage (StageLoadProcess process = StageLoadProcess.UseCheckpoint) {
+        PackedScene scene = GD.Load<PackedScene> (Instance.SceneFilePath);
+        Node parent = Instance.GetParent ();
+        UnloadStage ();
+        LoadStage (scene, parent, process);
+    }
+
     [Signal]
     public delegate void PlayerSpawnEventHandler ();
+    [Signal]
+    public delegate void BossAlarmEventHandler ();
+
     [Signal]
     public delegate void SaveCheckpointEventHandler ();
     [Signal]
     public delegate void LoadCheckpointEventHandler ();
     [Signal]
-    public delegate void BossAlarmEventHandler ();
+    public delegate void StageStartUnloadEventHandler ();
 }

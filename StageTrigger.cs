@@ -72,7 +72,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
 
         switch (type) {
             case TriggerType.Checkpoint: {
-                // TODO: Checkpoint code
+                STGController.SetNewCheckpoint (GetPath ());
                 break;
             }
             case TriggerType.JumpToNode: {
