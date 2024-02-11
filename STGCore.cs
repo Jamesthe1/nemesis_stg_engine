@@ -14,6 +14,7 @@ public sealed partial class STGCore : EditorPlugin {
 		RegisterType<Spawner, CharacterBody2D> ();
 		RegisterType<Entity, CharacterBody2D> ();
 		RegisterType<PlayerEntity, CharacterBody2D> ();
+		RegisterType<StageTrigger, Marker2D> ();
 		RegisterType<STGController, Node2D> ();
 
 		// Resources
