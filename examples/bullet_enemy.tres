@@ -9,13 +9,14 @@ radius = 12.0
 
 [resource]
 script = ExtResource("2_42pyf")
+type = 0
 loopPath = false
 follow = null
 speed = 256.0
 turnSpeed = 0.0
 damage = 1
 selfDamage = 1
-hp = 3
+hp = 0
 texture = ExtResource("3_scf4x")
 collisionShape = SubResource("CircleShape2D_5qb6t")
 collisionLayer = 0

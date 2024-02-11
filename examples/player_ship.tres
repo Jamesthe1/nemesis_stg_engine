@@ -1,9 +1,12 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://b58h7qx700vgd"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://b58h7qx700vgd"]
 
 [ext_resource type="PackedScene" uid="uid://drgrfhxba06dm" path="res://addons/nemesis_stg_engine/prefab/player.tscn" id="1_1hnv0"]
 [ext_resource type="Resource" uid="uid://tsy82141051s" path="res://addons/nemesis_stg_engine/examples/bullet_player.tres" id="2_5yjxf"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/resources/PlayerResource.cs" id="2_woiks"]
 [ext_resource type="Texture2D" uid="uid://dwgswtnmw5584" path="res://addons/nemesis_stg_engine/examples/ship.png" id="3_ca6kq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_caqo5"]
+size = Vector2(8, 8)
 
 [resource]
 script = ExtResource("2_woiks")
@@ -17,6 +20,7 @@ damage = 1
 selfDamage = 1
 hp = 3
 texture = ExtResource("3_ca6kq")
+collisionShape = SubResource("RectangleShape2D_caqo5")
 collisionLayer = 2
 collisionMask = 5
 baseScene = ExtResource("1_1hnv0")
