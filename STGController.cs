@@ -55,8 +55,12 @@ public partial class STGController : Node2D {
         Vector2 shift = pos - Position;
         List<Node2D> movables = Players.Cast<Node2D> ().ToList ();
         movables.AddRange (PlayerSpawners);
+        movables.AddRange (GetChildren ().OfType<Camera2D> ());
 
-        Position -= shift;
+        if (GetParent ().Name != "root") {
+            shift *= 0.5f;
+            Position -= shift;
+        }
         foreach (Node2D movable in movables)
             movable.Position += shift;   // Keep them on-screen
     }
