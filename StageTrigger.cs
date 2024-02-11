@@ -9,6 +9,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     }
 
     public enum TriggerType {
+        EventOnly,
         Checkpoint,
         JumpToNode,
         Boss
@@ -70,6 +71,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
         if (disabled)
             return;
 
+        EmitSignal ("Trigger");
         switch (type) {
             case TriggerType.Checkpoint: {
                 STGController.SetNewCheckpoint (GetPath ());
@@ -97,4 +99,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     public void LoadState() {
         disabled = States[GetPath ()];
     }
+
+    [Signal]
+    public delegate void TriggerEventHandler ();
 }
