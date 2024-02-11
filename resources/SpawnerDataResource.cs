@@ -11,7 +11,12 @@ public partial class SpawnerDataResource : SpawnResource {
     [Export]
     public SpawnTrigger trigger = SpawnTrigger.OnSeen;
     [Export]
-    public SpawnResource[] spawns = new SpawnResource[0];
+    public SpawnResource spawn = null;
+    /// <summary>
+    /// All points this spawner will spawn on
+    /// </summary>
+    [Export]
+    public Vector2[] spawnOffsetPoints = new Vector2[1];
     [Export]
     public float startRotation = 0f;
     [Export]
@@ -27,6 +32,6 @@ public partial class SpawnerDataResource : SpawnResource {
     public bool requireKill = false;
 
     public double TimePerSpawn {
-        get => time / spawns.Length;
+        get => time / spawnOffsetPoints.Length;
     }
 }

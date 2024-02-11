@@ -36,11 +36,11 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     }
 
     public override void _PhysicsProcess (double delta) {
-        if (fireId >= 0 && fireId < spawnData.spawns.Length) {
+        if (fireId >= 0 && fireId < spawnData.spawnOffsetPoints.Length) {
             double timeSinceFire = timeElapsed - timeTrigger;
             timeSinceFire -= spawnData.TimePerSpawn * fireId;   // Stay up-to-date with our existing spawns
-            while (fireId < spawnData.spawns.Length && timeSinceFire >= spawnData.TimePerSpawn) {
-                Spawnable spawn = STGController.Instance.Spawn (spawnData.spawns[fireId], Position);
+            while (fireId < spawnData.spawnOffsetPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
+                Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnOffsetPoints[fireId]);
                 spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
 
                 fireId++;

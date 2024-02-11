@@ -57,6 +57,7 @@ public abstract partial class Spawnable : CharacterBody2D {
     }
 
     public virtual void _OnSeen () { }
+    // Doesn't activate if we spawn outside the scene, we should be good
     public virtual void _OnUnseen () {
         EmitSignal ("Despawn");
     }
