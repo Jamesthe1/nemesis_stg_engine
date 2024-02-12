@@ -40,7 +40,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
             double timeSinceFire = timeElapsed - timeTrigger;
             timeSinceFire -= spawnData.TimePerSpawn * fireId;   // Stay up-to-date with our existing spawns
             while (fireId < spawnData.spawnOffsetPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
-                Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnOffsetPoints[fireId]);
+                Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnOffsetPoints[fireId], GetPath ());
                 spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
 
                 fireId++;

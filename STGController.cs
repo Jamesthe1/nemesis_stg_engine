@@ -86,7 +86,7 @@ public partial class STGController : Node2D {
     /// Spawns a spawnable using the provided resource details
     /// </summary>
     /// <returns>The new object that was spawned</returns>
-    public Spawnable Spawn (SpawnResource resource, Vector2 pos) {
+    public Spawnable Spawn (SpawnResource resource, Vector2 pos, NodePath spawnerPath) {
         if (resource == null)
             throw new ArgumentNullException ($"{nameof(SpawnResource)} cannot be null");
 
@@ -116,6 +116,8 @@ public partial class STGController : Node2D {
         spawnable.Data = resource;
         spawnable.Active = true;    // Also sets collision mask and layer
         spawnable.Position = pos;
+        spawnable.spawnerPath = spawnerPath;
+
         spawnable.EmitSignal ("Spawn");
         return spawnable;
     }

@@ -9,6 +9,12 @@ public partial class Entity : Spawnable {
 
     public int currentHp;
 
+    protected Vector2 lastSpawnerPos;
+
+    protected Vector2 GetSpawnerPos () {
+        return GetNode<Node2D> (spawnerPath).Position;
+    }
+
     public override void _EnterTree () {
         base._EnterTree ();
         Damage += _OnDamage;
@@ -22,6 +28,7 @@ public partial class Entity : Spawnable {
     public override void _OnSpawn () {
         base._OnSpawn ();
         currentHp = entityData.hp;
+        lastSpawnerPos = GetSpawnerPos ();
     }
 
     /// <summary>
@@ -53,6 +60,9 @@ public partial class Entity : Spawnable {
         base._PhysicsProcess (delta);
 
         (float angle, Vector2 dir) = GetRotationAndMovement (delta);
+        if (entityData.moveWithSpawner)
+            dir += GetSpawnerPos () - lastSpawnerPos;
+
         Rotate (angle);
         var collision = MoveAndCollide (dir);
         if (collision != null) {
@@ -63,6 +73,8 @@ public partial class Entity : Spawnable {
             else
                 EmitSignal ("Damage", entityData.miscSelfDamage);
         }
+
+        lastSpawnerPos = GetSpawnerPos ();
     }
 
     [Signal]

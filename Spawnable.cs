@@ -19,6 +19,8 @@ public abstract partial class Spawnable : CharacterBody2D {
         }
     }
 
+    public NodePath spawnerPath = "";
+
     public override void _EnterTree () {
         Spawn += _OnSpawn;
         Despawn += _OnDespawn;
@@ -33,7 +35,7 @@ public abstract partial class Spawnable : CharacterBody2D {
         if (Data.intervalSpawn != null) {
             double te_interval = (timeElapsed % Data.interval) + delta;
             if (te_interval > Data.interval)
-                STGController.Instance.Spawn (Data.intervalSpawn, Position);
+                STGController.Instance.Spawn (Data.intervalSpawn, Position, GetPath ());
         }
     }
 
@@ -55,7 +57,7 @@ public abstract partial class Spawnable : CharacterBody2D {
 
     public virtual void _OnDespawn () {
         if (Data.despawnSpawn != null)
-            STGController.Instance.Spawn (Data.despawnSpawn, Position);
+            STGController.Instance.Spawn (Data.despawnSpawn, Position, GetPath ());
     }
 
     public virtual void _OnSeen () { }

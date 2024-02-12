@@ -33,7 +33,7 @@ public partial class PlayerEntity : Entity {
         if (entityData.intervalSpawn != null &&
           inputs["fire"] > 0f &&
           timeSinceFire > entityData.interval) {
-            STGController.Instance.Spawn (entityData.intervalSpawn, Position);
+            STGController.Instance.Spawn (entityData.intervalSpawn, Position, GetPath ());
             timeSinceFire %= entityData.interval;   // We might have some delta left over, keep it
         }
     }
