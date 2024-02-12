@@ -73,9 +73,10 @@ public partial class STGController : Node2D {
         if (Engine.IsEditorHint ())
             return;
 
-        MoveStageTo (Position + stageMovement);
+        Vector2 moveStep = stageMovement * (float)delta;
+        MoveStageTo (Position + moveStep);
         if (parallaxBgPath != "")
-            GetNode<Node2D> (parallaxBgPath).Position -= stageMovement; // Keep illusion of smooth movement by decoupling bg movement from world
+            GetNode<Node2D> (parallaxBgPath).Position -= moveStep;  // Keep illusion of smooth movement by decoupling bg movement from world
     }
 
     private Rect2 CenteredRegion (Vector2 size) {
