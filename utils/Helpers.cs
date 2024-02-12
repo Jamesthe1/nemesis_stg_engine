@@ -11,4 +11,8 @@ public static class Helpers {
         if (node.HasNode (path))
             node.GetNode (path).Set (param, value);
     }
+
+    public static Rect2 GetCenteredRegion (this Vector2 size) {
+        return new Rect2 (-size * 0.5f, size);
+    }
 }

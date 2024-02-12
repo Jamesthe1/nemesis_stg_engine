@@ -79,10 +79,6 @@ public partial class STGController : Node2D {
             GetNode<Node2D> (parallaxBgPath).Position -= moveStep;  // Keep illusion of smooth movement by decoupling bg movement from world
     }
 
-    private Rect2 CenteredRegion (Vector2 size) {
-        return new Rect2 (-size * 0.5f, size);
-    }
-
     /// <summary>
     /// Spawns a spawnable using the provided resource details
     /// </summary>
@@ -111,7 +107,7 @@ public partial class STGController : Node2D {
             Vector2 size = Vector2.One * 20;
             if (resource.texture != null)
                 size = resource.texture.GetSize ();
-            spawnable.SetChildIfExist ("VisCheck", "rect", CenteredRegion (size));
+            spawnable.SetChildIfExist ("VisCheck", "rect", size.GetCenteredRegion ());
         }
 
         spawnable.Data = resource;
