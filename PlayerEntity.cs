@@ -22,6 +22,7 @@ public partial class PlayerEntity : Entity {
     }
 
     private double timeSinceFire = 0f;
+    protected Rect2 spriteRegion;
 
     public override void _Ready () {
         foreach (string name in inputNames.Values)
@@ -40,7 +41,10 @@ public partial class PlayerEntity : Entity {
 
     protected override (float, Vector2) GetRotationAndMovement (double delta) {
         Vector2 motionAxes = new Vector2 (inputs["right"] - inputs["left"], inputs["down"] - inputs["up"]);
-        return (0f, motionAxes.Normalized () * entityData.speed * (float)delta);
+        Vector2 dir = motionAxes.Normalized () * entityData.speed * (float)delta;
+
+        Vector2 nextPos = (Position + dir).KeepInsideScreen (spriteRegion, GetViewport ());
+        return (0f, nextPos - Position);
     }
 
     public override void _Input (InputEvent @event) {
@@ -59,6 +63,7 @@ public partial class PlayerEntity : Entity {
 
     public override void _OnSpawn () {
         base._OnSpawn ();
+        spriteRegion = GetNode<Sprite2D> ("Sprite").Texture.GetSize ().GetCenteredRegion ();
         if (!(entityData is PlayerResource))
             throw new System.Exception ("A player has been spawned without a player resource. Please make sure your player spawner's data has a PlayerResource associated with it!");
         STGController.Players.Add (this);
