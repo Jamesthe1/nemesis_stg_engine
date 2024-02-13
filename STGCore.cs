@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public sealed partial class STGCore : EditorPlugin {
 	private List<string> scripts = new List<string> ();
 
-	private const string root = "res://addons/nemesis_stg_engine";
+	private const string root = "res://addons/nemesis_stg_engine/src";
 
 	public override void _EnterTree () {
 		// Nodes
