@@ -7,8 +7,8 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
 
     public override SpawnResource Data { get => spawnData; set => spawnData = value as SpawnerDataResource; }
 
-    private double timeTrigger = 0.0;
-    private int fireId = -1;
+    protected double timeTrigger = 0.0;
+    protected int fireId = -1;
     
     public static Dictionary<NodePath, SpawnerSaveData> States { get; private set; } = new Dictionary<NodePath, SpawnerSaveData> ();
 

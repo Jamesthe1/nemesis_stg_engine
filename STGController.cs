@@ -11,8 +11,8 @@ public partial class STGController : Node2D {
         ClearStats
     }
 
-    private List<Spawnable> active = new List<Spawnable> ();
-    private List<Spawnable> spare = new List<Spawnable> ();
+    protected List<Spawnable> active = new List<Spawnable> ();
+    protected List<Spawnable> spare = new List<Spawnable> ();
 
     public static List<PlayerEntity> Players { get; private set; }
     protected List<Spawner> PlayerSpawners {

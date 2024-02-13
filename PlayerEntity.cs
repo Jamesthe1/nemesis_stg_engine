@@ -21,7 +21,8 @@ public partial class PlayerEntity : Entity {
         get => ((PlayerResource)entityData).usesKeyboard;
     }
 
-    private double timeSinceFire = 0f;
+    protected double timeSinceFire = 0f;
+    
     protected Rect2 spriteRegion;
 
     public override void _Ready () {
