@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=5 format=3 uid="uid://m4evi6kqvmcs"]
 
 [ext_resource type="PackedScene" uid="uid://dktdr1wbsco6b" path="res://addons/nemesis_stg_engine/prefab/entity.tscn" id="1_665dp"]
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/resources/EntityResource.cs" id="2_42pyf"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="2_42pyf"]
 [ext_resource type="Texture2D" uid="uid://b1r4j77x44imu" path="res://addons/nemesis_stg_engine/examples/bullet_enemy.png" id="3_scf4x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5qb6t"]

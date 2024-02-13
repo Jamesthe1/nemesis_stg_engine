@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://cylway1kg1yw0"]
 
 [ext_resource type="PackedScene" uid="uid://cjeyphqpkhabx" path="res://addons/nemesis_stg_engine/prefab/spawner.tscn" id="1_4lv0x"]
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/resources/SpawnerDataResource.cs" id="1_dd7ww"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="1_dd7ww"]
 [ext_resource type="Resource" uid="uid://buy3umhttjhi1" path="res://addons/nemesis_stg_engine/examples/enemy_ship.tres" id="2_mliwj"]
 
 [resource]

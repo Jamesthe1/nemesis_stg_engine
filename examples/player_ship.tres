@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://drgrfhxba06dm" path="res://addons/nemesis_stg_engine/prefab/player.tscn" id="1_1hnv0"]
 [ext_resource type="Resource" uid="uid://tsy82141051s" path="res://addons/nemesis_stg_engine/examples/bullet_player.tres" id="2_5yjxf"]
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/resources/PlayerResource.cs" id="2_woiks"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/PlayerResource.cs" id="2_woiks"]
 [ext_resource type="Texture2D" uid="uid://dwgswtnmw5584" path="res://addons/nemesis_stg_engine/examples/ship.png" id="3_ca6kq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_caqo5"]
