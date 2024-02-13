@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjeyphqpkhabx"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/Spawner.cs" id="1_lklc4"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Spawner.cs" id="1_lklc4"]
 
 [node name="Spawner" type="CharacterBody2D"]
 motion_mode = 1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dktdr1wbsco6b"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/Entity.cs" id="1_hjfib"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Entity.cs" id="1_hjfib"]
 
 [node name="Entity" type="CharacterBody2D"]
 motion_mode = 1
