@@ -8,6 +8,12 @@ public partial class SpawnerDataResource : SpawnResource {
         PlayerSpawnEvent
     }
 
+    public enum DespawnCondition {
+        None,
+        AllSpawned,
+        RequireKill
+    }
+
     [Export]
     public SpawnTrigger trigger = SpawnTrigger.OnSeen;
     [Export]
@@ -27,9 +33,7 @@ public partial class SpawnerDataResource : SpawnResource {
     [Export]
     public double time = 0f;
     [Export]
-    public bool despawnAfter = true;
-    [Export]
-    public bool requireKill = false;
+    public DespawnCondition despawnCondition = DespawnCondition.AllSpawned;
 
     public double TimePerSpawn {
         get => time / spawnOffsetPoints.Length;

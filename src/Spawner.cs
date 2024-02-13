@@ -46,7 +46,8 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
                 fireId++;
                 timeSinceFire -= spawnData.TimePerSpawn;
             }
-            if (spawnData.despawnAfter)
+            if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.AllSpawned
+                && fireId == spawnData.spawnOffsetPoints.Length)
                 STGController.Instance.Despawn (this);
         }
 
