@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
@@ -9,6 +10,8 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
 
     protected double timeTrigger = 0.0;
     protected int fireId = -1;
+
+    protected List<Spawnable> spawns = new List<Spawnable> ();
     
     public static Dictionary<NodePath, SpawnerSaveData> States { get; private set; } = new Dictionary<NodePath, SpawnerSaveData> ();
 
@@ -45,6 +48,8 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
 
                 fireId++;
                 timeSinceFire -= spawnData.TimePerSpawn;
+                spawns.Add (spawn);
+                spawn.Despawn += UpdateTrackedSpawns;
             }
             if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.AllSpawned
                 && fireId == spawnData.spawnOffsetPoints.Length)
@@ -59,6 +64,16 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
         fireId = 0;
     }
 
+    protected void UpdateTrackedSpawns () {
+        Spawnable spawn = spawns.First (s => s.Active == false);
+        spawn.Despawn -= UpdateTrackedSpawns;
+        spawns.Remove (spawn);
+
+        if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.RequireKill
+            && spawns.Count == 0)
+            STGController.Instance.Despawn (this);
+    }
+
     public override void _OnSeen () {
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnSeen)
             FireSpawn ();
@@ -70,6 +85,10 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     }
 
     public override void _OnSpawn () {
+        foreach (Spawnable spawn in spawns)
+            spawn.Despawn -= UpdateTrackedSpawns;
+        spawns.Clear ();
+
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnPlaced)
             FireSpawn ();
     }
@@ -83,7 +102,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
         States[GetPath ()] = new SpawnerSaveData (spawnData, timeTrigger, fireId);
     }
 
-    public void LoadState() {
+    public void LoadState () {
         SpawnerSaveData state = States[GetPath ()];
         spawnData = state.data;
         timeTrigger = state.timeTrigger;
