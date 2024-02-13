@@ -45,11 +45,12 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
             while (fireId < spawnData.spawnOffsetPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
                 Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnOffsetPoints[fireId], GetPath ());
                 spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
+                
+                spawns.Add (spawn);
+                spawn.Despawn += UpdateTrackedSpawns;
 
                 fireId++;
                 timeSinceFire -= spawnData.TimePerSpawn;
-                spawns.Add (spawn);
-                spawn.Despawn += UpdateTrackedSpawns;
             }
             if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.AllSpawned
                 && fireId == spawnData.spawnOffsetPoints.Length)
