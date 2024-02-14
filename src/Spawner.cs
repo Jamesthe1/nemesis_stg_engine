@@ -66,7 +66,12 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     }
 
     protected void UpdateTrackedSpawns () {
-        Spawnable spawn = spawns.First (s => s.Active == false);
+        Spawnable spawn = spawns.FirstOrDefault (s => s.Active == false);
+        if (spawn == null) {
+            GD.PrintErr ($"Couldn't find an inactive spawn; spawns: {spawns.Count}");
+            return;
+        }
+
         spawn.Despawn -= UpdateTrackedSpawns;
         spawns.Remove (spawn);
 
