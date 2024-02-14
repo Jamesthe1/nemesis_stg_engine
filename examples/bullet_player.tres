@@ -18,6 +18,7 @@ moveWithSpawner = false
 ramDamage = 1
 miscSelfDamage = 1
 hp = 0
+score = 250
 texture = ExtResource("3_j2c6g")
 collisionShape = SubResource("CircleShape2D_5qb6t")
 collisionLayer = 0
