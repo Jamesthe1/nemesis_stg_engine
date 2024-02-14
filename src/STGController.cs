@@ -36,6 +36,16 @@ public partial class STGController : Node2D {
     public static STGController Instance {
         get; private set;
     }
+
+    private static int _score = 0;
+    public static int Score {
+        get => _score;
+        set {
+            _score = value;
+            Instance.EmitSignal ("ScoreUpdate");
+        }
+    }
+
     protected static NodePath checkpoint = "";
 
     public override void _EnterTree () {
@@ -49,6 +59,7 @@ public partial class STGController : Node2D {
 
     public virtual void ClearStats () {
         checkpoint = "";
+        Score = 0;
     }
 
     public void MoveStageTo (Vector2 pos) {
@@ -192,6 +203,8 @@ public partial class STGController : Node2D {
 
     [Signal]
     public delegate void PlayerSpawnEventHandler ();
+    [Signal]
+    public delegate void ScoreUpdateEventHandler ();
     [Signal]
     public delegate void BossAlarmEventHandler ();
 

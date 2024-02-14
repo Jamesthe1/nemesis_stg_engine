@@ -66,26 +66,30 @@ public partial class Entity : Spawnable {
         Rotate (angle);
         var collision = MoveAndCollide (dir);
         if (collision != null) {
-            if (collision.GetCollider () is Entity other) {
-                other.EmitSignal ("Damage", entityData.ramDamage);
-                EmitSignal ("Damage", other.entityData.ramDamage);
+            GodotObject collider = collision.GetCollider ();
+            if (collider is Entity other) {
+                other.EmitSignal ("Damage", entityData.ramDamage, this);
+                EmitSignal ("Damage", other.entityData.ramDamage, other);
             }
-            else
-                EmitSignal ("Damage", entityData.miscSelfDamage);
+            else if (collider is StaticBody2D)
+                EmitSignal ("Damage", entityData.miscSelfDamage, (Entity)null);
         }
 
         lastSpawnerPos = GetSpawnerPos ();
     }
 
     [Signal]
-    public delegate void DamageEventHandler (int damage);
+    public delegate void DamageEventHandler (int damage, Entity source);
 
-    public virtual void _OnDamage (int damage) {
+    public virtual void _OnDamage (int damage, Entity source) {
         if (damage == 0)
             return;
             
         currentHp -= damage;
-        if (currentHp <= 0)
+        if (currentHp <= 0) {
             STGController.Instance.Despawn (this);
+            if (source != null && source.SpawnedByPlayer)
+                STGController.Score += entityData.score;
+        }
     }
 }

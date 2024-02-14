@@ -40,4 +40,6 @@ public partial class EntityResource : SpawnResource {
     /// </summary>
     [Export]
     public int hp = 3;
+    [Export]
+    public int score = 250;
 }

@@ -21,6 +21,8 @@ public abstract partial class Spawnable : CharacterBody2D {
 
     public NodePath spawnerPath = "";
 
+    public bool SpawnedByPlayer { get; private set; } = false;
+
     public override void _EnterTree () {
         Spawn += _OnSpawn;
         Despawn += _OnDespawn;
@@ -53,6 +55,10 @@ public abstract partial class Spawnable : CharacterBody2D {
         if (Data == null)
             throw new NullReferenceException ($"Spawnable data of node {Name} cannot be null");
         timeElapsed = 0.0;
+        Node spawner = GetNode (spawnerPath);
+        if (spawner is PlayerEntity
+            || (spawner is Spawnable spawnable && spawnable.SpawnedByPlayer))
+            SpawnedByPlayer = true;
     }
 
     public virtual void _OnDespawn () {
