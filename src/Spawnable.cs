@@ -42,6 +42,9 @@ public abstract partial class Spawnable : CharacterBody2D {
     }
 
     public override void _PhysicsProcess (double delta) {
+        if (!Active)
+            return;
+        
         ProcessInterval (delta);
         timeElapsed += delta;
     }
