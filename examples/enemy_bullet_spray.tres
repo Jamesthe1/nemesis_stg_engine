@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dkmb0vfs6ba6v"]
+
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="1_07ryq"]
+[ext_resource type="PackedScene" uid="uid://cjeyphqpkhabx" path="res://addons/nemesis_stg_engine/prefab/spawner.tscn" id="1_d5mgk"]
+[ext_resource type="Resource" uid="uid://m4evi6kqvmcs" path="res://addons/nemesis_stg_engine/examples/bullet_enemy.tres" id="2_o1l2d"]
+
+[resource]
+script = ExtResource("1_07ryq")
+trigger = 1
+spawn = ExtResource("2_o1l2d")
+spawnOffsetPoints = PackedVector2Array(0, 0, 0, 0, 0, 0)
+startRotation = 200.0
+rotationIncrement = -20.0
+time = 0.0
+despawnCondition = 1
+collisionLayer = 1
+collisionMask = 1
+baseScene = ExtResource("1_d5mgk")
+interval = 1.0
