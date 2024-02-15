@@ -42,4 +42,7 @@ public partial class EntityResource : SpawnResource {
     public int hp = 3;
     [Export]
     public int score = 250;
+
+    [Export]
+    public SpawnResource destroySpawn;
 }

@@ -18,11 +18,13 @@ public partial class Entity : Spawnable {
     public override void _EnterTree () {
         base._EnterTree ();
         Damage += _OnDamage;
+        Destroy += _OnDestroy;
     }
 
     public override void _ExitTree () {
         base._ExitTree ();
         Damage -= _OnDamage;
+        Destroy -= _OnDestroy;
     }
 
     public override void _OnSpawn () {
@@ -78,18 +80,26 @@ public partial class Entity : Spawnable {
         lastSpawnerPos = GetSpawnerPos ();
     }
 
-    [Signal]
-    public delegate void DamageEventHandler (int damage, Entity source);
-
     public virtual void _OnDamage (int damage, Entity source) {
         if (damage == 0)
             return;
             
         currentHp -= damage;
-        if (currentHp <= 0) {
-            STGController.Instance.Despawn (this);
-            if (source != null && source.SpawnedByPlayer)
-                STGController.Score += entityData.score;
-        }
+        if (currentHp <= 0)
+            EmitSignal ("Destroy", source != null && source.SpawnedByPlayer);
     }
+
+    public virtual void _OnDestroy (bool destroyedByPlayer) {
+        if (destroyedByPlayer)
+            STGController.Score += entityData.score;
+        if (entityData.destroySpawn != null)
+            STGController.Instance.Spawn (entityData.destroySpawn, Position, GetPath ());
+
+        STGController.Instance.Despawn (this);
+    }
+
+    [Signal]
+    public delegate void DamageEventHandler (int damage, Entity source);
+    [Signal]
+    public delegate void DestroyEventHandler (bool destroyedByPlayer);
 }
