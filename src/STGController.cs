@@ -123,6 +123,7 @@ public partial class STGController : Node2D {
 
         spawnable.Data = resource;
         spawnable.Position = pos;
+        spawnable.Rotation = GetNode<Node2D> (spawnerPath).Rotation;
         spawnable.spawnerPath = spawnerPath;
 
         spawnable.Active = true;    // Also sets collision mask and layer
