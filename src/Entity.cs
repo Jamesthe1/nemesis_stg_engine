@@ -11,6 +11,8 @@ public partial class Entity : Spawnable {
 
     protected Vector2 lastSpawnerPos;
 
+    protected double lastPathElapsed;
+
     protected Vector2 GetSpawnerPos () {
         return GetNode<Node2D> (spawnerPath).Position;
     }
@@ -31,6 +33,20 @@ public partial class Entity : Spawnable {
         base._OnSpawn ();
         currentHp = entityData.hp;
         lastSpawnerPos = GetSpawnerPos ();
+        lastPathElapsed = timeElapsed;
+    }
+
+    protected float GetRotationOnPath (float time, float previousTime) {
+        Curve2D path = entityData.path;
+
+        Vector2 point = path.Samplef (time);
+        Vector2 lastPoint = path.Samplef (previousTime);
+        point.X *= Mathf.Sign (entityData.speed);
+        lastPoint.X *= Mathf.Sign (entityData.speed);
+        if (time < previousTime)
+            point.X += lastPoint.X;
+
+        return lastPoint.WorkingAngleTo (point);    // AngleTo is broken, don't use it
     }
 
     /// <summary>
@@ -41,7 +57,17 @@ public partial class Entity : Spawnable {
         float angle = entityData.turnSpeed;
         switch (entityData.type) {
             case EntityResource.MotionType.Path: {
-                // TODO: Get new angle from path
+                Curve2D path = entityData.path;
+                int endpoint = path.PointCount - 1;
+                if (timeElapsed > endpoint && !entityData.loopPath) {
+                    angle = path.GetPointIn (endpoint).WorkingAngleTo (Vector2.Zero);
+                    angle = Mathf.RadToDeg (angle) - RotationDegrees;
+                    break;
+                }
+
+                double elapsed = timeElapsed % endpoint;
+                angle = Mathf.RadToDeg (GetRotationOnPath ((float)elapsed, (float)lastPathElapsed)) - RotationDegrees;
+                lastPathElapsed = elapsed;
                 break;
             }
             case EntityResource.MotionType.Follow: {
@@ -60,6 +86,8 @@ public partial class Entity : Spawnable {
 
     public override void _PhysicsProcess (double delta) {
         base._PhysicsProcess (delta);
+        if (!Active)
+            return;
 
         (float angle, Vector2 dir) = GetRotationAndMovement (delta);
         if (entityData.moveWithSpawner)

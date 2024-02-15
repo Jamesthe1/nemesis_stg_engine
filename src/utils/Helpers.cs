@@ -37,4 +37,14 @@ public static class Helpers {
 
         return vector.ClampVector (surrounding, windowRect);
     }
+
+    /// <summary>
+    /// An implementation of <see cref="Vector2.AngleTo(Vector2)"/> that actually works
+    /// </summary>
+    /// <returns>The angle to the point in space</returns>
+    public static float WorkingAngleTo (this Vector2 a, Vector2 b) {
+        a.Y = -a.Y;
+        b.Y = -b.Y;
+        return (b - a).Angle ();
+    }
 }
