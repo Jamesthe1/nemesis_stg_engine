@@ -50,9 +50,8 @@ public partial class PlayerEntity : Entity {
 
     public override void ProcessCollision (GodotObject collider) {
         base.ProcessCollision (collider);
-        if (collider is Pickup pickup) {
+        if (collider is Pickup pickup)
             pickup.DoPickUp (this);
-        }
     }
 
     public override void _Input (InputEvent @event) {

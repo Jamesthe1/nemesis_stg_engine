@@ -18,13 +18,12 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     public override void _Ready () {
         if (!STGController.Instance.IsTracked (this)) {
             STGController.Instance.RequestTrack (this);
-            EmitSignal ("Spawn");
+            EmitSignal ("Spawned");
         }
     }
 
     public override void _EnterTree () {
         base._EnterTree ();
-        Trigger += _OnTrigger;
         STGController.Instance.PlayerSpawn += _OnPlayerSpawnEvent;
         STGController.Instance.SaveCheckpoint += SaveState;
         STGController.Instance.LoadCheckpoint += LoadState;
@@ -32,7 +31,6 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
 
     public override void _ExitTree () {
         base._ExitTree ();
-        Trigger -= _OnTrigger;
         STGController.Instance.PlayerSpawn -= _OnPlayerSpawnEvent;
         STGController.Instance.SaveCheckpoint -= SaveState;
         STGController.Instance.LoadCheckpoint -= LoadState;
@@ -47,7 +45,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
                 spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
                 
                 spawns.Add (spawn);
-                spawn.Despawn += UpdateTrackedSpawns;
+                spawn.Despawned += UpdateTrackedSpawns;
 
                 fireId++;
                 timeSinceFire -= spawnData.TimePerSpawn;
@@ -63,6 +61,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     private void FireSpawn () {
         timeTrigger = timeElapsed;
         fireId = 0;
+        EmitSignal ("Triggered");
     }
 
     protected void UpdateTrackedSpawns () {
@@ -72,7 +71,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
             return;
         }
 
-        spawn.Despawn -= UpdateTrackedSpawns;
+        spawn.Despawned -= UpdateTrackedSpawns;
         spawns.Remove (spawn);
 
         if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.RequireKill
@@ -85,14 +84,14 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
             FireSpawn ();
     }
 
-    public virtual void _OnTrigger () {
+    public virtual void _OnEvent () {
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.Event)
             FireSpawn ();
     }
 
     public override void _OnSpawn () {
         foreach (Spawnable spawn in spawns)
-            spawn.Despawn -= UpdateTrackedSpawns;
+            spawn.Despawned -= UpdateTrackedSpawns;
         spawns.Clear ();
 
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnPlaced)
@@ -116,5 +115,5 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     }
 
     [Signal]
-    public delegate void TriggerEventHandler ();
+    public delegate void TriggeredEventHandler ();
 }

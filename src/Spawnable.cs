@@ -24,13 +24,13 @@ public abstract partial class Spawnable : CharacterBody2D {
     public bool SpawnedByPlayer { get; private set; } = false;
 
     public override void _EnterTree () {
-        Spawn += _OnSpawn;
-        Despawn += _OnDespawn;
+        Spawned += _OnSpawn;
+        Despawned += _OnDespawn;
     }
 
     public override void _ExitTree () {
-        Spawn -= _OnSpawn;
-        Despawn -= _OnDespawn;
+        Spawned -= _OnSpawn;
+        Despawned -= _OnDespawn;
     }
 
     protected virtual void ProcessInterval (double delta) {
@@ -58,9 +58,9 @@ public abstract partial class Spawnable : CharacterBody2D {
     }
 
     [Signal]
-    public delegate void SpawnEventHandler ();
+    public delegate void SpawnedEventHandler ();
     [Signal]
-    public delegate void DespawnEventHandler ();
+    public delegate void DespawnedEventHandler ();
 
     public virtual void _OnSpawn () {
         if (Data == null)

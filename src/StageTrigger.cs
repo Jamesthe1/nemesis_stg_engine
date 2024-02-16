@@ -71,7 +71,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
         if (disabled)
             return;
 
-        EmitSignal ("Trigger");
+        EmitSignal ("Triggered");
         switch (type) {
             case TriggerType.Checkpoint: {
                 STGController.SetNewCheckpoint (GetPath ());
@@ -101,5 +101,5 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     }
 
     [Signal]
-    public delegate void TriggerEventHandler ();
+    public delegate void TriggeredEventHandler ();
 }

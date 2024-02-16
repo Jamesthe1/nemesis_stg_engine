@@ -19,14 +19,10 @@ public partial class Entity : Spawnable {
 
     public override void _EnterTree () {
         base._EnterTree ();
-        Damage += _OnDamage;
-        Destroy += _OnDestroy;
     }
 
     public override void _ExitTree () {
         base._ExitTree ();
-        Damage -= _OnDamage;
-        Destroy -= _OnDestroy;
     }
 
     public override void _OnSpawn () {
@@ -89,11 +85,11 @@ public partial class Entity : Spawnable {
 
     public virtual void ProcessCollision (GodotObject collider) {
         if (collider is Entity other) {
-            other.EmitSignal ("Damage", entityData.ramDamage, this);
-            EmitSignal ("Damage", other.entityData.ramDamage, other);
+            other.Damage (entityData.ramDamage, this);
+            Damage (other.entityData.ramDamage, other);
         }
         else if (collider is StaticBody2D)
-            EmitSignal ("Damage", entityData.miscSelfDamage, (Entity)null);
+            Damage (entityData.miscSelfDamage, (Entity)null);
     }
 
     public override void _PhysicsProcess (double delta) {
@@ -113,13 +109,14 @@ public partial class Entity : Spawnable {
         lastSpawnerPos = GetSpawnerPos ();
     }
 
-    public virtual void _OnDamage (int damage, Entity source) {
+    public virtual void Damage (int damage, Entity source) {
         if (damage == 0)
             return;
             
         currentHp -= damage;
+        EmitSignal ("Damaged", damage, source);
         if (currentHp <= 0)
-            EmitSignal ("Destroy", source != null && source.SpawnedByPlayer);
+            Destroy (source != null && source.SpawnedByPlayer);
     }
 
     public void Heal (int amount) {
@@ -127,19 +124,20 @@ public partial class Entity : Spawnable {
         EmitSignal ("Healed", amount);
     }
 
-    public virtual void _OnDestroy (bool destroyedByPlayer) {
+    public virtual void Destroy (bool destroyedByPlayer) {
         if (destroyedByPlayer)
             STGController.Score += entityData.score;
         if (entityData.destroySpawn != null)
             STGController.Instance.Spawn (entityData.destroySpawn, Position, GetPath ());
 
+        EmitSignal ("Destroyed", destroyedByPlayer);
         STGController.Instance.Despawn (this);
     }
 
     [Signal]
     public delegate void HealedEventHandler (int amount);
     [Signal]
-    public delegate void DamageEventHandler (int damage, Entity source);
+    public delegate void DamagedEventHandler (int damage, Entity source);
     [Signal]
-    public delegate void DestroyEventHandler (bool destroyedByPlayer);
+    public delegate void DestroyedEventHandler (bool destroyedByPlayer);
 }

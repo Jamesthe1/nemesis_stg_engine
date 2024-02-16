@@ -127,7 +127,7 @@ public partial class STGController : Node2D {
         spawnable.spawnerPath = spawnerPath;
 
         spawnable.Active = true;    // Also sets collision mask and layer
-        spawnable.EmitSignal ("Spawn");
+        spawnable.EmitSignal ("Spawned");
         return spawnable;
     }
 
@@ -164,7 +164,7 @@ public partial class STGController : Node2D {
         spare.Add (spawnable);
 
         spawnable.Active = false;
-        spawnable.EmitSignal ("Despawn");
+        spawnable.EmitSignal ("Despawned");
         return true;
     }
 
