@@ -90,6 +90,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     }
 
     public override void _OnSpawn () {
+        base._OnSpawn ();
         foreach (Spawnable spawn in spawns)
             spawn.Despawned -= UpdateTrackedSpawns;
         spawns.Clear ();
