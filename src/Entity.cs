@@ -71,9 +71,12 @@ public partial class Entity : Spawnable {
                 break;
             }
             case EntityResource.MotionType.Follow: {
+                if (!HasNode (entityData.follow))
+                    break;
+
                 Vector2 pos = GetNode<Node2D> (entityData.follow).Position;
-                float dirAngle = GetAngleTo (pos);
-                angle = (float)Math.Min (Mathf.Abs (entityData.turnSpeed) * delta, Mathf.Abs (dirAngle));
+                float dirAngle = Mathf.RadToDeg (GetAngleTo (pos));
+                angle = Mathf.Min (Mathf.Abs (entityData.turnSpeed) * (float)delta, Mathf.Abs (dirAngle));
                 angle *= Mathf.Sign (dirAngle);
                 break;
             }
