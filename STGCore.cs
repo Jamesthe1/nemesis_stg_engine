@@ -18,12 +18,16 @@ public sealed partial class STGCore : EditorPlugin {
 		RegisterType<STGController, Node2D> ();
 
 		// Resources
-		RegisterType<EntityResource, Resource> ();
-		RegisterType<SpawnerDataResource, Resource> ();
-		RegisterType<PlayerResource, Resource> ();
+		RegisterResource<EntityResource> ();
+		RegisterResource<SpawnerDataResource> ();
+		RegisterResource<PlayerResource> ();
 	}
 
-	private void RegisterType<T, U> () where T : class, U where U : class {
+	private void RegisterResource<T> () where T : Resource {
+		RegisterType<T, Resource> ();
+	}
+
+	private void RegisterType<T, U> () where T : U where U : class {
 		string folder = root;
 		if (typeof (U).Name == nameof (Resource))
 			folder += "/resources";
