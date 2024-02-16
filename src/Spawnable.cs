@@ -66,6 +66,9 @@ public abstract partial class Spawnable : CharacterBody2D {
         if (Data == null)
             throw new NullReferenceException ($"Spawnable data of node {Name} cannot be null");
         timeElapsed = 0.0;
+
+        if (spawnerPath == "")
+            return;
         Node spawner = GetNode (spawnerPath);
         if (spawner is PlayerEntity
             || (spawner is Spawnable spawnable && spawnable.SpawnedByPlayer))
