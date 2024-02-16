@@ -87,6 +87,15 @@ public partial class Entity : Spawnable {
         return (angle, dir);
     }
 
+    public virtual void ProcessCollision (GodotObject collider) {
+        if (collider is Entity other) {
+            other.EmitSignal ("Damage", entityData.ramDamage, this);
+            EmitSignal ("Damage", other.entityData.ramDamage, other);
+        }
+        else if (collider is StaticBody2D)
+            EmitSignal ("Damage", entityData.miscSelfDamage, (Entity)null);
+    }
+
     public override void _PhysicsProcess (double delta) {
         base._PhysicsProcess (delta);
         if (!Active)
@@ -98,15 +107,8 @@ public partial class Entity : Spawnable {
 
         Rotate (angle);
         var collision = MoveAndCollide (dir);
-        if (collision != null) {
-            GodotObject collider = collision.GetCollider ();
-            if (collider is Entity other) {
-                other.EmitSignal ("Damage", entityData.ramDamage, this);
-                EmitSignal ("Damage", other.entityData.ramDamage, other);
-            }
-            else if (collider is StaticBody2D)
-                EmitSignal ("Damage", entityData.miscSelfDamage, (Entity)null);
-        }
+        if (collision != null) 
+            ProcessCollision (collision.GetCollider ());
 
         lastSpawnerPos = GetSpawnerPos ();
     }
