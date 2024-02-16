@@ -13,6 +13,7 @@ startRotation = 0.0
 rotationIncrement = 0.0
 time = 0.0
 despawnCondition = 1
+fixTexRotation = false
 collisionLayer = 1
 collisionMask = 1
 baseScene = ExtResource("1_xyong")

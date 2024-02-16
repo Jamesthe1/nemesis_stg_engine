@@ -23,6 +23,7 @@ miscSelfDamage = 1
 hp = 3
 score = 0
 texture = ExtResource("3_ca6kq")
+fixTexRotation = false
 collisionShape = SubResource("RectangleShape2D_caqo5")
 collisionLayer = 2
 collisionMask = 5
