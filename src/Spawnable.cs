@@ -49,6 +49,14 @@ public abstract partial class Spawnable : CharacterBody2D {
         timeElapsed += delta;
     }
 
+    public override void _Process (double delta) {
+        if (!Active)
+            return;
+
+        if (HasNode ("Sprite") && Data.fixTexRotation)
+            GetNode<Node2D> ("Sprite").Rotation = -Rotation;
+    }
+
     [Signal]
     public delegate void SpawnEventHandler ();
     [Signal]
