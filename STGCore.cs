@@ -15,12 +15,14 @@ public sealed partial class STGCore : EditorPlugin {
 		RegisterType<Spawner, CharacterBody2D> ();
 		RegisterType<Entity, CharacterBody2D> ();
 		RegisterType<PlayerEntity, CharacterBody2D> ();
+		RegisterType<Pickup, CharacterBody2D> ();
 		RegisterType<StageTrigger, Marker2D> ();
 
 		// Resources
 		RegisterResource<EntityResource> ();
 		RegisterResource<SpawnerDataResource> ();
 		RegisterResource<PlayerResource> ();
+		RegisterResource<PickupResource> ();
 	}
 
 	private void RegisterResource<T> () where T : Resource {
