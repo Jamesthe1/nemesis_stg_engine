@@ -122,6 +122,11 @@ public partial class Entity : Spawnable {
             EmitSignal ("Destroy", source != null && source.SpawnedByPlayer);
     }
 
+    public void Heal (int amount) {
+        currentHp = Mathf.Min (currentHp + amount, entityData.hp);
+        EmitSignal ("Healed", amount);
+    }
+
     public virtual void _OnDestroy (bool destroyedByPlayer) {
         if (destroyedByPlayer)
             STGController.Score += entityData.score;
@@ -131,6 +136,8 @@ public partial class Entity : Spawnable {
         STGController.Instance.Despawn (this);
     }
 
+    [Signal]
+    public delegate void HealedEventHandler (int amount);
     [Signal]
     public delegate void DamageEventHandler (int damage, Entity source);
     [Signal]
