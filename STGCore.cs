@@ -11,11 +11,11 @@ public sealed partial class STGCore : EditorPlugin {
 
 	public override void _EnterTree () {
 		// Nodes
+		RegisterType<STGController, Node2D> ();
 		RegisterType<Spawner, CharacterBody2D> ();
 		RegisterType<Entity, CharacterBody2D> ();
 		RegisterType<PlayerEntity, CharacterBody2D> ();
 		RegisterType<StageTrigger, Marker2D> ();
-		RegisterType<STGController, Node2D> ();
 
 		// Resources
 		RegisterResource<EntityResource> ();
