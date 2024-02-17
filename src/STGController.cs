@@ -55,6 +55,7 @@ public partial class STGController : Node2D {
 
     public override void _Ready () {
         EmitSignal ("PlayerSpawn");
+        EmitSignal ("StageStart");
     }
 
     public virtual void ClearStats () {
@@ -204,6 +205,8 @@ public partial class STGController : Node2D {
 
     [Signal]
     public delegate void PlayerSpawnEventHandler ();
+    [Signal]
+    public delegate void StageStartEventHandler ();
     [Signal]
     public delegate void ScoreUpdateEventHandler ();
     [Signal]
