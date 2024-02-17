@@ -36,31 +36,39 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
         STGController.Instance.LoadCheckpoint -= LoadState;
     }
 
+    protected virtual void DoSpawnStep (double timeSinceFire) {
+        while (fireId < spawnData.spawnOffsetPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
+            Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnOffsetPoints[fireId], GetPath ());
+            spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
+            
+            spawns.Add (spawn);
+            spawn.Despawned += UpdateTrackedSpawns;
+
+            fireId++;
+            timeSinceFire -= spawnData.TimePerSpawn;
+        }
+        if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.AllSpawned
+            && fireId == spawnData.spawnOffsetPoints.Length)
+            STGController.Instance.Despawn (this);
+    }
+
     public override void _PhysicsProcess (double delta) {
+        if (!Active)
+            return;
+
+        base._PhysicsProcess (delta);
+
         if (fireId >= 0 && fireId < spawnData.spawnOffsetPoints.Length) {
             double timeSinceFire = timeElapsed - timeTrigger;
             timeSinceFire -= spawnData.TimePerSpawn * fireId;   // Stay up-to-date with our existing spawns
-            while (fireId < spawnData.spawnOffsetPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
-                Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnOffsetPoints[fireId], GetPath ());
-                spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
-                
-                spawns.Add (spawn);
-                spawn.Despawned += UpdateTrackedSpawns;
-
-                fireId++;
-                timeSinceFire -= spawnData.TimePerSpawn;
-            }
-            if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.AllSpawned
-                && fireId == spawnData.spawnOffsetPoints.Length)
-                STGController.Instance.Despawn (this);
+            DoSpawnStep (timeSinceFire);
         }
-
-        base._PhysicsProcess (delta);
     }
 
     private void FireSpawn () {
         timeTrigger = timeElapsed;
         fireId = 0;
+        DoSpawnStep (spawnData.TimePerSpawn);
         EmitSignal ("Triggered");
     }
 
