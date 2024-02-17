@@ -23,6 +23,6 @@ texture = ExtResource("3_scf4x")
 fixTexRotation = true
 collisionShape = SubResource("CircleShape2D_5qb6t")
 collisionLayer = 0
-collisionMask = 3
+collisionMask = 2
 baseScene = ExtResource("1_665dp")
 interval = 1.0
