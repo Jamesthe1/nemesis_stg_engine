@@ -37,12 +37,10 @@ public partial class Entity : Spawnable {
 
         Vector2 point = path.Samplef (time);
         Vector2 lastPoint = path.Samplef (previousTime);
-        point.X *= Mathf.Sign (entityData.speed);
-        lastPoint.X *= Mathf.Sign (entityData.speed);
         if (time < previousTime)
             point.X += lastPoint.X;
 
-        return lastPoint.WorkingAngleTo (point);    // AngleTo is broken, don't use it
+        return lastPoint.OtherAngleTo (point);
     }
 
     /// <summary>
@@ -56,7 +54,7 @@ public partial class Entity : Spawnable {
                 Curve2D path = entityData.path;
                 int endpoint = path.PointCount - 1;
                 if (timeElapsed > endpoint && !entityData.loopPath) {
-                    angle = path.GetPointIn (endpoint).WorkingAngleTo (Vector2.Zero);
+                    angle = path.GetPointIn (endpoint).OtherAngleTo (Vector2.Zero);
                     angle = Mathf.RadToDeg (angle) - RotationDegrees;
                     break;
                 }
@@ -89,7 +87,7 @@ public partial class Entity : Spawnable {
             Damage (other.entityData.ramDamage, other);
         }
         else if (collider is StaticBody2D)
-            Damage (entityData.miscSelfDamage, (Entity)null);
+            Damage (entityData.miscSelfDamage, null);
     }
 
     public override void _PhysicsProcess (double delta) {

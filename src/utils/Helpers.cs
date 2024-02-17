@@ -39,12 +39,10 @@ public static class Helpers {
     }
 
     /// <summary>
-    /// An implementation of <see cref="Vector2.AngleTo(Vector2)"/> that actually works
+    /// An implementation of <see cref="Vector2.AngleTo(Vector2)"/> that seems to work when AngleTo does not
     /// </summary>
     /// <returns>The angle to the point in space</returns>
-    public static float WorkingAngleTo (this Vector2 a, Vector2 b) {
-        a.Y = -a.Y;
-        b.Y = -b.Y;
+    public static float OtherAngleTo (this Vector2 a, Vector2 b) {
         return (b - a).Angle ();
     }
 }
