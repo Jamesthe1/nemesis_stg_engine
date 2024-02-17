@@ -17,5 +17,10 @@ public partial class Pickup : Spawnable {
                 break;
             }
         }
+        EmitSignal ("PickedUp");
+        STGController.Instance.Despawn (this);
     }
+
+    [Signal]
+    public delegate void PickedUpEventHandler ();
 }
