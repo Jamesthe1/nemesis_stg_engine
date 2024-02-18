@@ -23,6 +23,7 @@ public sealed partial class STGCore : EditorPlugin {
 		RegisterResource<SpawnerDataResource> ();
 		RegisterResource<PlayerResource> ();
 		RegisterResource<PickupResource> ();
+		RegisterResource<WeaponResource> ();
 	}
 
 	private void RegisterResource<T> () where T : Resource {
