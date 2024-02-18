@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cjeyphqpkhabx" path="res://addons/nemesis_stg_engine/prefab/spawner.tscn" id="1_xyong"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="2_jgi8s"]
-[ext_resource type="Resource" uid="uid://cm6p6yj1r1iaq" path="res://addons/nemesis_stg_engine/examples/pickup_bonus.tres" id="2_kymvs"]
+[ext_resource type="Resource" uid="uid://cm6p6yj1r1iaq" path="res://addons/nemesis_stg_engine/examples/pickup_heal.tres" id="2_kymvs"]
 [ext_resource type="Resource" uid="uid://buy3umhttjhi1" path="res://addons/nemesis_stg_engine/examples/enemy_ship.tres" id="3_wmmfb"]
 
 [resource]
