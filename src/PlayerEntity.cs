@@ -36,7 +36,7 @@ public partial class PlayerEntity : Entity {
         float interval = IntervalOverridden () ? intervalOverride.interval : Data.interval;
 
         timeSinceFire += delta;
-        bool fireAgain = intervalOverride.autofire || !fired;
+        bool fireAgain = !IntervalOverridden () || intervalOverride.autofire || !fired; // Autofire by default
         if (spawn != null &&
           inputs["fire"] > 0f &&
           fireAgain &&
