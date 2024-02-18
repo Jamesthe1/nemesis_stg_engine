@@ -16,6 +16,10 @@ public partial class Pickup : Spawnable {
                 STGController.Score += pickupData.value;
                 break;
             }
+            case PickupResource.PickupType.WeaponOption: {
+                player.intervalOverride = pickupData.weapon;
+                break;
+            }
         }
         EmitSignal ("PickedUp");
         STGController.Instance.Despawn (this);

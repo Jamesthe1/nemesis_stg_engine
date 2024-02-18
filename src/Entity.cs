@@ -13,6 +13,19 @@ public partial class Entity : Spawnable {
 
     protected double lastPathElapsed;
 
+    [Export]
+    public WeaponResource intervalOverride;
+
+    protected bool IntervalOverridden () {
+        return intervalOverride != null;
+    }
+
+    protected SpawnResource GetIntervalSpawn () {
+        if (!IntervalOverridden ())
+            return entityData.intervalSpawn;
+        return intervalOverride.projectile;
+    }
+
     protected Vector2 GetSpawnerPos () {
         return GetNode<Node2D> (spawnerPath).Position;
     }
@@ -105,6 +118,17 @@ public partial class Entity : Spawnable {
             ProcessCollision (collision.GetCollider ());
 
         lastSpawnerPos = GetSpawnerPos ();
+    }
+
+    protected override void ProcessInterval (double delta) {
+        SpawnResource spawn = GetIntervalSpawn ();
+        float interval = IntervalOverridden () ? intervalOverride.interval : Data.interval;
+
+        if (spawn != null) {
+            double te_interval = (timeElapsed % interval) + delta;
+            if (te_interval > interval)
+                STGController.Instance.Spawn (spawn, Position, GetPath ());
+        }
     }
 
     public virtual void Damage (int damage, Entity source) {

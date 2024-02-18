@@ -22,6 +22,7 @@ public partial class PlayerEntity : Entity {
     }
 
     protected double timeSinceFire = 0f;
+    protected bool fired = false;
     
     protected Rect2 spriteRegion;
 
@@ -31,13 +32,19 @@ public partial class PlayerEntity : Entity {
     }
 
     protected override void ProcessInterval (double delta) {
+        SpawnResource spawn = GetIntervalSpawn ();
+        float interval = IntervalOverridden () ? intervalOverride.interval : Data.interval;
+
         timeSinceFire += delta;
-        if (entityData.intervalSpawn != null &&
+        bool fireAgain = intervalOverride.autofire || !fired;
+        if (spawn != null &&
           inputs["fire"] > 0f &&
-          timeSinceFire > entityData.interval) {
-            STGController.Instance.Spawn (entityData.intervalSpawn, Position, GetPath ());
-            timeSinceFire %= entityData.interval;   // We might have some delta left over, keep it
+          fireAgain &&
+          timeSinceFire > interval) {
+            STGController.Instance.Spawn (spawn, Position, GetPath ());
+            timeSinceFire = 0;  // Don't keep delta since it can be abused to charge up shots
         }
+        fired = inputs["fire"] > 0f;
     }
 
     protected override (float, Vector2) GetRotationAndMovement (double delta) {

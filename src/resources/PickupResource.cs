@@ -12,5 +12,6 @@ public partial class PickupResource : SpawnResource {
 
     [Export]
     public int value;
-    // TODO: Implement weapon/option resource
+    [Export]
+    public WeaponResource weapon;
 }
