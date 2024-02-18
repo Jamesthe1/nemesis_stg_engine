@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://7ydtxadlae1q"]
+
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Pickup.cs" id="1_agd78"]
+
+[node name="Pickup" type="CharacterBody2D"]
+script = ExtResource("1_agd78")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+
+[node name="VisCheck" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisCheck" to="." method="_OnSeen"]
+[connection signal="screen_exited" from="VisCheck" to="." method="_OnUnseen"]
