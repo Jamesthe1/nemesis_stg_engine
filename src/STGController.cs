@@ -113,7 +113,12 @@ public partial class STGController : Node2D {
         if (hadToSpawn)
             AddChild (spawnable);
 
-        spawnable.SetChildIfExist ("Sprite", "texture", resource.texture);
+        if (spawnable.HasNode ("Sprite")) {
+            Sprite2D sprite = spawnable.GetNode<Sprite2D> ("Sprite");
+            sprite.Texture = resource.texture;
+            sprite.Rotation = 0;    // Fix incorrect texture rotations when pulling from pool
+        }
+        
         spawnable.SetChildIfExist ("Collision", "shape", resource.collisionShape);
         if (spawnable.HasNode ("VisCheck")) {
             Vector2 size = Vector2.One * 20;
