@@ -112,14 +112,14 @@ public partial class Entity : Spawnable {
             return;
             
         currentHp -= damage;
-        EmitSignal ("Damaged", damage, source);
+        EmitSignal ("HealthChanged", -damage);
         if (currentHp <= 0)
             Destroy (source != null && source.SpawnedByPlayer);
     }
 
     public void Heal (int amount) {
         currentHp = Mathf.Min (currentHp + amount, entityData.hp);
-        EmitSignal ("Healed", amount);
+        EmitSignal ("HealthChanged", amount);
     }
 
     public virtual void Destroy (bool destroyedByPlayer) {
@@ -133,9 +133,7 @@ public partial class Entity : Spawnable {
     }
 
     [Signal]
-    public delegate void HealedEventHandler (int amount);
-    [Signal]
-    public delegate void DamagedEventHandler (int damage, Entity source);
+    public delegate void HealthChangedEventHandler (int amount);
     [Signal]
     public delegate void DestroyedEventHandler (bool destroyedByPlayer);
 }
