@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b4pbqtx7xq3e2"]
+
+[ext_resource type="Resource" uid="uid://dhbnbtfiilns0" path="res://addons/nemesis_stg_engine/examples/bullet_player_wavy.tres" id="1_4jrph"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/WeaponResource.cs" id="1_xh35l"]
+
+[resource]
+script = ExtResource("1_xh35l")
+projectile = ExtResource("1_4jrph")
+autofire = true
+interval = 0.05
