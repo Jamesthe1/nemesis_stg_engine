@@ -12,6 +12,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     protected int fireId = -1;
 
     protected List<Spawnable> spawns = new List<Spawnable> ();
+    protected int unkilledByPlayer = 0;
     
     public static Dictionary<NodePath, SpawnerSaveData> States { get; private set; } = new Dictionary<NodePath, SpawnerSaveData> ();
 
@@ -43,6 +44,11 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
             
             spawns.Add (spawn);
             spawn.Despawned += UpdateTrackedSpawns;
+            if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.RequireKill
+                && spawn is Entity entity) {
+                entity.Destroyed += UpdateAlive;
+                unkilledByPlayer++;
+            }
 
             fireId++;
             timeSinceFire -= spawnData.TimePerSpawn;
@@ -72,6 +78,18 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
         EmitSignal ("Triggered");
     }
 
+    protected void UpdateAlive (bool destroyedByPlayer) {
+        Entity entity = spawns.OfType<Entity> ().FirstOrDefault (s => s.currentHp <= 0);
+        if (entity == null) {
+            GD.PrintErr ($"Couldn't find a dead entity; spawns: {spawns.Count}");
+            return;
+        }
+        entity.Destroyed -= UpdateAlive;
+
+        if (destroyedByPlayer)
+            unkilledByPlayer--;
+    }
+
     protected void UpdateTrackedSpawns () {
         Spawnable spawn = spawns.FirstOrDefault (s => s.Active == false);
         if (spawn == null) {
@@ -99,12 +117,22 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
 
     public override void _OnSpawn () {
         base._OnSpawn ();
-        foreach (Spawnable spawn in spawns)
+        foreach (Spawnable spawn in spawns) {
             spawn.Despawned -= UpdateTrackedSpawns;
+            if (spawn is Entity entity)
+                entity.Destroyed -= UpdateAlive;
+        }
         spawns.Clear ();
+        unkilledByPlayer = 0;
 
         if (spawnData.trigger == SpawnerDataResource.SpawnTrigger.OnPlaced)
             FireSpawn ();
+    }
+
+    public override void _OnDespawn () {
+        if (spawnData.despawnCondition != SpawnerDataResource.DespawnCondition.RequireKill
+            || unkilledByPlayer == 0)
+            base._OnDespawn ();
     }
 
     public virtual void _OnPlayerSpawnEvent () {
