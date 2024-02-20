@@ -8,6 +8,8 @@ public partial class Entity : Spawnable {
     public override SpawnResource Data { get => entityData; set => entityData = value as EntityResource; }
 
     public int currentHp;
+    protected double timeSinceFire = 0f;
+    protected bool fired = false;
 
     protected Vector2 lastSpawnerPos;
 
@@ -120,15 +122,24 @@ public partial class Entity : Spawnable {
         lastSpawnerPos = GetSpawnerPos ();
     }
 
+    protected virtual bool GetFiringState () {
+        return true;
+    }
+
     protected override void ProcessInterval (double delta) {
         SpawnResource spawn = GetIntervalSpawn ();
         float interval = IntervalOverridden () ? intervalOverride.interval : Data.interval;
 
-        if (spawn != null) {
-            double te_interval = (timeElapsed % interval) + delta;
-            if (te_interval > interval)
-                STGController.Instance.Spawn (spawn, Position, GetPath ());
+        timeSinceFire += delta;
+        bool fireAgain = !IntervalOverridden () || intervalOverride.autofire || !fired; // Autofire by default
+        if (spawn != null &&
+          fireAgain &&
+          timeSinceFire > interval &&
+          GetFiringState ()) {
+            STGController.Instance.Spawn (spawn, Position, GetPath ());
+            timeSinceFire = 0;
         }
+        fired = GetFiringState ();
     }
 
     public virtual void Damage (int damage, Entity source) {
