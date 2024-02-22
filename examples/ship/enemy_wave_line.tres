@@ -9,7 +9,7 @@
 script = ExtResource("1_dd7ww")
 trigger = 0
 spawn = ExtResource("2_mliwj")
-spawnOffsetPoints = PackedVector2Array(0, 0, 0, -80, 0, -160, 0, 80, 0, 160)
+spawnPoints = PackedVector2Array(0, 0, 0, 80, 0, 160, 0, -80, 0, -160)
 startRotation = 0.0
 rotationIncrement = 0.0
 time = 0.0

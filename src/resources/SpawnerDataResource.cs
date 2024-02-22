@@ -22,7 +22,7 @@ public partial class SpawnerDataResource : SpawnResource {
     /// All points this spawner will spawn on
     /// </summary>
     [Export]
-    public Vector2[] spawnOffsetPoints = new Vector2[1];
+    public Vector2[] spawnPoints = new Vector2[1];
     [Export]
     public float startRotation = 0f;
     [Export]
@@ -36,6 +36,6 @@ public partial class SpawnerDataResource : SpawnResource {
     public DespawnCondition despawnCondition = DespawnCondition.AllSpawned;
 
     public double TimePerSpawn {
-        get => time / spawnOffsetPoints.Length;
+        get => time / spawnPoints.Length;
     }
 }

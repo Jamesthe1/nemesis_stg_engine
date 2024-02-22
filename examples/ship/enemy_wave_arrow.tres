@@ -9,7 +9,7 @@
 script = ExtResource("2_jgi8s")
 trigger = 0
 spawn = ExtResource("3_wmmfb")
-spawnOffsetPoints = PackedVector2Array(0, 0, 80, -80, 160, -160, 80, 80, 160, 160)
+spawnPoints = PackedVector2Array(0, 0, 80, 80, 160, 160, 80, -80, 160, -160)
 startRotation = 0.0
 rotationIncrement = 0.0
 time = 0.0

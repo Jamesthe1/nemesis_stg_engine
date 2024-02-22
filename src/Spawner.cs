@@ -38,8 +38,8 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     }
 
     protected virtual void DoSpawnStep (double timeSinceFire) {
-        while (fireId < spawnData.spawnOffsetPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
-            Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnOffsetPoints[fireId], GetPath ());
+        while (fireId < spawnData.spawnPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
+            Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnPoints[fireId], GetPath ());
             spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;
             
             spawns.Add (spawn);
@@ -54,7 +54,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
             timeSinceFire -= spawnData.TimePerSpawn;
         }
         if (spawnData.despawnCondition == SpawnerDataResource.DespawnCondition.AllSpawned
-            && fireId == spawnData.spawnOffsetPoints.Length)
+            && fireId == spawnData.spawnPoints.Length)
             STGController.Instance.Despawn (this);
     }
 
@@ -64,7 +64,7 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
 
         base._PhysicsProcess (delta);
 
-        if (fireId >= 0 && fireId < spawnData.spawnOffsetPoints.Length) {
+        if (fireId >= 0 && fireId < spawnData.spawnPoints.Length) {
             double timeSinceFire = timeElapsed - timeTrigger;
             timeSinceFire -= spawnData.TimePerSpawn * fireId;   // Stay up-to-date with our existing spawns
             DoSpawnStep (timeSinceFire);

@@ -8,11 +8,12 @@
 script = ExtResource("1_07ryq")
 trigger = 1
 spawn = ExtResource("2_o1l2d")
-spawnOffsetPoints = PackedVector2Array(0, 0, 0, 0, 0, 0)
+spawnPoints = PackedVector2Array(0, 0, 0, 0, 0, 0)
 startRotation = 200.0
 rotationIncrement = -20.0
 time = 0.0
 despawnCondition = 1
+fixTexRotation = false
 collisionLayer = 1
 collisionMask = 1
 baseScene = ExtResource("1_d5mgk")
