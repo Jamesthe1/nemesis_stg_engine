@@ -155,14 +155,12 @@ public partial class Entity : Spawnable {
             Spawnable projectile = STGController.Instance.Spawn (spawn, Position, GetPath ());
             if (overridden)
                 projectile.RotationDegrees += optionOverride.rotationOffset;
-
-            //GD.Print ($"{Name} fired weapon with fire time {weaponState.timeSinceFire}");
             
             weaponState.timeSinceFire = 0;
             weaponState.fired = true;
         }
         else
-            weaponState.timeSinceFire += delta;
+            weaponState.timeSinceFire += delta; // Keep delta update in else statement, lest we have issues with how firing is processed
         firedLastFrame = GetFiringState ();
     }
 
@@ -180,7 +178,6 @@ public partial class Entity : Spawnable {
         WeaponResource option = phase.options[currentPhaseWeapon];
         bool canFire = !option.fireOnce || !weaponPhaseData.fired;  // Fire many by default
         bool skip = !canFire && Mathf.IsZeroApprox (timeSinceSelected);
-        // TODO: Figure out what's causing our second weapon to fire early
         ProcessFiring (option, delta, ref weaponPhaseData);
 
         weaponStatesPhase[currentPhaseWeapon] = weaponPhaseData;
