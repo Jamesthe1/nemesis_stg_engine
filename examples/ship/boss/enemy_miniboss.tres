@@ -1,0 +1,33 @@
+[gd_resource type="Resource" load_steps=8 format=3 uid="uid://ipgidc1n08gl"]
+
+[ext_resource type="PackedScene" uid="uid://dktdr1wbsco6b" path="res://addons/nemesis_stg_engine/prefab/entity.tscn" id="1_annko"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityPhasedResource.cs" id="1_inu11"]
+[ext_resource type="Resource" uid="uid://bv04rb72rxvg8" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_wpn_wavy.tres" id="2_1g3in"]
+[ext_resource type="Resource" uid="uid://dwoc23mgc3l83" path="res://addons/nemesis_stg_engine/examples/ship/boss/miniboss_phases/phase1.tres" id="2_5g2x4"]
+[ext_resource type="Texture2D" uid="uid://daovcfndesphy" path="res://addons/nemesis_stg_engine/examples/ship/boss/enemy_miniboss.png" id="2_63r16"]
+[ext_resource type="Resource" uid="uid://boq8gm8ndf8wh" path="res://addons/nemesis_stg_engine/examples/ship/boss/miniboss_phases/phase2.tres" id="3_u03hb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ty7s2"]
+size = Vector2(64, 64)
+
+[resource]
+script = ExtResource("1_inu11")
+phases = [ExtResource("2_5g2x4"), ExtResource("3_u03hb")]
+type = 0
+loopPath = false
+follow = null
+speed = 110.0
+turnSpeed = 0.0
+moveWithSpawner = false
+ramDamage = 1
+miscSelfDamage = 1
+hp = 40
+score = 3500
+destroySpawn = ExtResource("2_1g3in")
+texture = ExtResource("2_63r16")
+fixTexRotation = false
+collisionShape = SubResource("RectangleShape2D_ty7s2")
+collisionLayer = 4
+collisionMask = 3
+baseScene = ExtResource("1_annko")
+interval = 1.0

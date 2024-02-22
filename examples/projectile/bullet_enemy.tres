@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://m4evi6kqvmcs"]
+
+[ext_resource type="PackedScene" uid="uid://dktdr1wbsco6b" path="res://addons/nemesis_stg_engine/prefab/entity.tscn" id="1_inmal"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="2_n57dm"]
+[ext_resource type="Texture2D" uid="uid://b1r4j77x44imu" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_enemy.png" id="3_wpi0l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5qb6t"]
+radius = 12.0
+
+[resource]
+script = ExtResource("2_n57dm")
+type = 0
+loopPath = false
+follow = null
+speed = 256.0
+turnSpeed = 0.0
+moveWithSpawner = false
+ramDamage = 1
+miscSelfDamage = 1
+hp = 0
+score = 50
+texture = ExtResource("3_wpi0l")
+fixTexRotation = true
+collisionShape = SubResource("CircleShape2D_5qb6t")
+collisionLayer = 0
+collisionMask = 2
+baseScene = ExtResource("1_inmal")
+interval = 1.0

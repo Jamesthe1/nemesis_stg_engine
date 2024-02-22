@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://boq8gm8ndf8wh"]
+
+[ext_resource type="Resource" uid="uid://unb26awojj8w" path="res://addons/nemesis_stg_engine/examples/weapon/wpn_enemy_sg_down_instant.tres" id="1_lnii2"]
+[ext_resource type="Resource" uid="uid://dkppnho82nv33" path="res://addons/nemesis_stg_engine/examples/weapon/wpn_enemy_sg_up.tres" id="2_jhcxo"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityPhase.cs" id="3_6iy2r"]
+[ext_resource type="Resource" uid="uid://dqbf52l5l3von" path="res://addons/nemesis_stg_engine/examples/weapon/wpn_enemy_missile.tres" id="3_ribl6"]
+
+[resource]
+script = ExtResource("3_6iy2r")
+hpMark = 15
+options = [ExtResource("1_lnii2"), ExtResource("2_jhcxo"), ExtResource("3_ribl6")]

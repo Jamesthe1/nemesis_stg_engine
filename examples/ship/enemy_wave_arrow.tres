@@ -1,0 +1,22 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://btq1idl3fdamg"]
+
+[ext_resource type="PackedScene" uid="uid://cjeyphqpkhabx" path="res://addons/nemesis_stg_engine/prefab/spawner.tscn" id="1_xyong"]
+[ext_resource type="Resource" uid="uid://f6l2pi7m0g4s" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_bonus.tres" id="2_d7yxu"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="2_jgi8s"]
+[ext_resource type="Resource" uid="uid://buy3umhttjhi1" path="res://addons/nemesis_stg_engine/examples/ship/enemy_ship.tres" id="3_wmmfb"]
+
+[resource]
+script = ExtResource("2_jgi8s")
+trigger = 0
+spawn = ExtResource("3_wmmfb")
+spawnOffsetPoints = PackedVector2Array(0, 0, 80, -80, 160, -160, 80, 80, 160, 160)
+startRotation = 0.0
+rotationIncrement = 0.0
+time = 0.0
+despawnCondition = 2
+fixTexRotation = false
+collisionLayer = 1
+collisionMask = 1
+baseScene = ExtResource("1_xyong")
+despawnSpawn = ExtResource("2_d7yxu")
+interval = 1.0

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dqbf52l5l3von"]
+
+[ext_resource type="Resource" uid="uid://bl0nr3t85eh3u" path="res://addons/nemesis_stg_engine/examples/projectile/missile_enemy.tres" id="1_2v3io"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/WeaponResource.cs" id="1_jo6vg"]
+
+[resource]
+script = ExtResource("1_jo6vg")
+projectile = ExtResource("1_2v3io")
+autofire = true
+interval = 0.5
+fireOnce = false
+timeUntilSwitch = 1.51
+rotationOffset = 180.0

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cyefgxg1ha7wn"]
+
+[ext_resource type="Resource" uid="uid://cnhwhm5sdb732" path="res://addons/nemesis_stg_engine/examples/projectile/enemy_bullet_spray_6_down.tres" id="1_13wsh"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/WeaponResource.cs" id="2_a0r7s"]
+
+[resource]
+script = ExtResource("2_a0r7s")
+projectile = ExtResource("1_13wsh")
+autofire = true
+interval = 0.5
+fireOnce = false
+timeUntilSwitch = 0.5
+rotationOffset = 0.0
