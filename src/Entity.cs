@@ -209,7 +209,6 @@ public partial class Entity : Spawnable {
     protected virtual void ResetPhaseStates () {
         currentPhaseWeapon = 0;
         firedLastFrame = false;
-        GD.Print ($"Phase reset for {Name}");
         weaponStatesPhase = new WeaponStateData[GetPhase ().options.Length];
     }
 
