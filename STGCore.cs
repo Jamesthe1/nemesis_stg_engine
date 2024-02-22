@@ -24,6 +24,8 @@ public sealed partial class STGCore : EditorPlugin {
 		RegisterResource<PlayerResource> ();
 		RegisterResource<PickupResource> ();
 		RegisterResource<WeaponResource> ();
+		RegisterResource<EntityPhasedResource> ();
+		RegisterResource<EntityPhase> ();
 	}
 
 	private void RegisterResource<T> () where T : Resource {

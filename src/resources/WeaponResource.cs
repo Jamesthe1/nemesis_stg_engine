@@ -7,4 +7,10 @@ public partial class WeaponResource : Resource {
     public bool autofire = true;
     [Export]
     public float interval = 1f;
+    [Export]
+    public bool fireOnce = false;
+    [Export]
+    public float timeUntilSwitch = 1f;
+    [Export]
+    public float rotationOffset = 0f;
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class Entity : Spawnable {
@@ -8,11 +10,14 @@ public partial class Entity : Spawnable {
     public override SpawnResource Data { get => entityData; set => entityData = value as EntityResource; }
 
     public int currentHp;
-    protected double timeSinceFire = 0f;
-    protected bool fired = false;
+    protected int currentPhaseWeapon;
+
+    protected WeaponStateData[] weaponStatesPhase = new WeaponStateData[0];
+    protected WeaponStateData weaponState = new WeaponStateData ();
+    protected double timeSinceSelected = 0.0;
+    protected bool firedLastFrame = false;
 
     protected Vector2 lastSpawnerPos;
-
     protected double lastPathElapsed;
 
     [Export]
@@ -45,6 +50,9 @@ public partial class Entity : Spawnable {
         currentHp = entityData.hp;
         lastSpawnerPos = GetSpawnerPos ();
         lastPathElapsed = timeElapsed;
+
+        if (IsPhased ())
+            ResetPhaseStates ();
     }
 
     protected float GetRotationOnPath (float time, float previousTime) {
@@ -85,6 +93,9 @@ public partial class Entity : Spawnable {
 
                 Vector2 pos = GetNode<Node2D> (entityData.follow).Position;
                 float dirAngle = Mathf.RadToDeg (GetAngleTo (pos));
+                if (dirAngle > Mathf.Pi)
+                    dirAngle = dirAngle - (Mathf.Pi * 2);   // Adds a sign for our alternative rotation
+                //angle = dirAngle;
                 angle = Mathf.Min (Mathf.Abs (entityData.turnSpeed) * (float)delta, Mathf.Abs (dirAngle));
                 angle *= Mathf.Sign (dirAngle);
                 break;
@@ -126,33 +137,105 @@ public partial class Entity : Spawnable {
         return true;
     }
 
-    protected override void ProcessInterval (double delta) {
-        SpawnResource spawn = GetIntervalSpawn ();
-        float interval = IntervalOverridden () ? intervalOverride.interval : Data.interval;
+    protected virtual void ProcessFiring (WeaponResource optionOverride, double delta, ref WeaponStateData weaponState) {
+        bool overridden = optionOverride != null;
 
-        timeSinceFire += delta;
-        bool fireAgain = !IntervalOverridden () || intervalOverride.autofire || !fired; // Autofire by default
+        SpawnResource spawn = overridden ? optionOverride.projectile : Data.intervalSpawn;
+        float interval = overridden ? optionOverride.interval : Data.interval;
+        bool autofire = !overridden || optionOverride.autofire;         // Autofire by default
+        bool fireOnce = overridden ? optionOverride.fireOnce : false;
+
+        bool fireAgain = autofire || !firedLastFrame;
+        bool repeat = !fireOnce || !weaponState.fired;
         if (spawn != null &&
           fireAgain &&
-          timeSinceFire > interval &&
+          repeat &&
+          weaponState.timeSinceFire > interval &&
           GetFiringState ()) {
-            STGController.Instance.Spawn (spawn, Position, GetPath ());
-            timeSinceFire = 0;
+            Spawnable projectile = STGController.Instance.Spawn (spawn, Position, GetPath ());
+            if (overridden)
+                projectile.RotationDegrees += optionOverride.rotationOffset;
+
+            //GD.Print ($"{Name} fired weapon with fire time {weaponState.timeSinceFire}");
+            
+            weaponState.timeSinceFire = 0;
+            weaponState.fired = true;
         }
-        fired = GetFiringState ();
+        else
+            weaponState.timeSinceFire += delta;
+        firedLastFrame = GetFiringState ();
+    }
+
+    protected override void ProcessInterval (double delta) {
+        if (entityData is EntityPhasedResource phasesRsc && phasesRsc.phases.Length > 0)
+            ProcessPhases (delta);
+        
+        ProcessFiring (intervalOverride, delta, ref weaponState);
+    }
+
+    protected virtual void ProcessPhases (double delta) {
+        EntityPhase phase = GetPhase ();
+        WeaponStateData weaponPhaseData = weaponStatesPhase[currentPhaseWeapon];
+
+        WeaponResource option = phase.options[currentPhaseWeapon];
+        bool canFire = !option.fireOnce || !weaponPhaseData.fired;  // Fire many by default
+        bool skip = !canFire && Mathf.IsZeroApprox (timeSinceSelected);
+        // TODO: Figure out what's causing our second weapon to fire early
+        ProcessFiring (option, delta, ref weaponPhaseData);
+
+        weaponStatesPhase[currentPhaseWeapon] = weaponPhaseData;
+
+        if (timeSinceSelected > option.timeUntilSwitch || skip) {
+            timeSinceSelected = 0;
+            firedLastFrame = false;
+            weaponStatesPhase[currentPhaseWeapon].timeSinceFire = 0;
+
+            currentPhaseWeapon++;
+            currentPhaseWeapon %= phase.options.Length;
+        }
+        else
+            timeSinceSelected += delta;
+    }
+
+    public bool IsPhased () {
+        return entityData is EntityPhasedResource;
+    }
+
+    protected virtual EntityPhase GetPhase () {
+        if (!IsPhased ())
+            return null;
+        return (entityData as EntityPhasedResource).phases
+                .GetBest ((ph1, ph2) => currentHp <= ph1.hpMark && ph1.hpMark < ph2.hpMark  // We want the smallest phase that satisfies our HP
+                                        || currentHp > ph2.hpMark);     // Just in case the first selected item is not what we want
+    }
+
+    protected virtual void ResetPhaseStates () {
+        currentPhaseWeapon = 0;
+        firedLastFrame = false;
+        GD.Print ($"Phase reset for {Name}");
+        weaponStatesPhase = new WeaponStateData[GetPhase ().options.Length];
     }
 
     public virtual void Damage (int damage, Entity source) {
         if (damage == 0)
             return;
             
+        EntityPhase currentPhase = GetPhase ();
+
         currentHp -= damage;
         EmitSignal ("HealthChanged", -damage);
+
+        EntityPhase newPhase = GetPhase ();
+        // IsPhased() is already implied since, if the data isn't phased, these would both be null
+        if (currentPhase != newPhase) {
+            ResetPhaseStates ();
+            EmitSignal ("PhaseChanged", newPhase);
+        }
         if (currentHp <= 0)
             Destroy (source != null && source.SpawnedByPlayer);
     }
 
-    public void Heal (int amount) {
+    public virtual void Heal (int amount) {
         currentHp = Mathf.Min (currentHp + amount, entityData.hp);
         EmitSignal ("HealthChanged", amount);
     }
@@ -169,6 +252,8 @@ public partial class Entity : Spawnable {
 
     [Signal]
     public delegate void HealthChangedEventHandler (int amount);
+    [Signal]
+    public delegate void PhaseChangedEventHandler (EntityPhase phase);
     [Signal]
     public delegate void DestroyedEventHandler (bool destroyedByPlayer);
 }

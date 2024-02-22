@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public static class Helpers {
@@ -44,5 +47,23 @@ public static class Helpers {
     /// <returns>The angle to the point in space</returns>
     public static float OtherAngleTo (this Vector2 a, Vector2 b) {
         return (b - a).Angle ();
+    }
+
+    /// <summary>
+    /// Compares all elements in an <see cref="IEnumerable{T}"/> to get the best item. If <paramref name="comparator"/> returns true, it will become the item to be compared against.
+    /// The first argument is the item in the list. The second argument is the item being compared
+    /// </summary>
+    /// <returns>The best item that satisfies <paramref name="comparator"/></returns>
+    public static T GetBest<T> (this IEnumerable<T> values, Func<T, T, bool> comparator) {
+        IEnumerator<T> enumerator = values.GetEnumerator ();
+        enumerator.Reset ();
+        enumerator.MoveNext (); // Starts enumeration
+        
+        T result = enumerator.Current;
+        while (enumerator.MoveNext ())
+            if (comparator (enumerator.Current, result))
+                result = enumerator.Current;
+
+        return result;
     }
 }
