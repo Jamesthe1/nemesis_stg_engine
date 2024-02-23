@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://dnuuidohxignu"]
 
-[ext_resource type="PackedScene" uid="uid://cjeyphqpkhabx" path="res://addons/nemesis_stg_engine/prefab/spawner.tscn" id="1_yadgi"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Spawner.cs" id="1_w1hnu"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="2_edfc7"]
 [ext_resource type="Resource" uid="uid://buy3umhttjhi1" path="res://addons/nemesis_stg_engine/examples/ship/enemy_ship.tres" id="3_oj0rp"]
 
@@ -8,12 +8,14 @@
 script = ExtResource("2_edfc7")
 trigger = 0
 spawn = ExtResource("3_oj0rp")
-spawnOffsetPoints = PackedVector2Array(0, 0)
+spawnPoints = PackedVector2Array(0, 0)
 startRotation = 0.0
 rotationIncrement = 0.0
 time = 0.0
 despawnCondition = 1
+name = "Node"
+fixTexRotation = false
 collisionLayer = 1
 collisionMask = 1
-baseScene = ExtResource("1_yadgi")
+baseScript = ExtResource("1_w1hnu")
 interval = 1.0

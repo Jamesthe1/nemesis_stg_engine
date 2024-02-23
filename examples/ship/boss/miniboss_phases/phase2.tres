@@ -8,4 +8,4 @@
 [resource]
 script = ExtResource("3_6iy2r")
 hpMark = 15
-options = [ExtResource("1_lnii2"), ExtResource("2_jhcxo"), ExtResource("3_ribl6")]
+options = [ExtResource("2_jhcxo"), ExtResource("1_lnii2"), ExtResource("3_ribl6")]

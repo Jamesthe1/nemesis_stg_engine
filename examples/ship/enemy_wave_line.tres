@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=5 format=3 uid="uid://cylway1kg1yw0"]
 
-[ext_resource type="PackedScene" uid="uid://cjeyphqpkhabx" path="res://addons/nemesis_stg_engine/prefab/spawner.tscn" id="1_4lv0x"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="1_dd7ww"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Spawner.cs" id="1_lpvs1"]
 [ext_resource type="Resource" uid="uid://buy3umhttjhi1" path="res://addons/nemesis_stg_engine/examples/ship/enemy_ship.tres" id="2_mliwj"]
 [ext_resource type="Resource" uid="uid://cm6p6yj1r1iaq" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_heal.tres" id="2_v7lhl"]
 
@@ -14,9 +14,10 @@ startRotation = 0.0
 rotationIncrement = 0.0
 time = 0.0
 despawnCondition = 2
+name = "Node"
 fixTexRotation = false
 collisionLayer = 1
 collisionMask = 1
-baseScene = ExtResource("1_4lv0x")
+baseScript = ExtResource("1_lpvs1")
 despawnSpawn = ExtResource("2_v7lhl")
 interval = 1.0

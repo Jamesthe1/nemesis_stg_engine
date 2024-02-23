@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=5 format=3 uid="uid://bl0nr3t85eh3u"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="1_a6o2k"]
-[ext_resource type="PackedScene" uid="uid://dktdr1wbsco6b" path="res://addons/nemesis_stg_engine/prefab/entity.tscn" id="1_qo2js"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Entity.cs" id="1_joiav"]
 [ext_resource type="Texture2D" uid="uid://brg4jyusqvwrc" path="res://addons/nemesis_stg_engine/examples/projectile/missile_enemy.png" id="2_880ok"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpjmb"]
@@ -19,10 +19,11 @@ ramDamage = 1
 miscSelfDamage = 1
 hp = 0
 score = 50
+name = "Missile"
 texture = ExtResource("2_880ok")
 fixTexRotation = false
 collisionShape = SubResource("RectangleShape2D_tpjmb")
 collisionLayer = 4
 collisionMask = 2
-baseScene = ExtResource("1_qo2js")
+baseScript = ExtResource("1_joiav")
 interval = 1.0

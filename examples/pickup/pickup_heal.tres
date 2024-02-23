@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=5 format=3 uid="uid://cm6p6yj1r1iaq"]
 
-[ext_resource type="PackedScene" uid="uid://7ydtxadlae1q" path="res://addons/nemesis_stg_engine/prefab/pickup.tscn" id="1_u13mg"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Pickup.cs" id="1_fwvao"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/PickupResource.cs" id="2_wlx4x"]
 [ext_resource type="Texture2D" uid="uid://2n7j7fw40cij" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_heal.png" id="3_vefqo"]
 
@@ -11,10 +11,11 @@ points = PackedVector2Array(0, -32, -32, 32, 32, 32)
 script = ExtResource("2_wlx4x")
 type = 0
 value = 1
+name = "Node"
 texture = ExtResource("3_vefqo")
 fixTexRotation = false
 collisionShape = SubResource("ConvexPolygonShape2D_a8y2q")
 collisionLayer = 1
 collisionMask = 1
-baseScene = ExtResource("1_u13mg")
+baseScript = ExtResource("1_fwvao")
 interval = 1.0
