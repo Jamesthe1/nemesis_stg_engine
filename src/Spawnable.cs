@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 public abstract partial class Spawnable : CharacterBody2D {
@@ -31,6 +32,32 @@ public abstract partial class Spawnable : CharacterBody2D {
     public override void _ExitTree () {
         Spawned -= _OnSpawn;
         Despawned -= _OnDespawn;
+    }
+
+    public virtual IEnumerable<Node2D> ConstructChildren () {
+        if (Data.texture != null)
+            yield return new Sprite2D {
+                Name = "Sprite",
+                Texture = Data.texture
+            };
+
+        if (Data.collisionShape != null)
+            yield return new CollisionShape2D {
+                Name = "Collision",
+                Shape = Data.collisionShape
+            };
+
+        Vector2 size = Vector2.One * 20;
+        if (Data.texture != null)
+            size = Data.texture.GetSize ();
+            
+        var visCheck = new VisibleOnScreenNotifier2D {
+            Name = "VisCheck",
+            Rect = size.GetCenteredRegion ()
+        };
+        visCheck.ScreenEntered += _OnSeen;
+        visCheck.ScreenExited += _OnUnseen;
+        yield return visCheck;
     }
 
     protected virtual void ProcessInterval (double delta) {

@@ -2,6 +2,8 @@ using Godot;
 
 public abstract partial class SpawnResource : Resource {
     [Export]
+    public string name = "Node";
+    [Export]
     public Texture2D texture;
     [Export]
     public bool fixTexRotation = false;
@@ -14,7 +16,7 @@ public abstract partial class SpawnResource : Resource {
     public uint collisionMask = 1;
 
     [Export]
-    public PackedScene baseScene;
+    public Script baseScript;
 
     /// <summary>
     /// Spawned on despawn

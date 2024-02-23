@@ -100,37 +100,30 @@ public partial class STGController : Node2D {
             throw new ArgumentNullException ($"{nameof(SpawnResource)} cannot be null");
 
         bool hadToSpawn = false;
-        Spawnable spawnable = spare.FirstOrDefault (s => s.Data.baseScene.Equals (resource.baseScene));
+        Spawnable spawnable = spare.FirstOrDefault (s => s.Data.baseScript.Equals (resource.baseScript));
         if (spawnable == null) {
             hadToSpawn = true;
-            spawnable = resource.baseScene.Instantiate () as Spawnable;
+            spawnable = resource.baseScript.Instantiate<CharacterBody2D> (resource.name) as Spawnable;
         }
         else
             spare.Remove (spawnable);
         active.Add (spawnable);
 
+        spawnable.Data = resource;
+        spawnable.spawnerPath = spawnerPath;
+
         // Moving this after adding to active due to _EnterTree event
         if (hadToSpawn)
             AddChild (spawnable);
+        else
+            foreach (Node child in spawnable.GetChildren ())
+                child.Free ();
 
-        if (spawnable.HasNode ("Sprite")) {
-            Sprite2D sprite = spawnable.GetNode<Sprite2D> ("Sprite");
-            sprite.Texture = resource.texture;
-            sprite.Rotation = 0;    // Fix incorrect texture rotations when pulling from pool
-        }
-        
-        spawnable.SetChildIfExist ("Collision", "shape", resource.collisionShape);
-        if (spawnable.HasNode ("VisCheck")) {
-            Vector2 size = Vector2.One * 20;
-            if (resource.texture != null)
-                size = resource.texture.GetSize ();
-            spawnable.SetChildIfExist ("VisCheck", "rect", size.GetCenteredRegion ());
-        }
+        foreach (Node2D child in spawnable.ConstructChildren ())
+            spawnable.AddChild (child);
 
-        spawnable.Data = resource;
         spawnable.Position = pos;
         spawnable.Rotation = GetNode<Node2D> (spawnerPath).Rotation;
-        spawnable.spawnerPath = spawnerPath;
 
         spawnable.Active = true;    // Also sets collision mask and layer
         spawnable.EmitSignal ("Spawned");
