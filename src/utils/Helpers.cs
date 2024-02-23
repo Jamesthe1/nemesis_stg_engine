@@ -72,7 +72,6 @@ public static class Helpers {
     /// </summary>
     /// <returns>The new instance of a <typeparamref name="TBase"/> with the instance script</returns>
     public static TBase Instantiate<TBase> (this Script script, string name) where TBase : Node, new() {
-        PackedScene wrapper = new PackedScene ();   // Using scene instantiation to give our node a unique name before being added to the tree
         Node temp = new Node ();    // Adding temp parent to re-fetch the child
         TBase baseNode = new TBase {
             Name = name
@@ -81,10 +80,9 @@ public static class Helpers {
 
         baseNode.SetScript (script);            // SetScript de-references our node
         baseNode = temp.GetChild<TBase> (0);    // So we fix this by getting it as a child
-        temp.RemoveChild (baseNode);            // Clean up temp
-        wrapper.Pack (baseNode);                // And then we pack into scene
+        temp.RemoveChild (baseNode);            // Then clean up temp
                                                 // Thank you godot for making me write jank code
 
-        return wrapper.Instantiate<TBase> ();
+        return baseNode;
     }
 }
