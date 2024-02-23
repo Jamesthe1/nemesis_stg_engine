@@ -100,10 +100,10 @@ public partial class STGController : Node2D {
             throw new ArgumentNullException ($"{nameof(SpawnResource)} cannot be null");
 
         bool hadToSpawn = false;
-        Spawnable spawnable = spare.FirstOrDefault (s => s.Data.baseScript.Equals (resource.baseScript));
+        Spawnable spawnable = spare.FirstOrDefault (s => s.Data.GetRelatedScript ().Equals (resource.GetRelatedScript ()));
         if (spawnable == null) {
             hadToSpawn = true;
-            spawnable = resource.baseScript.Instantiate<CharacterBody2D> (resource.name) as Spawnable;
+            spawnable = resource.GetRelatedScript ().Instantiate<CharacterBody2D> (resource.name) as Spawnable;
         }
         else
             spare.Remove (spawnable);

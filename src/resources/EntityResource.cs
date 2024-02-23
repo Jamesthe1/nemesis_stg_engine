@@ -45,4 +45,8 @@ public partial class EntityResource : SpawnResource {
 
     [Export]
     public SpawnResource destroySpawn;
+
+    public override Script GetDefaultScript () {
+        return STGScripts.scripts["Entity"];
+    }
 }

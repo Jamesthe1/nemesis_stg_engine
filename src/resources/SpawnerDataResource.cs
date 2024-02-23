@@ -38,4 +38,8 @@ public partial class SpawnerDataResource : SpawnResource {
     public double TimePerSpawn {
         get => time / spawnPoints.Length;
     }
+
+    public override Script GetDefaultScript () {
+        return STGScripts.scripts["Spawner"];
+    }
 }

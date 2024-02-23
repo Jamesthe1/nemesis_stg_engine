@@ -14,4 +14,8 @@ public partial class PickupResource : SpawnResource {
     public int value;
     [Export]
     public WeaponResource weapon;
+
+    public override Script GetDefaultScript () {
+        return STGScripts.scripts["Pickup"];
+    }
 }

@@ -7,6 +7,8 @@ public abstract partial class SpawnResource : Resource {
     public Texture2D texture;
     [Export]
     public bool fixTexRotation = false;
+    [Export]
+    public Script scriptOverride = null;
 
     [Export]
     public Shape2D collisionShape;
@@ -14,9 +16,6 @@ public abstract partial class SpawnResource : Resource {
     public uint collisionLayer = 1;
     [Export]
     public uint collisionMask = 1;
-
-    [Export]
-    public Script baseScript;
 
     /// <summary>
     /// Spawned on despawn
@@ -30,4 +29,10 @@ public abstract partial class SpawnResource : Resource {
     /// </summary>
     [Export]
     public float interval = 1f;
+
+    public abstract Script GetDefaultScript ();
+
+    public Script GetRelatedScript () {
+        return scriptOverride ?? GetDefaultScript ();
+    }
 }

@@ -5,4 +5,8 @@ public partial class PlayerResource : EntityResource {
     public int deviceID;
     [Export]
     public bool usesKeyboard;
+
+    public override Script GetDefaultScript () {
+        return STGScripts.scripts["PlayerEntity"];
+    }
 }
