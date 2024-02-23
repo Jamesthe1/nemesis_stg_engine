@@ -2,46 +2,29 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Tool]
 public sealed partial class STGCore : EditorPlugin {
 	private List<string> scripts = new List<string> ();
 
-	private const string root = "res://addons/nemesis_stg_engine/src";
-
 	public override void _EnterTree () {
-		// Nodes
-		RegisterType<STGController, Node2D> ();
-		RegisterType<Spawner, CharacterBody2D> ();
-		RegisterType<Entity, CharacterBody2D> ();
-		RegisterType<PlayerEntity, CharacterBody2D> ();
-		RegisterType<Pickup, CharacterBody2D> ();
-		RegisterType<StageTrigger, Marker2D> ();
-
-		// Resources
-		RegisterResource<EntityResource> ();
-		RegisterResource<SpawnerDataResource> ();
-		RegisterResource<PlayerResource> ();
-		RegisterResource<PickupResource> ();
-		RegisterResource<WeaponResource> ();
-		RegisterResource<EntityPhasedResource> ();
-		RegisterResource<EntityPhase> ();
+		RegisterTypes (STGScripts.types.Keys, STGScripts.types.Values);
+		RegisterResources ();
 	}
 
-	private void RegisterResource<T> () where T : Resource {
-		RegisterType<T, Resource> ();
+	private void RegisterResources () {
+		RegisterTypes (STGScripts.resources, Enumerable.Repeat (typeof (Resource), STGScripts.resources.Length));
 	}
 
-	private void RegisterType<T, U> () where T : U where U : class {
-		string folder = root;
-		if (typeof (U).Name == nameof (Resource))
-			folder += "/resources";
-		
-		Type type = typeof(T);
-		Script script = GD.Load<Script> ($"{folder}/{type.Name}.cs");
-		// Base class must be a node predefined in Godot, not a custom one
-		AddCustomType (type.Name, typeof (U).Name, script, null);
-		scripts.Add (type.Name);
+	private void RegisterTypes (IEnumerable<Type> types, IEnumerable<Type> baseTypes) {
+		for (int i = 0; i < types.Count (); i++) {
+			Type type = types.ElementAt (i);
+			Type baseType = baseTypes.ElementAt (i);
+			// Base class must be a node predefined in Godot, not a custom one
+			AddCustomType (type.Name, baseType.Name, STGScripts.scripts[type.Name], null);
+			scripts.Add (type.Name);
+		}
 	}
 
 	public override void _ExitTree () {
