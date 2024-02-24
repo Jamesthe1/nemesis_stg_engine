@@ -34,12 +34,21 @@ public abstract partial class Spawnable : CharacterBody2D {
         Despawned -= _OnDespawn;
     }
 
+    protected IEnumerable<Node2D> ConstructSprites () {
+        if (Data.texture == null)
+            yield break;
+
+        // TODO: Animated sprites (alternate SpriteFrames parameter for SpawnResource?)
+        
+        yield return new Sprite2D {
+            Name = "Sprite",
+            Texture = Data.texture
+        };
+    }
+
     public virtual IEnumerable<Node2D> ConstructChildren () {
-        if (Data.texture != null)
-            yield return new Sprite2D {
-                Name = "Sprite",
-                Texture = Data.texture
-            };
+        foreach (Node2D sprite in ConstructSprites ())
+            yield return sprite;
 
         if (Data.collisionShape != null)
             yield return new CollisionShape2D {
