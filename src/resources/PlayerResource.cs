@@ -7,6 +7,6 @@ public partial class PlayerResource : EntityResource {
     public bool usesKeyboard;
 
     public override Script GetDefaultScript () {
-        return STGScripts.scripts["PlayerEntity"];
+        return STGScripts.scripts[nameof (PlayerEntity)];
     }
 }

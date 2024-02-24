@@ -16,6 +16,6 @@ public partial class PickupResource : SpawnResource {
     public WeaponResource weapon;
 
     public override Script GetDefaultScript () {
-        return STGScripts.scripts["Pickup"];
+        return STGScripts.scripts[nameof (Pickup)];
     }
 }

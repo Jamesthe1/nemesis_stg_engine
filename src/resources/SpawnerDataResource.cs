@@ -40,6 +40,6 @@ public partial class SpawnerDataResource : SpawnResource {
     }
 
     public override Script GetDefaultScript () {
-        return STGScripts.scripts["Spawner"];
+        return STGScripts.scripts[nameof (Spawner)];
     }
 }
