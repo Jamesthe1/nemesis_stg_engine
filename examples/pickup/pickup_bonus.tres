@@ -1,6 +1,5 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://f6l2pi7m0g4s"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://f6l2pi7m0g4s"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Pickup.cs" id="1_jnw4k"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/PickupResource.cs" id="1_kr328"]
 [ext_resource type="Texture2D" uid="uid://bce158u653wvi" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_score.png" id="2_4dxo6"]
 
@@ -17,5 +16,4 @@ fixTexRotation = false
 collisionShape = SubResource("ConvexPolygonShape2D_a8y2q")
 collisionLayer = 1
 collisionMask = 1
-baseScript = ExtResource("1_jnw4k")
 interval = 1.0

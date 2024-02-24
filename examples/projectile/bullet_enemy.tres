@@ -1,6 +1,5 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://m4evi6kqvmcs"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://m4evi6kqvmcs"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Entity.cs" id="1_1t0k8"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="2_n57dm"]
 [ext_resource type="Texture2D" uid="uid://b1r4j77x44imu" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_enemy.png" id="3_wpi0l"]
 
@@ -25,5 +24,4 @@ fixTexRotation = true
 collisionShape = SubResource("CircleShape2D_5qb6t")
 collisionLayer = 0
 collisionMask = 2
-baseScript = ExtResource("1_1t0k8")
 interval = 1.0

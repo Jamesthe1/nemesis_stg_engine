@@ -1,6 +1,5 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://dhbnbtfiilns0"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://dhbnbtfiilns0"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Entity.cs" id="1_ggcl1"]
 [ext_resource type="Curve2D" uid="uid://blivarqrx6w3y" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_wavy_curve.tres" id="2_3g7ro"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="3_33gct"]
 [ext_resource type="Texture2D" uid="uid://cppkd8jl20y1h" path="res://addons/nemesis_stg_engine/examples/projectile/bullet.png" id="4_cdk8j"]
@@ -27,5 +26,4 @@ fixTexRotation = true
 collisionShape = SubResource("CircleShape2D_5qb6t")
 collisionLayer = 0
 collisionMask = 4
-baseScript = ExtResource("1_ggcl1")
 interval = 1.0

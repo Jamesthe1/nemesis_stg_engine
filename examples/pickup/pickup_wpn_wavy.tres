@@ -1,6 +1,5 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://bv04rb72rxvg8"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://bv04rb72rxvg8"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Pickup.cs" id="1_dqrad"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/PickupResource.cs" id="2_qrex0"]
 [ext_resource type="Texture2D" uid="uid://ld2t5oiipeqt" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_wpn.png" id="3_15llk"]
 [ext_resource type="Resource" uid="uid://b4pbqtx7xq3e2" path="res://addons/nemesis_stg_engine/examples/weapon/wpn_player_wavy.tres" id="4_glgyg"]
@@ -19,5 +18,4 @@ fixTexRotation = false
 collisionShape = SubResource("ConvexPolygonShape2D_1tifi")
 collisionLayer = 1
 collisionMask = 1
-baseScript = ExtResource("1_dqrad")
 interval = 1.0
