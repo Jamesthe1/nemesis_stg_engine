@@ -1,0 +1,3 @@
+Particle/Sound effect node and resource
+AnimatedSprite implementation (with predefined names for idle/spawning/despawning/destroying, wait on most of these animations before moving on)
+Custom resource for audio events (Godot dictionaries are unreliable at best without type restriction)
