@@ -11,8 +11,9 @@ public static class STGScripts {
 		{ typeof(Spawner), typeof(CharacterBody2D) },
 		{ typeof(Entity), typeof(CharacterBody2D) },
 		{ typeof(PlayerEntity), typeof(CharacterBody2D) },
+		{ typeof(SpecialFXNode), typeof(CharacterBody2D) },
 		{ typeof(Pickup), typeof(CharacterBody2D) },
-		{ typeof(StageTrigger), typeof(Marker2D) }
+		{ typeof(StageTrigger), typeof(Marker2D) },
     };
 
     public static Type[] resources = new Type[] {
@@ -22,7 +23,8 @@ public static class STGScripts {
 		typeof(PickupResource),
 		typeof(WeaponResource),
 		typeof(EntityPhasedResource),
-		typeof(EntityPhase)
+		typeof(EntityPhase),
+		typeof(SpecialFXResource),
     };
 
     private static Dictionary<string, Script> TransformToScripts (this IEnumerable<Type> types, bool isResource = false) {
