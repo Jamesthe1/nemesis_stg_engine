@@ -242,6 +242,7 @@ public partial class Entity : Spawnable {
         if (entityData.destroySpawn != null)
             STGController.Instance.Spawn (entityData.destroySpawn, Position, GetPath ());
 
+        // TODO: Implement SpriteFrames animation, wait for destroy animation to complete or fire immediately if not exist
         EmitSignal ("Destroyed", destroyedByPlayer);
         STGController.Instance.Despawn (this);
     }

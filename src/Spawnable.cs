@@ -50,6 +50,7 @@ public abstract partial class Spawnable : CharacterBody2D {
         foreach (Node2D sprite in ConstructSprites ())
             yield return sprite;
 
+        // TODO: Start with collision deactivated
         if (Data.collisionShape != null)
             yield return new CollisionShape2D {
                 Name = "Collision",
@@ -102,6 +103,8 @@ public abstract partial class Spawnable : CharacterBody2D {
         if (Data == null)
             throw new NullReferenceException ($"Spawnable data of node {Name} cannot be null");
         timeElapsed = 0.0;
+        // TODO: Implement animation frames, *then* execute a "spawn complete" event when the spawn animation is over or nonexistent
+        // TODO: Set current sound to "idle" on spawn complete, activate collision
 
         if (spawnerPath == "")
             return;
