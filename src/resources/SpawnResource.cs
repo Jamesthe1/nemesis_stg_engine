@@ -9,6 +9,8 @@ public abstract partial class SpawnResource : Resource {
     public bool fixTexRotation = false;
     [Export]
     public Script scriptOverride = null;
+    [Export]
+    public SpawnableSounds sounds;
 
     [Export]
     public Shape2D collisionShape;

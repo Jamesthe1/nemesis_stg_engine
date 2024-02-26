@@ -25,6 +25,7 @@ public static class STGScripts {
 		typeof(EntityPhasedResource),
 		typeof(EntityPhase),
 		typeof(SpecialFXResource),
+        typeof(SpawnableSounds),
     };
 
     private static Dictionary<string, Script> TransformToScripts (this IEnumerable<Type> types, bool isResource = false) {

@@ -46,9 +46,21 @@ public abstract partial class Spawnable : CharacterBody2D {
         };
     }
 
+    protected IEnumerable<Node2D> ConstructSounds () {
+        if (Data.sounds == null)
+            yield break;
+
+        yield return new AudioStreamPlayer2D {
+            Name = "Sound"
+        };
+    }
+
     public virtual IEnumerable<Node2D> ConstructChildren () {
         foreach (Node2D sprite in ConstructSprites ())
             yield return sprite;
+
+        foreach (Node2D sound in ConstructSounds ())
+            yield return sound;
 
         // TODO: Start with collision deactivated
         if (Data.collisionShape != null)
@@ -68,6 +80,15 @@ public abstract partial class Spawnable : CharacterBody2D {
         visCheck.ScreenEntered += _OnSeen;
         visCheck.ScreenExited += _OnUnseen;
         yield return visCheck;
+    }
+
+    protected void SetCurrentSound (AudioStream stream) {
+        AudioStreamPlayer2D sound = GetNode<AudioStreamPlayer2D> ("Sound");
+        if (sound.Playing)
+            sound.Stop ();
+        sound.Stream = stream;
+        if (stream != null)
+            sound.Play ();
     }
 
     protected virtual void ProcessInterval (double delta) {
@@ -102,7 +123,10 @@ public abstract partial class Spawnable : CharacterBody2D {
     public virtual void _OnSpawn () {
         if (Data == null)
             throw new NullReferenceException ($"Spawnable data of node {Name} cannot be null");
+
         timeElapsed = 0.0;
+        if (Data.sounds != null)
+            SetCurrentSound (Data.sounds.spawn);
         // TODO: Implement animation frames, *then* execute a "spawn complete" event when the spawn animation is over or nonexistent
         // TODO: Set current sound to "idle" on spawn complete, activate collision
 
@@ -117,6 +141,8 @@ public abstract partial class Spawnable : CharacterBody2D {
     public virtual void _OnDespawn () {
         if (Data.despawnSpawn != null)
             STGController.Instance.Spawn (Data.despawnSpawn, Position, GetPath ());
+        if (Data.sounds != null)
+            SetCurrentSound (Data.sounds.despawn);
     }
 
     public virtual void _OnSeen () { }
