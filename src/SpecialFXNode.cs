@@ -17,6 +17,9 @@ public partial class SpecialFXNode : Spawnable {
 
         particle.Finished += Despawn;
         yield return particle;
+
+        foreach (Node2D sound in ConstructSounds ())
+            yield return sound;
     }
 
     protected void Despawn () {
