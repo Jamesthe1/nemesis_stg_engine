@@ -28,7 +28,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     [Export]
     public bool fireOnce = true;
 
-    public bool disabled;
+    public bool disabled = false;
 
     public static Dictionary<NodePath, bool> States { get; private set; } = new Dictionary<NodePath, bool> ();
 
@@ -41,7 +41,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     }
 
     protected bool Passed (int axis) {
-        Vector2 stage = -STGController.Instance.Position;
+        Vector2 stage = STGController.Instance.StagePos;
         Vector2 moveDir = STGController.Instance.stageMovement.Sign ();
         if (moveDir[axis] == 1)
             return stage[axis] > Position[axis];
@@ -60,6 +60,9 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     }
 
     public override void _PhysicsProcess (double delta) {
+        if (disabled)
+            return;
+
         if (condition == TriggerCondition.PassX && Passed (0) ||
             condition == TriggerCondition.PassY && Passed (1))
             FireTrigger ();
@@ -71,9 +74,6 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     }
 
     protected virtual void FireTrigger () {
-        if (disabled)
-            return;
-
         EmitSignal ("Triggered");
         switch (type) {
             case TriggerType.Checkpoint: {
@@ -82,7 +82,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
             }
             case TriggerType.JumpToNode: {
                 if (jump != null && jump != "")
-                    STGController.Instance.MoveStageTo (jump);
+                    STGController.Instance.MoveStageTo (jump, this);
                 break;
             }
             case TriggerType.ChangeStageMovement: {
