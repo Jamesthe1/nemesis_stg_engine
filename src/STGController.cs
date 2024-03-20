@@ -14,7 +14,7 @@ public partial class STGController : Node2D {
     protected List<Spawnable> active = new List<Spawnable> ();
     protected List<Spawnable> spare = new List<Spawnable> ();
 
-    public static List<PlayerEntity> Players { get; private set; }
+    public static List<PlayerEntity> Players { get; private set; } = new List<PlayerEntity> ();
     protected List<Spawner> PlayerSpawners {
         get => active.OfType<Spawner> ()
                      .Where (s => s.spawnData.trigger == SpawnerDataResource.SpawnTrigger.PlayerSpawnEvent)
@@ -33,6 +33,10 @@ public partial class STGController : Node2D {
     [Export]
     public NodePath parallaxBgPath = "";
 
+    public Vector2 StagePos { get; protected set; } = Vector2.Zero;
+
+    public List<Node2D> movables = new List<Node2D> ();
+
     public static STGController Instance {
         get; private set;
     }
@@ -50,11 +54,13 @@ public partial class STGController : Node2D {
 
     public override void _EnterTree () {
         Instance = this;
-        Players = new List<PlayerEntity> ();
     }
 
     public override void _Ready () {
         EmitSignal ("PlayerSpawn");
+        movables.AddRange (Players);
+        movables.AddRange (PlayerSpawners);
+        movables.AddRange (GetChildren ().OfType<Camera2D> ());
         EmitSignal ("StageStart");
     }
 
@@ -64,10 +70,7 @@ public partial class STGController : Node2D {
     }
 
     public void MoveStageTo (Vector2 pos) {
-        Vector2 shift = pos - Position;
-        List<Node2D> movables = Players.Cast<Node2D> ().ToList ();
-        movables.AddRange (PlayerSpawners);
-        movables.AddRange (GetChildren ().OfType<Camera2D> ());
+        Vector2 shift = pos - StagePos;
 
         if (GetParent ().Name != "root") {
             shift *= 0.5f;
@@ -75,10 +78,11 @@ public partial class STGController : Node2D {
         }
         foreach (Node2D movable in movables)
             movable.Position += shift;   // Keep them on-screen
+        StagePos += shift;
     }
 
-    public void MoveStageTo (NodePath nodePath) {
-        MoveStageTo (GetNode<Node2D> (nodePath).Position);
+    public void MoveStageTo (NodePath nodePath, Node root) {
+        MoveStageTo (root.GetNode<Node2D> (nodePath).Position);
     }
 
     public override void _PhysicsProcess (double delta) {
@@ -86,7 +90,7 @@ public partial class STGController : Node2D {
             return;
 
         Vector2 moveStep = stageMovement * (float)delta;
-        MoveStageTo (Position + moveStep);
+        MoveStageTo (StagePos + moveStep);
         if (parallaxBgPath != "")
             GetNode<Node2D> (parallaxBgPath).Position -= moveStep;  // Keep illusion of smooth movement by decoupling bg movement from world
     }
