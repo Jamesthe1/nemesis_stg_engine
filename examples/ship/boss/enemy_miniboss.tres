@@ -18,6 +18,7 @@ follow = null
 speed = 110.0
 turnSpeed = 0.0
 moveWithSpawner = false
+moveWithStageAfter = 5.0
 ramDamage = 1
 miscSelfDamage = 1
 hp = 40
