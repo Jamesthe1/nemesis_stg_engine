@@ -19,6 +19,8 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     public override void _Ready () {
         if (!STGController.Instance.IsTracked (this)) {
             STGController.Instance.RequestTrack (this);
+            foreach (Node2D child in ConstructChildren ())
+                AddChild (child);
             EmitSignal ("Spawned");
         }
     }
