@@ -27,6 +27,8 @@ public partial class EntityResource : SpawnResource {
     public float turnSpeed = 0f;
     [Export]
     public bool moveWithSpawner = false;
+    [Export]
+    public float moveWithStageAfter = 0f;
 
     [Export]
     public int ramDamage = 1;

@@ -72,6 +72,7 @@ public partial class Entity : Spawnable {
     /// <returns>A tuple representing rotation and movement</returns>
     protected virtual (float, Vector2) GetRotationAndMovement (double delta) {
         float angle = entityData.turnSpeed;
+        bool noDir = false;
         switch (entityData.type) {
             case EntityResource.MotionType.Path: {
                 Curve2D path = entityData.path;
@@ -79,7 +80,7 @@ public partial class Entity : Spawnable {
                 if (timeElapsed > endpoint && !entityData.loopPath) {
                     angle = path.GetPointIn (endpoint).OtherAngleTo (Vector2.Zero);
                     angle = Mathf.RadToDeg (angle) - RotationDegrees;
-                    break;
+                    goto case EntityResource.MotionType.Standard;
                 }
 
                 double elapsed = timeElapsed % endpoint;
@@ -100,11 +101,15 @@ public partial class Entity : Spawnable {
                 angle *= Mathf.Sign (dirAngle);
                 break;
             }
+            case EntityResource.MotionType.Standard: {
+                noDir = STGController.Instance.movables.Contains (this);
+                break;
+            }
         }
         angle = Mathf.DegToRad (angle); // Everything must use radians, we've been working with degrees
 
         Vector2 dir = Vector2.FromAngle (Rotation + angle) * entityData.speed * (float)delta;
-        return (angle, dir);
+        return (angle, noDir ? Vector2.Zero : dir);
     }
 
     public virtual void ProcessCollision (GodotObject collider) {
@@ -120,6 +125,11 @@ public partial class Entity : Spawnable {
         base._PhysicsProcess (delta);
         if (!Active)
             return;
+
+        if (timeElapsed > entityData.moveWithStageAfter && entityData.moveWithStageAfter > 0f) {
+            if (!STGController.Instance.movables.Contains (this))
+                STGController.Instance.movables.Add (this);
+        }
 
         (float angle, Vector2 dir) = GetRotationAndMovement (delta);
         if (entityData.moveWithSpawner)
@@ -247,6 +257,12 @@ public partial class Entity : Spawnable {
         // TODO: Implement SpriteFrames animation, wait for destroy animation to complete or fire immediately if not exist
         EmitSignal ("Destroyed", destroyedByPlayer);
         STGController.Instance.Despawn (this);
+    }
+
+    public override void _OnDespawn () {
+        base._OnDespawn ();
+        if (STGController.Instance.movables.Contains (this))
+            STGController.Instance.movables.Remove (this);
     }
 
     [Signal]
