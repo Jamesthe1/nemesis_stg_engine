@@ -12,6 +12,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
         EventOnly,
         Checkpoint,
         JumpToNode,
+        ChangeStageMovement,
         Boss
     }
 
@@ -21,6 +22,8 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     public TriggerType type;
     [Export]
     public NodePath jump;
+    [Export]
+    public Vector2 stageMovement;
 
     [Export]
     public bool fireOnce = true;
@@ -45,7 +48,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
         return stage[axis] < Position[axis];
     }
 
-    public override void _EnterTree() {
+    public override void _EnterTree () {
         STGController.Instance.SaveCheckpoint += SaveState;
         STGController.Instance.LoadCheckpoint += LoadState;
     }
@@ -82,6 +85,10 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
                     STGController.Instance.MoveStageTo (jump);
                 break;
             }
+            case TriggerType.ChangeStageMovement: {
+                STGController.Instance.stageMovement = stageMovement;
+                break;
+            }
             case TriggerType.Boss: {
                 STGController.Instance.EmitSignal ("BossAlarm");
                 break;
@@ -92,11 +99,11 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
             disabled = true;
     }
 
-    public void SaveState() {
+    public void SaveState () {
         States[GetPath ()] = disabled;
     }
 
-    public void LoadState() {
+    public void LoadState () {
         disabled = States[GetPath ()];
     }
 
