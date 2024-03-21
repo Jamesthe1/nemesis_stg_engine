@@ -28,13 +28,18 @@ public partial class STGController : Node2D {
         }
     }
 
+    public static List<Entity> Bosses {
+        get => Instance.active.OfType<Entity> ()
+                              .Where (e => e.entityData.isBoss)
+                              .ToList ();
+    }
+
     [Export]
     public Vector2 stageMovement = Vector2.Zero;
     [Export]
     public NodePath parallaxBgPath = "";
 
     public Vector2 StagePos { get; protected set; } = Vector2.Zero;
-
     public List<Node2D> movables = new List<Node2D> ();
 
     public static STGController Instance {
@@ -220,8 +225,13 @@ public partial class STGController : Node2D {
     public delegate void StageStartEventHandler ();
     [Signal]
     public delegate void ScoreUpdateEventHandler ();
+
     [Signal]
     public delegate void BossAlarmEventHandler ();
+    [Signal]
+    public delegate void BossSpawnedEventHandler (Entity boss);
+    [Signal]
+    public delegate void BossDestroyedEventHandler (Entity boss);
 
     [Signal]
     public delegate void SaveCheckpointEventHandler ();

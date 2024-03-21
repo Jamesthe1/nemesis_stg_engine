@@ -27,6 +27,8 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
 
     [Export]
     public bool fireOnce = true;
+    [Export]
+    public EntityResource disableWithBoss;
 
     public bool Disabled { get; protected set; } = false;
 
@@ -37,6 +39,13 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
         if (!HasNode (visCheckName)) {
             var visCheck = this.CreateChild<VisibleOnScreenNotifier2D> (visCheckName);
             visCheck.ScreenEntered += ScreenTriggerCheck;
+        }
+
+        if (disableWithBoss != null) {
+            if (!disableWithBoss.isBoss)
+                GD.PushWarning ($"Entity data provided to {Name} is not a boss");
+
+            STGController.Instance.BossDestroyed += CheckBossDestroyed;
         }
     }
 
@@ -109,6 +118,11 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
 
     public void Disable () {
         Disabled = true;
+    }
+
+    public void CheckBossDestroyed (Entity boss) {
+        if (boss.entityData == disableWithBoss)
+            Disable ();
     }
 
     [Signal]

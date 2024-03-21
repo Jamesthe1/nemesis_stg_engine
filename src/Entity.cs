@@ -53,6 +53,8 @@ public partial class Entity : Spawnable {
 
         if (IsPhased ())
             ResetPhaseStates ();
+        if (entityData.isBoss)
+            STGController.Instance.EmitSignal ("BossSpawned", this);
     }
 
     protected float GetRotationOnPath (float time, float previousTime) {
@@ -256,6 +258,8 @@ public partial class Entity : Spawnable {
 
         // TODO: Implement SpriteFrames animation, wait for destroy animation to complete or fire immediately if not exist
         EmitSignal ("Destroyed", destroyedByPlayer);
+        if (entityData.isBoss)
+            STGController.Instance.EmitSignal ("BossDestroyed", this);
         STGController.Instance.Despawn (this);
     }
 
