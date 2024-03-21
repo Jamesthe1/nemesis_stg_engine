@@ -69,20 +69,29 @@ public partial class STGController : Node2D {
         Score = 0;
     }
 
-    public void MoveStageTo (Vector2 pos) {
+    public void MoveStageTo (Vector2 pos, bool moveAllSpawnables = false) {
+        List<Node2D> m_movables = new List<Node2D> (movables);  // Clones the movables list so we don't accidentally modify the original
+        if (moveAllSpawnables) {
+            m_movables.AddRange (
+                GetChildren ()
+                    .OfType<Spawnable> ()
+                    .Where (s => !movables.Contains (s))        // Avoid duplicate entries
+            );
+        }
+
         Vector2 shift = pos - StagePos;
 
         if (GetParent ().Name != "root") {
             shift *= 0.5f;
             Position -= shift;
         }
-        foreach (Node2D movable in movables)
+        foreach (Node2D movable in m_movables)
             movable.Position += shift;   // Keep them on-screen
         StagePos += shift;
     }
 
-    public void MoveStageTo (NodePath nodePath, Node root) {
-        MoveStageTo (root.GetNode<Node2D> (nodePath).Position);
+    public void MoveStageTo (NodePath nodePath, Node root, bool moveAllSpawnables = false) {
+        MoveStageTo (root.GetNode<Node2D> (nodePath).Position, moveAllSpawnables);
     }
 
     public override void _PhysicsProcess (double delta) {

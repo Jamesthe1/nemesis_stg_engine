@@ -82,7 +82,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
             }
             case TriggerType.JumpToNode: {
                 if (jump != null && jump != "")
-                    STGController.Instance.MoveStageTo (jump, this);
+                    STGController.Instance.MoveStageTo (jump, this, true);
                 break;
             }
             case TriggerType.ChangeStageMovement: {
