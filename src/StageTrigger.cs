@@ -28,7 +28,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     [Export]
     public bool fireOnce = true;
 
-    public bool disabled = false;
+    public bool Disabled { get; protected set; } = false;
 
     public static Dictionary<NodePath, bool> States { get; private set; } = new Dictionary<NodePath, bool> ();
 
@@ -60,7 +60,7 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
     }
 
     public override void _PhysicsProcess (double delta) {
-        if (disabled)
+        if (Disabled)
             return;
 
         if (condition == TriggerCondition.PassX && Passed (0) ||
@@ -96,15 +96,19 @@ public partial class StageTrigger : Marker2D, ISaveState<bool> {
         }
 
         if (fireOnce)
-            disabled = true;
+            Disable ();
     }
 
     public void SaveState () {
-        States[GetPath ()] = disabled;
+        States[GetPath ()] = Disabled;
     }
 
     public void LoadState () {
-        disabled = States[GetPath ()];
+        Disabled = States[GetPath ()];
+    }
+
+    public void Disable () {
+        Disabled = true;
     }
 
     [Signal]
