@@ -23,6 +23,7 @@ ramDamage = 1
 miscSelfDamage = 1
 hp = 40
 score = 3500
+isBoss = true
 destroySpawn = ExtResource("2_1g3in")
 name = "Miniboss"
 texture = ExtResource("2_63r16")
