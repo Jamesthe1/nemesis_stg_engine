@@ -46,6 +46,8 @@ public partial class EntityResource : SpawnResource {
     public int score = 250;
     [Export]
     public bool isBoss = false;
+    [Export]
+    public bool endsStage = false;
 
     [Export]
     public SpawnResource destroySpawn;

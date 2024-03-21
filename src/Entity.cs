@@ -258,8 +258,11 @@ public partial class Entity : Spawnable {
 
         // TODO: Implement SpriteFrames animation, wait for destroy animation to complete or fire immediately if not exist
         EmitSignal ("Destroyed", destroyedByPlayer);
-        if (entityData.isBoss)
+        if (entityData.isBoss) {
             STGController.Instance.EmitSignal ("BossDestroyed", this);
+            if (entityData.endsStage && STGController.Bosses.Count - 1 == 0)
+                STGController.Instance.EmitSignal ("StageEnd");
+        }
         STGController.Instance.Despawn (this);
     }
 

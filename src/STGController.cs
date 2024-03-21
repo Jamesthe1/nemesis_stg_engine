@@ -224,6 +224,8 @@ public partial class STGController : Node2D {
     [Signal]
     public delegate void StageStartEventHandler ();
     [Signal]
+    public delegate void StageEndEventHandler ();
+    [Signal]
     public delegate void ScoreUpdateEventHandler ();
 
     [Signal]
