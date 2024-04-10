@@ -39,6 +39,7 @@ public partial class Entity : Spawnable {
 
     public override void _EnterTree () {
         base._EnterTree ();
+        Destroyed += DestroyedFinalize;
     }
 
     public override void _ExitTree () {
@@ -249,6 +250,11 @@ public partial class Entity : Spawnable {
     }
 
     public virtual void Destroy (bool destroyedByPlayer) {
+        void DestroyAnimHook () {
+            GetNode<AnimatedSprite2D> ("Sprite").AnimationFinished -= DestroyAnimHook;
+            EmitSignal ("Destroyed", destroyedByPlayer);
+        }
+
         if (destroyedByPlayer)
             STGController.Score += entityData.score;
         if (entityData.destroySpawn != null)
@@ -256,8 +262,16 @@ public partial class Entity : Spawnable {
         if (entityData.sounds != null)
             SetCurrentSound (entityData.sounds.destroy);
 
-        // TODO: Implement SpriteFrames animation, wait for destroy animation to complete or fire immediately if not exist
-        EmitSignal ("Destroyed", destroyedByPlayer);
+        if (entityData.HasAnimation ("destroy")) {
+            AnimatedSprite2D sprite = GetNode<AnimatedSprite2D> ("Sprite");
+            sprite.AnimationFinished += DestroyAnimHook;
+            sprite.Play ("destroy");
+        }
+        else
+            EmitSignal ("Destroyed", destroyedByPlayer);
+    }
+
+    public virtual void DestroyedFinalize (bool destroyedByPlayer) {
         if (entityData.isBoss) {
             STGController.Instance.EmitSignal ("BossDestroyed", this);
             if (entityData.endsStage && STGController.Bosses.Count - 1 == 0)

@@ -62,7 +62,7 @@ public partial class PlayerEntity : Entity {
 
     public override void _OnSpawn () {
         base._OnSpawn ();
-        spriteRegion = GetNode<Sprite2D> ("Sprite").Texture.GetSize ().GetCenteredRegion ();
+        spriteRegion = Data.GetAnimationSize ().GetCenteredRegion ();
         if (!(entityData is PlayerResource))
             throw new System.Exception ("A player has been spawned without a player resource. Please make sure your player spawner's data has a PlayerResource associated with it!");
         STGController.Players.Add (this);

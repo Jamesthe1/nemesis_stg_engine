@@ -26,23 +26,24 @@ public abstract partial class Spawnable : CharacterBody2D {
 
     public override void _EnterTree () {
         Spawned += _OnSpawn;
+        FinishedSetup += _OnFinishedSetup;
         Despawned += _OnDespawn;
     }
 
     public override void _ExitTree () {
         Spawned -= _OnSpawn;
+        FinishedSetup -= _OnFinishedSetup;
         Despawned -= _OnDespawn;
     }
 
     protected IEnumerable<Node2D> ConstructSprites () {
-        if (Data.texture == null)
+        if (Data.sequence == null)
             yield break;
-
-        // TODO: Animated sprites (alternate SpriteFrames parameter for SpawnResource?)
         
-        yield return new Sprite2D {
+        yield return new AnimatedSprite2D {
             Name = "Sprite",
-            Texture = Data.texture
+            SpriteFrames = Data.sequence,
+            Animation = Data.GetDefaultAnimation ()
         };
     }
 
@@ -70,8 +71,8 @@ public abstract partial class Spawnable : CharacterBody2D {
             };
 
         Vector2 size = Vector2.One * 20;
-        if (Data.texture != null)
-            size = Data.texture.GetSize ();
+        if (Data.sequence != null)
+            size = Data.GetAnimationSize ();
             
         var visCheck = new VisibleOnScreenNotifier2D {
             Name = "VisCheck",
@@ -118,17 +119,41 @@ public abstract partial class Spawnable : CharacterBody2D {
     [Signal]
     public delegate void SpawnedEventHandler ();
     [Signal]
+    public delegate void FinishedSetupEventHandler ();
+    [Signal]
     public delegate void DespawnedEventHandler ();
 
     public virtual void _OnSpawn () {
+        void SpawnAnimHook () {
+            GetNode<AnimatedSprite2D> ("Sprite").AnimationFinished -= SpawnAnimHook;
+            EmitSignal ("FinishedSetup");
+        }
+
+        // Keep separate from anim hook to let the spawn sound complete
+        void SpawnSoundHook () {
+            GetNode<AudioStreamPlayer2D> ("Sound").Finished -= SpawnSoundHook;
+            SetCurrentSound (Data.sounds.idle);
+        }
+
         if (Data == null)
             throw new NullReferenceException ($"Spawnable data of node {Name} cannot be null");
 
         timeElapsed = 0.0;
-        if (Data.sounds != null)
-            SetCurrentSound (Data.sounds.spawn);
-        // TODO: Implement animation frames, *then* execute a "spawn complete" event when the spawn animation is over or nonexistent
-        // TODO: Set current sound to "idle" on spawn complete, activate collision
+        if (Data.sounds != null) {
+            if (Data.sounds.spawn != null) {
+                SetCurrentSound (Data.sounds.spawn);
+                GetNode<AudioStreamPlayer2D> ("Sound").Finished += SpawnSoundHook;
+            }
+            else
+                SetCurrentSound (Data.sounds.idle);
+        }
+        
+        if (Data.HasAnimation ("spawn")) {
+            AnimatedSprite2D sprite = GetNode<AnimatedSprite2D> ("Sprite");
+            sprite.AnimationFinished += SpawnAnimHook;
+            sprite.Play ("spawn");
+        } else
+            EmitSignal ("FinishedSetup");
 
         if (spawnerPath == "")
             return;
@@ -136,6 +161,13 @@ public abstract partial class Spawnable : CharacterBody2D {
         if (spawner is PlayerEntity
             || (spawner is Spawnable spawnable && spawnable.SpawnedByPlayer))
             SpawnedByPlayer = true;
+    }
+
+    public virtual void _OnFinishedSetup () {
+        AnimatedSprite2D sprite = GetNode<AnimatedSprite2D> ("Sprite");
+        
+        // Automatically chooses idle animation
+        sprite.Play (Data.GetDefaultAnimation ());
     }
 
     public virtual void _OnDespawn () {
