@@ -2,6 +2,8 @@ using Godot;
 
 public partial class SpecialFXResource : SpawnResource {
     [Export]
+    public Texture2D particle;
+    [Export]
     public ParticleProcessMaterial material;
     [Export]
     public int count;
