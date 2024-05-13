@@ -40,6 +40,9 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
     }
 
     protected virtual void DoSpawnStep (double timeSinceFire) {
+        if (spawnData.moveWithSpawner)
+            Position = GetSpawnerPos ();
+
         while (fireId < spawnData.spawnPoints.Length && timeSinceFire >= spawnData.TimePerSpawn) {
             Spawnable spawn = STGController.Instance.Spawn (spawnData.spawn, Position + spawnData.spawnPoints[fireId], GetPath ());
             spawn.RotationDegrees = spawnData.startRotation + spawnData.rotationIncrement * fireId;

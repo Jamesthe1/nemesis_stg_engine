@@ -27,6 +27,8 @@ public partial class SpawnerDataResource : SpawnResource {
     public float startRotation = 0f;
     [Export]
     public float rotationIncrement = 0f;
+    [Export]
+    public bool moveWithSpawner = false;
     /// <summary>
     /// How long it will take to spawn all items
     /// </summary>
