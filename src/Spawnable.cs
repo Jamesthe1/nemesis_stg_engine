@@ -72,11 +72,12 @@ public abstract partial class Spawnable : CharacterBody2D {
         foreach (Node2D sound in ConstructSounds ())
             yield return sound;
 
-        // TODO: Start with collision deactivated
+        // Starts with collision deactivated until animation has fully played out
         if (Data.collisionShape != null)
             yield return new CollisionShape2D {
                 Name = "Collision",
-                Shape = Data.collisionShape
+                Shape = Data.collisionShape,
+                Disabled = true
             };
 
         Vector2 size = Vector2.One * 20;
@@ -177,6 +178,9 @@ public abstract partial class Spawnable : CharacterBody2D {
     }
 
     public virtual void _OnFinishedSetup () {
+        if (Data.collisionShape != null)
+            GetNode<CollisionShape2D> ("Collision").Disabled = false;   // Now that everything is complete, we can now be hit
+
         if (!Data.IsAssignedTextures ())
             return;
         
