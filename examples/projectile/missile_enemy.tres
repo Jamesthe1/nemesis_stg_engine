@@ -1,7 +1,6 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bl0nr3t85eh3u"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bl0nr3t85eh3u"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="1_a6o2k"]
-[ext_resource type="Texture2D" uid="uid://brg4jyusqvwrc" path="res://addons/nemesis_stg_engine/examples/projectile/missile_enemy.png" id="2_880ok"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpjmb"]
 size = Vector2(32, 16)
@@ -19,8 +18,9 @@ ramDamage = 1
 miscSelfDamage = 1
 hp = 0
 score = 50
+isBoss = false
+endsStage = false
 name = "Missile"
-texture = ExtResource("2_880ok")
 fixTexRotation = false
 collisionShape = SubResource("RectangleShape2D_tpjmb")
 collisionLayer = 4

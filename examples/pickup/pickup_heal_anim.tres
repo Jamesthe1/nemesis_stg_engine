@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3 uid="uid://curuh0p43nt7b"]
+
+[ext_resource type="Texture2D" uid="uid://2n7j7fw40cij" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_heal.png" id="1_8wefv"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8wefv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
