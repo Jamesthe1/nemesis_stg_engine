@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cqaproleyolam"]
+
+[ext_resource type="Texture2D" uid="uid://cu5br6165r883" path="res://addons/nemesis_stg_engine/examples/sfx/poof.png" id="1_ovl6e"]
+[ext_resource type="Material" uid="uid://ghnf2pyp6pqk" path="res://addons/nemesis_stg_engine/examples/sfx/poof_material.tres" id="1_xet6s"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpecialFXResource.cs" id="2_gy62c"]
+
+[resource]
+script = ExtResource("2_gy62c")
+particle = ExtResource("1_ovl6e")
+material = ExtResource("1_xet6s")
+count = 50
+emissionTime = 0.2
+name = "Node"
+fixTexRotation = false
+collisionLayer = 1
+collisionMask = 1
+interval = 1.0
