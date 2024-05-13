@@ -1,7 +1,6 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dyrkvfp66sqpl"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dyrkvfp66sqpl"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="1_6rbyw"]
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Spawner.cs" id="1_hjxmu"]
 [ext_resource type="Resource" uid="uid://bl0nr3t85eh3u" path="res://addons/nemesis_stg_engine/examples/projectile/missile_enemy.tres" id="2_tsany"]
 
 [resource]
@@ -11,11 +10,11 @@ spawn = ExtResource("2_tsany")
 spawnPoints = PackedVector2Array(-64, 48, -64, -48)
 startRotation = 180.0
 rotationIncrement = 0.0
+moveWithSpawner = false
 time = 0.0
 despawnCondition = 1
 name = "DualMissileSpawner"
 fixTexRotation = false
 collisionLayer = 1
 collisionMask = 1
-baseScript = ExtResource("1_hjxmu")
 interval = 1.0
