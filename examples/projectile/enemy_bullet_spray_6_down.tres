@@ -22,6 +22,7 @@ spawn = ExtResource("3_vlln0")
 spawnPoints = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 startRotation = 225.0
 rotationIncrement = -18.0
+moveWithSpawner = true
 time = 0.5
 despawnCondition = 1
 name = "Sprayer"

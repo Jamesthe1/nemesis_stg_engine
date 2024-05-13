@@ -1,6 +1,5 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bx0jxem1jjvos"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bx0jxem1jjvos"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Spawner.cs" id="1_olsfb"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="2_1lv3k"]
 [ext_resource type="Resource" uid="uid://m4evi6kqvmcs" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_enemy.tres" id="3_vcemv"]
 
@@ -11,11 +10,11 @@ spawn = ExtResource("3_vcemv")
 spawnPoints = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 startRotation = 135.0
 rotationIncrement = 9.0
+moveWithSpawner = true
 time = 0.5
 despawnCondition = 1
 name = "Sprayer"
 fixTexRotation = false
 collisionLayer = 1
 collisionMask = 1
-baseScript = ExtResource("1_olsfb")
 interval = 1.0
