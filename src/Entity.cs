@@ -44,6 +44,7 @@ public partial class Entity : Spawnable {
 
     public override void _ExitTree () {
         base._ExitTree ();
+        Destroyed -= DestroyedFinalize;
     }
 
     public override void _OnSpawn () {
