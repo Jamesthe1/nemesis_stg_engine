@@ -89,7 +89,10 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
             GD.PrintErr ($"Couldn't find a dead entity; spawns: {spawns.Count}");
             return;
         }
+
         entity.Destroyed -= UpdateAlive;
+        entity.Despawned -= UpdateTrackedSpawns;
+        spawns.Remove (entity);
 
         if (destroyedByPlayer)
             unkilledByPlayer--;

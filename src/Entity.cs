@@ -33,16 +33,6 @@ public partial class Entity : Spawnable {
         return intervalOverride.projectile;
     }
 
-    public override void _EnterTree () {
-        base._EnterTree ();
-        Destroyed += DestroyedFinalize;
-    }
-
-    public override void _ExitTree () {
-        base._ExitTree ();
-        Destroyed -= DestroyedFinalize;
-    }
-
     public override void _OnSpawn () {
         base._OnSpawn ();
         currentHp = entityData.hp;
@@ -259,6 +249,7 @@ public partial class Entity : Spawnable {
         if (entityData.sounds != null)
             SetCurrentSound (entityData.sounds.destroy);
 
+        Destroyed += DestroyedFinalize; // Done this way so that this will trigger last
         if (entityData.HasAnimation ("destroy")) {
             AnimatedSprite2D sprite = GetNode<AnimatedSprite2D> ("Sprite");
             sprite.AnimationFinished += DestroyAnimHook;
@@ -269,6 +260,7 @@ public partial class Entity : Spawnable {
     }
 
     public virtual void DestroyedFinalize (bool destroyedByPlayer) {
+        Destroyed -= DestroyedFinalize;
         if (entityData.isBoss) {
             STGController.Instance.EmitSignal ("BossDestroyed", this);
             if (entityData.endsStage && STGController.Bosses.Count - 1 == 0)
