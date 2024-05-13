@@ -1,3 +1,2 @@
 Particle/Sound effect node and resource
-AnimatedSprite implementation (with predefined names for idle/spawning/despawning/destroying, wait on most of these animations before moving on)
 Manual in its own file
