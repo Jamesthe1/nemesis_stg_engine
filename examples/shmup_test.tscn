@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://nrk1eg51sxqm"]
+[gd_scene load_steps=14 format=3 uid="uid://nrk1eg51sxqm"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/STGController.cs" id="1_g0ojk"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/examples/scripts/ScoreDisplay.cs" id="2_aq8ra"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/StageTrigger.cs" id="2_atw6x"]
 [ext_resource type="Resource" uid="uid://ipgidc1n08gl" path="res://addons/nemesis_stg_engine/examples/ship/boss/enemy_miniboss.tres" id="3_228df"]
+[ext_resource type="Script" path="res://addons/nemesis_stg_engine/examples/scripts/HPDisplay.cs" id="3_t16tv"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/SpecialFXNode.cs" id="4_77yjo"]
 [ext_resource type="Resource" uid="uid://cqaproleyolam" path="res://addons/nemesis_stg_engine/examples/sfx/poof_fx.tres" id="5_tuvtf"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Spawner.cs" id="6_b3in2"]
@@ -26,6 +27,18 @@ offset_right = 210.0
 offset_bottom = 33.0
 text = "SCORE: 0000000"
 script = ExtResource("2_aq8ra")
+
+[node name="HP" type="Label" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -33.0
+offset_right = 50.0
+offset_bottom = -10.0
+grow_vertical = 0
+text = "HP: 0"
+script = ExtResource("3_t16tv")
 
 [node name="StarterCheckpoint" type="Marker2D" parent="."]
 script = ExtResource("2_atw6x")
