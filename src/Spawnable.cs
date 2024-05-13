@@ -23,6 +23,15 @@ public abstract partial class Spawnable : CharacterBody2D {
     public NodePath spawnerPath = "";
 
     public bool SpawnedByPlayer { get; private set; } = false;
+    
+    public override void _Ready () {
+        if (!STGController.Instance.IsTracked (this)) {
+            STGController.Instance.RequestTrack (this);
+            foreach (Node2D child in ConstructChildren ())
+                AddChild (child);
+            EmitSignal ("Spawned");
+        }
+    }
 
     public override void _EnterTree () {
         Spawned += _OnSpawn;
