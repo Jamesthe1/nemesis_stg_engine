@@ -33,10 +33,6 @@ public partial class Entity : Spawnable {
         return intervalOverride.projectile;
     }
 
-    protected Vector2 GetSpawnerPos () {
-        return GetNode<Node2D> (spawnerPath).Position;
-    }
-
     public override void _EnterTree () {
         base._EnterTree ();
         Destroyed += DestroyedFinalize;

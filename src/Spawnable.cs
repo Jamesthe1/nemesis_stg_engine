@@ -92,6 +92,10 @@ public abstract partial class Spawnable : CharacterBody2D {
             sound.Play ();
     }
 
+    protected Vector2 GetSpawnerPos () {
+        return GetNode<Node2D> (spawnerPath).Position;
+    }
+
     protected virtual void ProcessInterval (double delta) {
         if (Data.intervalSpawn != null) {
             double te_interval = (timeElapsed % Data.interval) + delta;
