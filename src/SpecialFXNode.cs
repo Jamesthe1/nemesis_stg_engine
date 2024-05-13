@@ -14,8 +14,10 @@ public partial class SpecialFXNode : Spawnable {
         GpuParticles2D particle = new GpuParticles2D {
             Name = "Particle",
             Amount = fxResource.count,
-            Material = fxResource.material,
-            Texture = fxResource.particle
+            ProcessMaterial = fxResource.material,
+            Texture = fxResource.particle,
+            OneShot = true,
+            Lifetime = fxResource.emissionTime
         };
 
         particle.Finished += Despawn;
