@@ -39,8 +39,13 @@ public abstract partial class SpawnResource : Resource {
         return scriptOverride ?? GetDefaultScript ();
     }
 
+    public bool IsAssignedTextures () {
+        return sequence != null;
+    }
+
     public bool HasAnimation (string animationName) {
-        return sequence.GetAnimationNames ().Contains (animationName);
+        // Obviously you can't find an animation without any textures so this should return false if so
+        return IsAssignedTextures () && sequence.GetAnimationNames ().Contains (animationName);
     }
 
     public string GetDefaultAnimation () {

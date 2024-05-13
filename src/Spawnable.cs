@@ -164,10 +164,11 @@ public abstract partial class Spawnable : CharacterBody2D {
     }
 
     public virtual void _OnFinishedSetup () {
-        AnimatedSprite2D sprite = GetNode<AnimatedSprite2D> ("Sprite");
+        if (!Data.IsAssignedTextures ())
+            return;
         
-        // Automatically chooses idle animation
-        sprite.Play (Data.GetDefaultAnimation ());
+        AnimatedSprite2D sprite = GetNode<AnimatedSprite2D> ("Sprite");
+        sprite.Play (Data.GetDefaultAnimation ());  // Automatically chooses idle animation
     }
 
     public virtual void _OnDespawn () {
