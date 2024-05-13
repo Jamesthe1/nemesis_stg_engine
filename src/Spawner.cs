@@ -91,8 +91,6 @@ public partial class Spawner : Spawnable, ISaveState<SpawnerSaveData> {
         }
 
         entity.Destroyed -= UpdateAlive;
-        entity.Despawned -= UpdateTrackedSpawns;
-        spawns.Remove (entity);
 
         if (destroyedByPlayer)
             unkilledByPlayer--;
