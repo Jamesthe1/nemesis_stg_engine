@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://bl0nr3t85eh3u"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://bl0nr3t85eh3u"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="1_a6o2k"]
 [ext_resource type="Texture2D" uid="uid://brg4jyusqvwrc" path="res://addons/nemesis_stg_engine/examples/projectile/missile_enemy.png" id="2_cf3ps"]
+[ext_resource type="Texture2D" uid="uid://dxc64iaociek0" path="res://addons/nemesis_stg_engine/examples/projectile/missile_enemy_2.png" id="3_osjpm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpjmb"]
 size = Vector2(32, 16)
@@ -11,10 +12,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_cf3ps")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_osjpm")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [resource]

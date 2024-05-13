@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://d053de1qf881i"]
+
+[ext_resource type="Texture2D" uid="uid://cppkd8jl20y1h" path="res://addons/nemesis_stg_engine/examples/projectile/bullet.png" id="1_4wc64"]
+[ext_resource type="Texture2D" uid="uid://crqm25uo7mgjj" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_2.png" id="2_21w78"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4wc64")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_21w78")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]

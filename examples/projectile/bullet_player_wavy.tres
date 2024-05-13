@@ -1,22 +1,11 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://dhbnbtfiilns0"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://dhbnbtfiilns0"]
 
 [ext_resource type="Curve2D" uid="uid://blivarqrx6w3y" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_wavy_curve.tres" id="2_3g7ro"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="3_33gct"]
-[ext_resource type="Texture2D" uid="uid://cppkd8jl20y1h" path="res://addons/nemesis_stg_engine/examples/projectile/bullet.png" id="3_wndqr"]
+[ext_resource type="SpriteFrames" uid="uid://d053de1qf881i" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_frames.tres" id="3_j7dfb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5qb6t"]
 radius = 12.0
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_plt3t"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_wndqr")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [resource]
 script = ExtResource("3_33gct")
@@ -35,7 +24,7 @@ score = 0
 isBoss = false
 endsStage = false
 name = "Bullet"
-sequence = SubResource("SpriteFrames_plt3t")
+sequence = ExtResource("3_j7dfb")
 fixTexRotation = true
 collisionShape = SubResource("CircleShape2D_5qb6t")
 collisionLayer = 0

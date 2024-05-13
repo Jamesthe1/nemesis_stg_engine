@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://b58h7qx700vgd"]
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://b58h7qx700vgd"]
 
 [ext_resource type="Resource" uid="uid://tsy82141051s" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_player.tres" id="2_aodpk"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/PlayerResource.cs" id="2_woiks"]
 [ext_resource type="Texture2D" uid="uid://dwgswtnmw5584" path="res://addons/nemesis_stg_engine/examples/ship/ship.png" id="3_2oot7"]
+[ext_resource type="Texture2D" uid="uid://dcmsdbfw8pc4m" path="res://addons/nemesis_stg_engine/examples/ship/ship_2.png" id="4_ntygu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_caqo5"]
 size = Vector2(8, 8)
@@ -12,10 +13,13 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_2oot7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ntygu")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [resource]
