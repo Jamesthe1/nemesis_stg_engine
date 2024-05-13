@@ -1,12 +1,24 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://ipgidc1n08gl"]
+[gd_resource type="Resource" load_steps=8 format=3 uid="uid://ipgidc1n08gl"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityPhasedResource.cs" id="1_inu11"]
 [ext_resource type="Resource" uid="uid://bv04rb72rxvg8" path="res://addons/nemesis_stg_engine/examples/pickup/pickup_wpn_wavy.tres" id="2_1g3in"]
 [ext_resource type="Resource" uid="uid://dwoc23mgc3l83" path="res://addons/nemesis_stg_engine/examples/ship/boss/miniboss_phases/phase1.tres" id="2_5g2x4"]
 [ext_resource type="Resource" uid="uid://boq8gm8ndf8wh" path="res://addons/nemesis_stg_engine/examples/ship/boss/miniboss_phases/phase2.tres" id="3_u03hb"]
+[ext_resource type="Texture2D" uid="uid://daovcfndesphy" path="res://addons/nemesis_stg_engine/examples/ship/boss/enemy_miniboss.png" id="5_k0pvp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ty7s2"]
 size = Vector2(128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vav4v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_k0pvp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("1_inu11")
@@ -26,6 +38,7 @@ isBoss = true
 endsStage = false
 destroySpawn = ExtResource("2_1g3in")
 name = "Miniboss"
+sequence = SubResource("SpriteFrames_vav4v")
 fixTexRotation = false
 collisionShape = SubResource("RectangleShape2D_ty7s2")
 collisionLayer = 4

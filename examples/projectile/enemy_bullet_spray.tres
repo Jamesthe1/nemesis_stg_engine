@@ -1,6 +1,5 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dkmb0vfs6ba6v"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dkmb0vfs6ba6v"]
 
-[ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/Spawner.cs" id="1_5rdqj"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/SpawnerDataResource.cs" id="1_07ryq"]
 [ext_resource type="Resource" uid="uid://m4evi6kqvmcs" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_enemy.tres" id="2_o1l2d"]
 
@@ -17,5 +16,4 @@ name = "Sprayer"
 fixTexRotation = false
 collisionLayer = 1
 collisionMask = 1
-baseScript = ExtResource("1_5rdqj")
 interval = 1.0

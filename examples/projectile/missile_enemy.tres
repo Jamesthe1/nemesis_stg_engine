@@ -1,9 +1,21 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bl0nr3t85eh3u"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://bl0nr3t85eh3u"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="1_a6o2k"]
+[ext_resource type="Texture2D" uid="uid://brg4jyusqvwrc" path="res://addons/nemesis_stg_engine/examples/projectile/missile_enemy.png" id="2_cf3ps"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpjmb"]
 size = Vector2(32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6f542"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cf3ps")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("1_a6o2k")
@@ -21,6 +33,7 @@ score = 50
 isBoss = false
 endsStage = false
 name = "Missile"
+sequence = SubResource("SpriteFrames_6f542")
 fixTexRotation = false
 collisionShape = SubResource("RectangleShape2D_tpjmb")
 collisionLayer = 4

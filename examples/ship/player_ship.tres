@@ -1,10 +1,22 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://b58h7qx700vgd"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://b58h7qx700vgd"]
 
 [ext_resource type="Resource" uid="uid://tsy82141051s" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_player.tres" id="2_aodpk"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/PlayerResource.cs" id="2_woiks"]
+[ext_resource type="Texture2D" uid="uid://dwgswtnmw5584" path="res://addons/nemesis_stg_engine/examples/ship/ship.png" id="3_2oot7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_caqo5"]
 size = Vector2(8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nv2aw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2oot7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("2_woiks")
@@ -24,6 +36,7 @@ score = 0
 isBoss = false
 endsStage = false
 name = "Player"
+sequence = SubResource("SpriteFrames_nv2aw")
 fixTexRotation = false
 collisionShape = SubResource("RectangleShape2D_caqo5")
 collisionLayer = 2

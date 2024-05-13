@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=5 format=3 uid="uid://buy3umhttjhi1"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://buy3umhttjhi1"]
 
 [ext_resource type="Resource" uid="uid://dkmb0vfs6ba6v" path="res://addons/nemesis_stg_engine/examples/projectile/enemy_bullet_spray.tres" id="2_5sguc"]
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="2_gk41o"]
@@ -6,6 +6,17 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huw0o"]
 size = Vector2(64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yyifu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_j4yjb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("2_gk41o")
@@ -15,12 +26,15 @@ follow = null
 speed = -128.0
 turnSpeed = 0.0
 moveWithSpawner = false
+moveWithStageAfter = 0.0
 ramDamage = 1
 miscSelfDamage = 1
 hp = 3
 score = 250
+isBoss = false
+endsStage = false
 name = "Enemy"
-texture = ExtResource("3_j4yjb")
+sequence = SubResource("SpriteFrames_yyifu")
 fixTexRotation = false
 collisionShape = SubResource("RectangleShape2D_huw0o")
 collisionLayer = 4

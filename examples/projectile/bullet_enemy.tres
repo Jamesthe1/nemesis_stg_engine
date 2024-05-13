@@ -1,9 +1,21 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://m4evi6kqvmcs"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://m4evi6kqvmcs"]
 
 [ext_resource type="Script" path="res://addons/nemesis_stg_engine/src/resources/EntityResource.cs" id="2_n57dm"]
+[ext_resource type="Texture2D" uid="uid://b1r4j77x44imu" path="res://addons/nemesis_stg_engine/examples/projectile/bullet_enemy.png" id="2_vbept"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5qb6t"]
 radius = 12.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fjpoa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vbept")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("2_n57dm")
@@ -21,6 +33,7 @@ score = 50
 isBoss = false
 endsStage = false
 name = "Bullet"
+sequence = SubResource("SpriteFrames_fjpoa")
 fixTexRotation = true
 collisionShape = SubResource("CircleShape2D_5qb6t")
 collisionLayer = 0
