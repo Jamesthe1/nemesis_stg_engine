@@ -1,1 +1,6 @@
 Manual in its own file
+
+Post-1.0:
+Laser bullets
+Connected entities (behaving as "ship parts")
+Particle FX on spawn, destroy, despawn
