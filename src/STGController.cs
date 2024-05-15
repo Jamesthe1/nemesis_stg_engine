@@ -195,7 +195,7 @@ public partial class STGController : Node2D {
         Instance.Free ();
     }
 
-    public static void LoadStage (PackedScene scene, Node parent, StageLoadProcess process = StageLoadProcess.ClearStats) {
+    public static STGController LoadStage (PackedScene scene, Node parent, StageLoadProcess process = StageLoadProcess.ClearStats) {
         if (parent == null)
             throw new ArgumentNullException ("Parent cannot be null");
         
@@ -210,13 +210,14 @@ public partial class STGController : Node2D {
             stage.ClearStats ();
 
         stage.RequestReady ();
+        return stage;
     }
 
-    public static void ReloadStage (StageLoadProcess process = StageLoadProcess.UseCheckpoint) {
+    public static STGController ReloadStage (StageLoadProcess process = StageLoadProcess.UseCheckpoint) {
         PackedScene scene = GD.Load<PackedScene> (Instance.SceneFilePath);
         Node parent = Instance.GetParent ();
         UnloadStage ();
-        LoadStage (scene, parent, process);
+        return LoadStage (scene, parent, process);
     }
 
     [Signal]
