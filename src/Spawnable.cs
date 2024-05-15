@@ -126,8 +126,11 @@ public abstract partial class Spawnable : CharacterBody2D {
         if (!Active)
             return;
 
-        if (HasNode ("Sprite") && Data.fixTexRotation)
+        if (HasNode ("Sprite") && Data.fixTexRotation) {
             GetNode<Node2D> ("Sprite").Rotation = -Rotation;
+            if (Data.collisionShape != null)
+                GetNode<CollisionShape2D> ("Collision").Rotation = -Rotation;
+        }
     }
 
     [Signal]
