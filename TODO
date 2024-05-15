@@ -7,3 +7,4 @@ Connected entities (behaving as "ship parts")
 Particle FX on spawn, destroy, despawn
 Particle FX can be triggered manually with a defined function to stop/start the particle effect (Change emission state with one function?)
 Persistent entity checkbox (exists even outside of screen)
+Replace "Follow" path with any SpawnResource
