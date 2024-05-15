@@ -1,6 +1,7 @@
 Manual in its own file
 
 Post-1.0:
+"StageSelector" node that manages the loading and unloading of stages (with backgrounds), keeps an array of them
 Laser bullets
 Connected entities (behaving as "ship parts")
 Particle FX on spawn, destroy, despawn
