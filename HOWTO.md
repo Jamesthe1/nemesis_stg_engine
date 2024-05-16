@@ -71,7 +71,7 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
     - Sounds
     - Collision shape (can be copied over from a dummy CollisionShape2D)
     - Collision layer and mask (same as above; you may have to right-click these variables in the inspector to do so)
-    - SpawnResource that is spawned when this item despawns (useful for spawning special FX or pickups, if despawn condition is set to "RequireKill")
+    - SpawnResource that is spawned when this item despawns (useful for spawning special FX or [pickups](#creating-a-pickup), if despawn condition is set to "RequireKill")
     - SpawnResource that is spawned on an interval. Not recommended to be used for this type of resource.
     - Interval period
 1. In the "SpawnerDataResource" section, we can set its:
@@ -84,6 +84,26 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
     - Time to spawn all objects (0 is instant)
     - Despawn condition
 1. If this will be placed in the world, create a Spawner node in your scene and set its spawn data to the resource you just created.
+
+## Creating a pickup
+> Pickups are things that the player can collide with. They will only collide with the player.
+1. In a folder, create a PickupResource.
+1. Scrolling down to the "SpawnResource" section, we can set its:
+    - Name
+    - Sprite sequence (if you want it to be not animated, you can just put one frame with your desired texture and nothing else)
+    - Whether or not the texture stays fixed (won't rotate with the entity)
+    - Script override, in case we want the pickup to use a different script (must be a Spawnable!)
+    - Sounds
+    - Collision shape (can be copied over from a dummy CollisionShape2D)
+    - Collision layer and mask (same as above; you may have to right-click these variables in the inspector to do so)
+    - SpawnResource that is spawned when this item despawns
+    - SpawnResource that is spawned on an interval
+    - Interval period
+1. In the "PickupResource" section, we can set its:
+    - Type
+    - Value ("ScoreBonus" gives score, "Health" gives HP, not used in "WeaponOption")
+    - Weapon (Only used by "WeaponOption" type)
+1. It's now free to be placed anywhere, like a spawner's despawn spawn
 
 ## Objects
 - Resources
