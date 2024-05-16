@@ -101,3 +101,9 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
     - Entity: An entity that moves around in the world, based on an EntityResource (or extending resource) provided to `entityData`. Spawners are a better approach as entities will even perform their behavior off-screen. Despawned when seen once and exits the player's view. Spawnable.
     - PlayerEntity: Same as above, but requires a PlayerResource instead of an EntityResource. Stays within screen bounds.
     - Pickup: A pickup item that the player can collect. Despawned when seen once and exits the player's view. Spawnable.
+
+## Named sprite animations
+> There are predefined names for animations that will trigger based on certain events. Naming your sequence this will cause it to be played based on its event.
+- "spawn": Plays on spawn, and the collision will wait until it is complete before being enabled.
+- "idle"/"default": Plays on idle.
+- "destroy": Plays when the entity's health reaches zero from damage. Will not despawn until the animation is complete.
