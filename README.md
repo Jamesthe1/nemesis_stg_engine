@@ -7,9 +7,13 @@ Nemesis is an addon/engine that makes sh'mup development easy. Whether you need 
 Requirements:
 - Godot Mono 4.2 or later
 
-# How to install
+## How to install
 
 1. Clone the repository to your project's addons folder
 1. Add the .cs files to your .csproj file, if necessary (VS and VSCode will automatically add these)
 1. Build the project
 1. In Godot, under Project Settings > Plugins, enable the Nemesis STG Engine plugin
+
+## How to use
+
+Read [the how-to](HOWTO.md) for details.
