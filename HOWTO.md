@@ -27,7 +27,7 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
     - Name
     - Sprite sequence (if you want it to be not animated, you can just put one frame with your desired texture and nothing else)
     - Whether or not the texture stays fixed (won't rotate with the entity)
-    - Script override, in case we want the entity to have special behavior
+    - Script override, in case we want the entity to use a different script (must be a Spawnable!)
     - Sounds
     - Collision shape (can be copied over from a dummy CollisionShape2D)
     - Collision layer and mask (same as above; you may have to right-click these variables in the inspector to do so)
@@ -66,7 +66,7 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
     - Name
     - Sprite sequence (it might not play out as you expect, considering the spawner behaves and disables itself independently)
     - Whether or not the texture stays fixed (won't rotate with the entity)
-    - Script override, in case we want the entity to have special behavior
+    - Script override, in case we want the spawner to use a different script (must be a Spawnable!)
     - Sounds
     - Collision shape (can be copied over from a dummy CollisionShape2D)
     - Collision layer and mask (same as above; you may have to right-click these variables in the inspector to do so)
