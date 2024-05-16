@@ -242,6 +242,8 @@ public partial class Entity : Spawnable {
             EmitSignal ("Destroyed", destroyedByPlayer);
         }
 
+        GetNode<CollisionShape2D> ("Collision").Disabled = true;    // Disable to prevent re-triggering
+
         if (destroyedByPlayer)
             STGController.Score += entityData.score;
         if (entityData.destroySpawn != null)
