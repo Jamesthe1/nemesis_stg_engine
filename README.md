@@ -9,11 +9,12 @@ Requirements:
 
 ## How to install
 
-1. Clone the repository to your project's addons folder
+1. Open the AssetLib tab in Godot
+1. Download the addon
 1. Add the .cs files to your .csproj file, if necessary (VS and VSCode will automatically add these)
 1. Build the project
 1. In Godot, under Project Settings > Plugins, enable the Nemesis STG Engine plugin
 
 ## How to use
 
-Read [the how-to](HOWTO.md) for details.
+Read [the how-to](addons/nemesis_stg_engine/HOWTO.md) for details.
