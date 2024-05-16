@@ -25,7 +25,7 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
 1. In a folder, create an EntityResource.
 1. Scrolling down to the "SpawnResource" section, we can set its:
     - Name
-    - Sprite sequence (if you want it to be not animated, you can just put one frame with your desired texture and nothing else)
+    - Sprite sequence (if you want it to be not animated, you can just put one frame with your desired texture and nothing else. See [named animations](#named-sprite-animations) for event-based animations)
     - Whether or not the texture stays fixed (won't rotate with the entity)
     - Script override, in case we want the entity to use a different script (must be a Spawnable!)
     - Sounds
