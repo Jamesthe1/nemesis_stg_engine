@@ -11,3 +11,4 @@ Replace "Follow" path with any SpawnResource
 Move PlayerEntity's control scheme to PlayerResource
 Place spawner's despawn item on last killed entity's position
 Phase change animations
+Possible resource creator tab from a node? (Pulling data from a provided entity node's child collision node, Sprite node, etc)
