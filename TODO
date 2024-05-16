@@ -9,3 +9,5 @@ Particle FX can be triggered manually with a defined function to stop/start the 
 Persistent entity checkbox (exists even outside of screen)
 Replace "Follow" path with any SpawnResource
 Move PlayerEntity's control scheme to PlayerResource
+Place spawner's despawn item on last killed entity's position
+Phase change animations
