@@ -32,7 +32,8 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
     - Collision shape (can be copied over from a dummy CollisionShape2D)
     - Collision layer and mask (same as above; you may have to right-click these variables in the inspector to do so)
     - SpawnResource that is spawned when this entity despawns (useful for spawning special FX)
-    - SpawnResource that is spawned on an interval. This is usually where bullets are spawned from ships.
+    - SpawnResource that is spawned on an interval. This is usually where bullets are spawned from ships
+    - Interval period; think of this like the fire rate
 1. In the "EntityResource" section, we can set its:
     - Motion type ("Standard" means it will move in a straight line)
     - Path that it follows, if the motion type is set to "Path"
@@ -60,18 +61,19 @@ This engine constructs its nodes on-the-fly using just scripts and resources, an
 1. When [creating a spawner](#creating-a-spawner), set the trigger to PlayerSpawnEvent and despawn condition to "None." It will automatically move with the scene, so it will stay in the same place on-screen.
 
 ## Creating a spawner
-> Spawners are what place entities in the world. They can spawn multiple objects and can be triggered via different ways.
+> Spawners are what place entities in the world. They can spawn multiple objects, can be spawned by other objects, and can be triggered via different ways.
 1. In a folder, create a SpawnerDataResource.
 1. Though the "SpawnResource" section can be ignored, we can set its:
     - Name
-    - Sprite sequence (it might not play out as you expect, considering the spawner behaves and disables itself independently)
+    - Sprite sequence (not required; it might not play out as you expect, considering the spawner behaves and disables itself independently)
     - Whether or not the texture stays fixed (won't rotate with the entity)
     - Script override, in case we want the spawner to use a different script (must be a Spawnable!)
     - Sounds
     - Collision shape (can be copied over from a dummy CollisionShape2D)
     - Collision layer and mask (same as above; you may have to right-click these variables in the inspector to do so)
-    - SpawnResource that is spawned when this item despawns (useful for spawning special FX)
+    - SpawnResource that is spawned when this item despawns (useful for spawning special FX or pickups, if despawn condition is set to "RequireKill")
     - SpawnResource that is spawned on an interval. Not recommended to be used for this type of resource.
+    - Interval period
 1. In the "SpawnerDataResource" section, we can set its:
     - Trigger condition ("OnEvent" will listen to the _OnEvent function, which can be hooked up to any signal. "OnPlaced" is when the spawner is either spawned or is ready in a scene)
     - SpawnResource to spawn
